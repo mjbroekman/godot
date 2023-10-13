@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d24ls7jrwilp0"]
 
-[ext_resource type="Material" uid="uid://cihh542v2dgi8" path="res://Materials/baloon.tres" id="1_86l32"]
 [ext_resource type="Script" path="res://Scripts/Balloon.gd" id="1_d7ncu"]
+[ext_resource type="Material" uid="uid://cihh542v2dgi8" path="res://Materials/balloon.tres" id="2_b43i5"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_2ruc4"]
 
@@ -15,7 +15,7 @@ script = ExtResource("1_d7ncu")
 
 [node name="Model" type="MeshInstance3D" parent="Balloon"]
 mesh = SubResource("SphereMesh_2ruc4")
-surface_material_override/0 = ExtResource("1_86l32")
+surface_material_override/0 = ExtResource("2_b43i5")
 
 [node name="Collider" type="CollisionShape3D" parent="Balloon"]
 shape = SubResource("SphereShape3D_1ryv4")
