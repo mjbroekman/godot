@@ -1,31 +1,52 @@
 [gd_scene load_steps=5 format=3 uid="uid://d24ls7jrwilp0"]
 
-[ext_resource type="Script" path="res://Scripts/Balloon.gd" id="1_d7ncu"]
-[ext_resource type="Material" uid="uid://cihh542v2dgi8" path="res://Materials/balloon.tres" id="2_b43i5"]
+[ext_resource type="Script" path="res://BallonManager.gd" id="1_4gu78"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_2ruc4"]
+[sub_resource type="LabelSettings" id="LabelSettings_jrg4t"]
+font_size = 40
+font_color = Color(0, 0.658824, 0.0509804, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_1ryv4"]
+[sub_resource type="LabelSettings" id="LabelSettings_ifwdw"]
+font_size = 40
+font_color = Color(0.984314, 1, 0, 1)
 
-[node name="Main" type="Node3D"]
+[sub_resource type="LabelSettings" id="LabelSettings_qld4x"]
+font_size = 36
 
-[node name="Balloon" type="Area3D" parent="."]
-transform = Transform3D(0.999522, 0, -0.0309223, 0, 1, 0, 0.0309223, 0, 0.999522, 0, 0, 0)
-script = ExtResource("1_d7ncu")
-
-[node name="Model" type="MeshInstance3D" parent="Balloon"]
-mesh = SubResource("SphereMesh_2ruc4")
-surface_material_override/0 = ExtResource("2_b43i5")
-
-[node name="Collider" type="CollisionShape3D" parent="Balloon"]
-shape = SubResource("SphereShape3D_1ryv4")
+[node name="Main" type="Node3D" node_paths=PackedStringArray("score_text", "high_score", "remaining_balloons")]
+script = ExtResource("1_4gu78")
+score_text = NodePath("ScoreText")
+high_score = NodePath("HighScoreText")
+remaining_balloons = NodePath("BalloonCount")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000991106, 0.00412011, 7.68598)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 8)
 current = true
 fov = 80.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.519647, 0.621093, -0.586694, -0.411808, 0.783737, 0.464941, 0.748586, 6.63259e-09, 0.663038, -4.30537, 1.91594, 3.92162)
+transform = Transform3D(0.240008, 0.932185, -0.270975, -0.618074, 0.361983, 0.697821, 0.748586, 7.25121e-08, 0.663038, -4.30537, 3.84715, 5.83201)
 
-[connection signal="input_event" from="Balloon" to="Balloon" method="_on_input_event"]
+[node name="ScoreText" type="Label" parent="."]
+offset_left = 19.0
+offset_top = 19.0
+offset_right = 292.0
+offset_bottom = 74.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_jrg4t")
+
+[node name="HighScoreText" type="Label" parent="."]
+offset_left = 803.0
+offset_top = 18.0
+offset_right = 1134.0
+offset_bottom = 88.0
+text = "High Score: 0"
+label_settings = SubResource("LabelSettings_ifwdw")
+
+[node name="BalloonCount" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 568.0
+offset_right = 512.0
+offset_bottom = 634.0
+text = "Balloons remaining:"
+label_settings = SubResource("LabelSettings_qld4x")
