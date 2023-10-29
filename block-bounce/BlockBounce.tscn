@@ -1,16 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8dcya20doiu4"]
+[gd_scene load_steps=3 format=3 uid="uid://c8dcya20doiu4"]
 
 [ext_resource type="Script" path="res://Scripts/BlockBounceManager.gd" id="1_mumk1"]
-[ext_resource type="Texture2D" uid="uid://bp64r0n601hcc" path="res://Sprites/PhysicsCharacter.png" id="2_gc8ft"]
-[ext_resource type="Script" path="res://Scripts/PhysicsPlayer.gd" id="2_v35d0"]
-[ext_resource type="Texture2D" uid="uid://dms12sx6fgwa5" path="res://Sprites/Crate.png" id="4_bcaro"]
-[ext_resource type="Script" path="res://Scripts/Crate.gd" id="4_xfmh3"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vqstt"]
-size = Vector2(18, 18)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hvf2"]
-size = Vector2(18, 18)
+[ext_resource type="PackedScene" uid="uid://4l2dyotja7ik" path="res://Player.tscn" id="2_86fnh"]
 
 [node name="Main" type="Node2D"]
 
@@ -21,26 +12,4 @@ zoom = Vector2(3, 3)
 [node name="Manager" type="Node2D" parent="Camera"]
 script = ExtResource("1_mumk1")
 
-[node name="Player" type="RigidBody2D" parent="."]
-mass = 0.3
-gravity_scale = 2.66454e-15
-script = ExtResource("2_v35d0")
-
-[node name="PlayerSprite" type="Sprite2D" parent="Player"]
-position = Vector2(2.08165e-12, 2.08165e-12)
-texture = ExtResource("2_gc8ft")
-
-[node name="PlayerCollider" type="CollisionShape2D" parent="Player"]
-shape = SubResource("RectangleShape2D_vqstt")
-
-[node name="Crate" type="RigidBody2D" parent="."]
-position = Vector2(-50, 2.08165e-12)
-gravity_scale = 2.66454e-15
-script = ExtResource("4_xfmh3")
-
-[node name="CrateSprite" type="Sprite2D" parent="Crate"]
-texture = ExtResource("4_bcaro")
-
-[node name="CrateCollider" type="CollisionShape2D" parent="Crate"]
-position = Vector2(0, -2.08165e-12)
-shape = SubResource("RectangleShape2D_2hvf2")
+[node name="Player" parent="." instance=ExtResource("2_86fnh")]
