@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d24ls7jrwilp0"]
 
-[ext_resource type="Script" path="res://BallonManager.gd" id="1_4gu78"]
+[ext_resource type="Script" path="res://Scripts/BalloonManager.gd" id="1_req7q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jrg4t"]
 font_size = 40
@@ -14,7 +14,7 @@ font_color = Color(0.984314, 1, 0, 1)
 font_size = 36
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("score_text", "high_score", "remaining_balloons")]
-script = ExtResource("1_4gu78")
+script = ExtResource("1_req7q")
 score_text = NodePath("ScoreText")
 high_score = NodePath("HighScoreText")
 remaining_balloons = NodePath("BalloonCount")
