@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://cu0lnyms28cpp"]
+
+[ext_resource type="Script" path="res://Scripts/Skier.gd" id="1_65qly"]
+[ext_resource type="BoxMesh" uid="uid://bcnajmdcbbji" path="res://Materials/SkierMesh.tres" id="2_mmnrg"]
+[ext_resource type="BoxMesh" uid="uid://df7kod748mbxy" path="res://Materials/SkiMesh.tres" id="3_tb85s"]
+[ext_resource type="Material" uid="uid://c20fqklh8frtl" path="res://Materials/Ski.tres" id="4_8i864"]
+[ext_resource type="Shape3D" uid="uid://bfcfyoybcbc0r" path="res://Materials/SkierCollision.tres" id="5_ehimj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2kykn"]
+friction = 0.0
+bounce = 0.02
+
+[sub_resource type="SphereMesh" id="SphereMesh_cklyh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qka8k"]
+albedo_color = Color(1, 1, 0.0980392, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38m41"]
+albedo_color = Color(1, 1, 0.109804, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h0h0f"]
+
+[node name="Skier" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 6.29392, 12.4053)
+physics_material_override = SubResource("PhysicsMaterial_2kykn")
+script = ExtResource("1_65qly")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, -3.79186e-16, 3.4746e-16, 3.4746e-16, 0.996195, 0.0871557, -3.79186e-16, -0.0871557, 0.996195, 0, 0, 0)
+mesh = ExtResource("2_mmnrg")
+
+[node name="Ski1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.241, -1.05, -0.169)
+mesh = ExtResource("3_tb85s")
+surface_material_override/0 = ExtResource("4_8i864")
+
+[node name="Ski2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.241, -1.05, -0.169)
+mesh = ExtResource("3_tb85s")
+skeleton = NodePath("../Ski1")
+surface_material_override/0 = ExtResource("4_8i864")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 2.08165e-12, 1.153, -0.0890155)
+mesh = SubResource("SphereMesh_cklyh")
+
+[node name="Hair" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 2.08165e-12, 1.19452, -0.0450706)
+material_override = SubResource("StandardMaterial3D_qka8k")
+mesh = SubResource("SphereMesh_cklyh")
+
+[node name="Hair2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.098056, 0.174313, 0, -0.174313, 0.098056, 2.08165e-12, 1.19272, 0.3)
+material_override = SubResource("StandardMaterial3D_38m41")
+mesh = SubResource("CylinderMesh_h0h0f")
+
+[node name="SkierCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.178737, -0.169875)
+shape = ExtResource("5_ehimj")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.934092, 0.357031, 0, -0.357031, 0.934092, 0, 1.91902, 8.31846)

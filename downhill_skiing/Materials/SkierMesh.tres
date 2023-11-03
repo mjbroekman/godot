@@ -1,0 +1,7 @@
+[gd_resource type="BoxMesh" load_steps=2 format=3 uid="uid://bcnajmdcbbji"]
+
+[ext_resource type="Material" uid="uid://c0l213oj0i07b" path="res://Materials/Skier.tres" id="1_ufi5a"]
+
+[resource]
+material = ExtResource("1_ufi5a")
+size = Vector3(0.5, 2, 0.5)
