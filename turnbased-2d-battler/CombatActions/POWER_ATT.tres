@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CombatAction" load_steps=2 format=3 uid="uid://pdynf16x30wv"]
+
+[ext_resource type="Script" path="res://Scripts/CombatActions.gd" id="1_wifp6"]
+
+[resource]
+script = ExtResource("1_wifp6")
+display_name = "Fire Breath (9 DMG)"
+damage_amt = 9
+heal_amt = 0
