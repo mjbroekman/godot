@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_wifp6")
-display_name = "Fire Breath (9 DMG)"
+display_name = "Action (x DMG)"
 damage_amt = 9
 heal_amt = 0

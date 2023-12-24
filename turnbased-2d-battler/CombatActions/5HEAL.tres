@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_fn6v1")
-display_name = "Heal (8 DMG)"
+display_name = "Action (x DMG)"
 damage_amt = 0
-heal_amt = 8
+heal_amt = 5

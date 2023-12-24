@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://drc87vn3asqrm"]
+[gd_scene load_steps=8 format=3 uid="uid://drc87vn3asqrm"]
 
 [ext_resource type="Texture2D" uid="uid://cm6wy8j05y7ut" path="res://Sprites/Dragon.png" id="1_egl6c"]
 [ext_resource type="Script" path="res://Scripts/Character.gd" id="1_hjmcs"]
+[ext_resource type="Script" path="res://PlayerUI.gd" id="3_ey3ea"]
+[ext_resource type="Script" path="res://CombatActionButton.gd" id="4_41ppu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yjj8q"]
 bg_color = Color(0.196078, 0.196078, 0.196078, 1)
@@ -54,3 +56,39 @@ gravity = Vector2(2.08165e-12, 450)
 scale_amount_min = 0.0
 scale_amount_max = 3.0
 color = Color(0.760784, 0.0823529, 0.654902, 1)
+
+[node name="PlayerUI" type="VBoxContainer" parent="."]
+offset_left = -88.0
+offset_top = 118.0
+offset_right = 85.0
+offset_bottom = 232.0
+script = ExtResource("3_ey3ea")
+
+[node name="CombatAction1" type="Button" parent="PlayerUI"]
+layout_mode = 2
+action_mode = 0
+text = "Action 1"
+script = ExtResource("4_41ppu")
+
+[node name="CombatAction2" type="Button" parent="PlayerUI"]
+layout_mode = 2
+action_mode = 0
+text = "Action 2"
+script = ExtResource("4_41ppu")
+
+[node name="CombatAction3" type="Button" parent="PlayerUI"]
+layout_mode = 2
+action_mode = 0
+text = "Action 3"
+script = ExtResource("4_41ppu")
+
+[node name="CombatAction4" type="Button" parent="PlayerUI"]
+layout_mode = 2
+action_mode = 0
+text = "Action 4"
+script = ExtResource("4_41ppu")
+
+[connection signal="pressed" from="PlayerUI/CombatAction1" to="PlayerUI/CombatAction1" method="_on_pressed"]
+[connection signal="pressed" from="PlayerUI/CombatAction2" to="PlayerUI/CombatAction2" method="_on_pressed"]
+[connection signal="pressed" from="PlayerUI/CombatAction3" to="PlayerUI/CombatAction3" method="_on_pressed"]
+[connection signal="pressed" from="PlayerUI/CombatAction4" to="PlayerUI/CombatAction4" method="_on_pressed"]
