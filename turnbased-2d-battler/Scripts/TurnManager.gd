@@ -15,8 +15,10 @@ var characters : Array = [
 					"res://Sprites/Snake.png"
 				 ]
 
-signal character_begin_turn(character)
-signal character_end_turn(character)
+signal character1_begin_turn(character)
+signal character1_end_turn(character)
+signal character2_begin_turn(character)
+signal character2_end_turn(character)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,10 +29,11 @@ func _ready():
 func begin_next_turn():
 	if cur_char == player_char:
 		cur_char = enemy_char
+		emit_signal("character2_begin_turn", cur_char)
 	else:
 		cur_char = player_char
+		emit_signal("character1_begin_turn", cur_char)
 
-	emit_signal("character_begin_turn", cur_char)
 
 
 func end_cur_turn():
@@ -39,7 +42,11 @@ func end_cur_turn():
 	if game_over == false:
 		begin_next_turn()
 
-	emit_signal("character_end_turn", cur_char)
+	if cur_char == player_char:
+		emit_signal("character1_end_turn", cur_char)
+	else:
+		emit_signal("character2_end_turn", cur_char)
+
 
 
 func character_died(character):

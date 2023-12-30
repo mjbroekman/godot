@@ -4,8 +4,13 @@ var actions : Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_node("/root/BattleScene").character_begin_turn.connect(_on_character_begin_turn)
-	get_node("/root/BattleScene").character_end_turn.connect(_on_character_end_turn)
+	visible =  self.get_parent().is_player
+	if self == get_node("/root/BattleScene/Player"):
+		get_node("/root/BattleScene").character1_begin_turn.connect(_on_character_begin_turn)
+		get_node("/root/BattleScene").character1_end_turn.connect(_on_character_end_turn)
+	else:
+		get_node("/root/BattleScene").character2_begin_turn.connect(_on_character_begin_turn)
+		get_node("/root/BattleScene").character2_end_turn.connect(_on_character_end_turn)
 
 	self.actions.push_back("PlayerUI/CombatAction1")
 	self.actions.push_back("PlayerUI/CombatAction2")

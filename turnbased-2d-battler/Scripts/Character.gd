@@ -22,7 +22,6 @@ var rng = RandomNumberGenerator.new()
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-
 	var char_list = get_node("/root/BattleScene").characters
 	var char_size= char_list.size()
 
@@ -30,12 +29,11 @@ func _ready():
 	self.health_bar.value = cur_hp
 	self.health_txt.text = str( cur_hp, "/", max_hp )
 	
-	get_node("/root/BattleScene").character_begin_turn.connect(_on_character_begin_turn)
-	get_node("/root/BattleScene").character_end_turn.connect(_on_character_end_turn)
-
 	$Sprite.texture = load(char_list[rng.randi_range(0,(char_size - 1))])
 	self.char_name = (str($Sprite.texture.get_path()).split("/")[-1]).split(".")[0]
 	if str(self.get_path()) == "/root/BattleScene/Player":
+		get_node("/root/BattleScene").character1_begin_turn.connect(_on_character_begin_turn)
+
 		self.is_player = true
 		$Sprite.flip_h = false
 		self.opponent = get_node("/root/BattleScene/Player2")
@@ -43,6 +41,8 @@ func _ready():
 		_set_buttons()
 
 	if str(self.get_path()) == "/root/BattleScene/Player2":
+		get_node("/root/BattleScene").character2_begin_turn.connect(_on_character_begin_turn)
+
 		self.is_player = false
 		$Sprite.flip_h = true
 		self.opponent = get_node("/root/BattleScene/Player")
@@ -132,18 +132,17 @@ func _decide_combat_action():
 		cast_combat_action(combat_actions[1])
 	else:
 		cast_combat_action(combat_actions[rng.randi_range(0,(len(combat_actions)-1))])
-	return
+
 
 func display_combat_actions():
-	print("Displaying actions for " + self.char_name)
 	for i in len(ui_mgr.actions):
 		var button = get_node(ui_mgr.actions[i])
-		print(button.text)
+
 		if i < len(self.combat_actions):
 			button.visible = true
 		else:
 			button.visible = false
-	return
+
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -164,7 +163,7 @@ func _update_health_bar():
 
 	self.health_bar.value = cur_hp
 	self.health_txt.text = str( cur_hp, "/", max_hp )
-	return
+
 
 func take_damage(damage):
 	self.cur_hp -= damage
@@ -174,7 +173,7 @@ func take_damage(damage):
 	if self.cur_hp <= 0:
 		get_node("/root/BattleScene").character_died(self)
 		queue_free()
-	return
+
 
 func heal(damage):
 	self.cur_hp += damage
@@ -183,17 +182,15 @@ func heal(damage):
 		self.cur_hp = self.max_hp
 
 	_update_health_bar()
-	return
+
 
 func _on_character_begin_turn(character):
-	print("Character is in begin_turn: " + str(character.get_path()))
 	if self == character and is_player == false:
+		ui_mgr.visible = false
 		_decide_combat_action()
-	return
+	elif self == character and is_player:
+		ui_mgr.visible = true
 
-func _on_character_end_turn(character):
-	print("Character is in end_turn: " + str(character.get_path()))
-	return
 
 func cast_combat_action(action):
 	if action.damage_amt > 0:
@@ -205,4 +202,4 @@ func cast_combat_action(action):
 		self.heal(action.heal_amt)
 	
 	get_node("/root/BattleScene").end_cur_turn()
-	return
+
