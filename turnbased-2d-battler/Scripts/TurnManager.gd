@@ -35,18 +35,16 @@ func begin_next_turn():
 		emit_signal("character1_begin_turn", cur_char)
 
 
-
 func end_cur_turn():
-	await get_tree().create_timer(next_turn_delay).timeout
-	
-	if game_over == false:
-		begin_next_turn()
-
 	if cur_char == player_char:
 		emit_signal("character1_end_turn", cur_char)
 	else:
 		emit_signal("character2_end_turn", cur_char)
 
+	await get_tree().create_timer(next_turn_delay).timeout
+	
+	if game_over == false:
+		begin_next_turn()
 
 
 func character_died(character):
