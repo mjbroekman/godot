@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cacvn7xoc6vvs"]
+
+[ext_resource type="TileSet" uid="uid://uoqn0c5juhdu" path="res://Resources/TileSet.tres" id="1_uokuj"]
+
+[node name="Main" type="Node2D"]
+position = Vector2(0, 3)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_uokuj")
+rendering_quadrant_size = 18
+format = 2
