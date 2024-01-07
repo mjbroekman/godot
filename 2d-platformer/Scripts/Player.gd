@@ -19,18 +19,22 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 #
 	velocity.x = 0
-	if Input.is_key_pressed(KEY_LEFT):
+	if Input.is_action_pressed("ui_left"):
 		velocity.x -= move_speed
 	
-	if Input.is_key_pressed(KEY_RIGHT):
+	if Input.is_action_pressed("ui_right"):
 		velocity.x += move_speed
 
 	# Handle jumping
-	if Input.is_key_pressed(KEY_SPACE) and ( is_on_floor() or can_double_jump):
-		if not is_on_floor():
+	if Input.is_action_just_pressed("ui_jump"):
+		if is_on_floor():
+			print("Space bar hit while on the ground. Executing regular jump.")
+			velocity.y -= jump_force
+		elif can_double_jump:
+			print("Space bar hit in mid air. Double jump commencing.")
 			can_double_jump = false
-		velocity.y -= jump_force
-#
+			velocity.y -= jump_force
+
 	if is_on_floor() and has_double_jump:
 		can_double_jump = true
 
