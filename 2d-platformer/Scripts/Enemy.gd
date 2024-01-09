@@ -30,7 +30,7 @@ func _ready():
 
 	print(my_anim[0])
 	if my_anim[0] == "24": # We are a flier, so we need to move up/down
-		move_dir = Vector2(0, rng.randf_range(15.0,20.0))
+		move_dir = Vector2(0, rng.randf_range(-20.0,-30.0))
 	else: # We are a crawler
 		move_dir = Vector2(rng.randf_range(20.0,25.0), 0)
 
