@@ -3,16 +3,15 @@ extends CharacterBody2D
 var move_speed : float = 100.0
 var jump_force : float = 200.0
 var gravity : float = 500.0
+
 var can_double_jump : bool = false
 var has_double_jump : bool = false
-#
-#const SPEED = 300.0
-#const JUMP_VELOCITY = -400.0
-#
-## Get the gravity from the project settings to be synced with RigidBody nodes.
-#var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-#
-#
+
+var score : int = 0
+var lives : int = 5
+
+@onready var score_text : Label = get_node("CanvasLayer/ScoreText")
+
 func _physics_process(delta):
 	## Add the gravity.
 	if not is_on_floor():
@@ -44,4 +43,10 @@ func _physics_process(delta):
 	move_and_slide()
 
 func game_over():
+	lives -= 1
 	get_tree().reload_current_scene()
+
+func add_score(amount):
+	score += amount
+	score_text.text = str(" Score: ",score)
+
