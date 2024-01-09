@@ -1,24 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://cacvn7xoc6vvs"]
+[gd_scene load_steps=10 format=3 uid="uid://cacvn7xoc6vvs"]
 
 [ext_resource type="TileSet" uid="uid://uoqn0c5juhdu" path="res://Resources/TileSet.tres" id="1_uokuj"]
-[ext_resource type="Texture2D" uid="uid://cdqw5kifbyiuj" path="res://Sprites/Characters/character_0006.png" id="2_1yvel"]
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="2_4ibh0"]
+[ext_resource type="PackedScene" uid="uid://c8hvn4sjuf1nd" path="res://Player.tscn" id="2_5do3a"]
 [ext_resource type="PackedScene" uid="uid://dfp7q44rlfljd" path="res://Enemy.tscn" id="4_lcwpb"]
 [ext_resource type="PackedScene" uid="uid://ccyeq4h4kvn8w" path="res://Spikes.tscn" id="5_pxx5i"]
 [ext_resource type="Script" path="res://Scripts/Crate.gd" id="6_1ln8h"]
 [ext_resource type="PackedScene" uid="uid://b3doreurvrjd4" path="res://Coin.tscn" id="7_mjepi"]
 [ext_resource type="PackedScene" uid="uid://dksu6ifx20nd1" path="res://Gem.tscn" id="8_obvxg"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fwjwq"]
-radius = 7.0
-height = 20.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_bymtc"]
-font_size = 24
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 10
-shadow_color = Color(0, 0, 0, 1)
+[ext_resource type="PackedScene" uid="uid://bkk6oxrhsnewm" path="res://Flag.tscn" id="9_bghcl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amrrb"]
 size = Vector2(18, 18)
@@ -36,31 +25,7 @@ layer_0/tile_data = PackedInt32Array(65531, 65536, 1, 65532, 131072, 1, 65533, 1
 layer_1/name = "Crate1"
 layer_1/tile_data = PackedInt32Array(131082, 393216, 1)
 
-[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
-position = Vector2(-44, -33)
-up_direction = Vector2(5.33756e-14, -1)
-script = ExtResource("2_4ibh0")
-
-[node name="PlayerSprite1" type="Sprite2D" parent="Player"]
-position = Vector2(2.08165e-12, 2.08165e-12)
-texture = ExtResource("2_1yvel")
-
-[node name="PlayerCollider" type="CollisionShape2D" parent="Player"]
-position = Vector2(0, 3)
-shape = SubResource("CapsuleShape2D_fwjwq")
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(3, 3)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
-
-[node name="ScoreText" type="Label" parent="Player/CanvasLayer"]
-offset_left = 20.0
-offset_top = 14.0
-offset_right = 162.0
-offset_bottom = 37.0
-text = " Score: 0"
-label_settings = SubResource("LabelSettings_bymtc")
+[node name="Player" parent="." instance=ExtResource("2_5do3a")]
 
 [node name="Enemy" parent="." instance=ExtResource("4_lcwpb")]
 
@@ -168,5 +133,11 @@ position = Vector2(213, -155)
 position = Vector2(590, -105)
 
 [node name="Gem" parent="." instance=ExtResource("8_obvxg")]
+position = Vector2(660, -121)
+
+[node name="EndFlag" parent="." instance=ExtResource("9_bghcl")]
+
+[node name="JumpFlag" parent="." instance=ExtResource("9_bghcl")]
+position = Vector2(571, -157)
 
 [connection signal="body_entered" from="Crate1" to="Crate1" method="_on_body_entered"]

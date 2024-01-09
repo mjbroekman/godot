@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkk6oxrhsnewm"]
+
+[ext_resource type="Script" path="res://Scripts/Flag.gd" id="1_wnvmd"]
+[ext_resource type="Texture2D" uid="uid://cop47aoytyxtb" path="res://Sprites/Objects/tile_0112.png" id="2_3ydbw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fa7qw"]
+size = Vector2(15, 17)
+
+[node name="EndFlag" type="Area2D"]
+position = Vector2(355, -13)
+script = ExtResource("1_wnvmd")
+
+[node name="FlagSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_3ydbw")
+
+[node name="FlagCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_fa7qw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
