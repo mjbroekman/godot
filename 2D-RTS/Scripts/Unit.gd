@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Unit
 
 # base characteristics
 var health : int = 100
