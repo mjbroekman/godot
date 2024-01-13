@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwy3gyif1gk3q"]
+[gd_scene load_steps=4 format=3 uid="uid://cwy3gyif1gk3q"]
 
 [ext_resource type="PackedScene" uid="uid://cwwsnuiu1744e" path="res://Unit.tscn" id="1_jj4vn"]
 [ext_resource type="Texture2D" uid="uid://cq7v28viqb58s" path="res://Sprites/tile_0060.png" id="2_swb38"]
+[ext_resource type="Script" path="res://Scripts/PlayerUnit.gd" id="2_vfxhw"]
 
-[node name="Unit" instance=ExtResource("1_jj4vn")]
+[node name="PlayerUnit" instance=ExtResource("1_jj4vn")]
+script = ExtResource("2_vfxhw")
 
 [node name="SelectionVisual" type="Sprite2D" parent="." index="0"]
 visible = false
