@@ -7,7 +7,7 @@
 size = Vector2(14, 13)
 
 [node name="Unit" type="CharacterBody2D"]
-position = Vector2(-50, 13)
+position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_fq00x")
 
 [node name="Sprite" type="Sprite2D" parent="."]
