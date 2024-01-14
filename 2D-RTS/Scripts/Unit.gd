@@ -3,10 +3,10 @@ class_name Unit
 
 # base characteristics
 var health : int = 100
-var damage : int = 20
+var damage : int = 10
 var move_speed : float = 50.0
 var atk_range : float = 20.0
-var atk_speed : float = 5.0
+var atk_speed : float = 1.0
 
 # tracking vars
 var last_atk_time : float
@@ -23,6 +23,8 @@ var is_player : bool
 func _ready():
 	agent = $UnitNavigator
 	sprite = $Sprite
+	print(agent)
+	print(sprite)
 
 
 func _process(delta):
@@ -30,12 +32,13 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	if agent.is_navigation_finished():
-		return
+	if agent != null:
+		if agent.is_navigation_finished():
+			return
 	
-	var direction = global_position.direction_to(agent.get_next_path_position())
-	velocity = direction * move_speed * delta
-	move_and_slide()
+		var direction = global_position.direction_to(agent.get_next_path_position())
+		velocity = direction * move_speed
+		move_and_slide()
 
 
 func _target_check():
@@ -50,9 +53,14 @@ func _target_check():
 
 func take_damage(dmg_to_take):
 	health -= dmg_to_take
-	
+	print(str(self," took ", dmg_to_take, ". Remaining health: ", health))
+	sprite.modulate = Color.RED
 	if health <= 0:
 		queue_free()
+
+	await get_tree().create_timer(0.1).timeout
+	sprite.modulate = Color.WHITE
+
 
 
 func _try_atk_target():
@@ -71,6 +79,7 @@ func set_target(new_target):
 
 
 func move_to_location(location):
-	target = null
+	# target = null
+	print(agent)
 	agent.target_position = location
 
