@@ -174,3 +174,18 @@ position = Vector2(-195, 74)
 
 [node name="EnemyUnit" parent="." instance=ExtResource("3_6so4n")]
 position = Vector2(120, -210)
+
+[node name="PlayerUnit2" parent="." instance=ExtResource("2_o3d0b")]
+position = Vector2(-198, 128)
+
+[node name="PlayerUnit3" parent="." instance=ExtResource("2_o3d0b")]
+position = Vector2(-217, 105)
+
+[node name="EnemyUnit2" parent="." instance=ExtResource("3_6so4n")]
+position = Vector2(162, -209)
+
+[node name="EnemyUnit3" parent="." instance=ExtResource("3_6so4n")]
+position = Vector2(213, -155)
+
+[node name="EnemyUnit4" parent="." instance=ExtResource("3_6so4n")]
+position = Vector2(210, -190)

@@ -6,6 +6,7 @@ func _ready():
 	super._ready()
 
 	is_player = true
+	gm.player_units.append(self)
 
 
 func toggle_selection_visual(toggle):
