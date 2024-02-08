@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://gqi3tjdp32ud"]
+
+[ext_resource type="PackedScene" uid="uid://q3h8rigw5kiy" path="res://Platforms/PlatformLarge.tscn" id="1_p1www"]
+
+[node name="Main" type="Node3D"]
+
+[node name="PlatformLarge" parent="." instance=ExtResource("1_p1www")]
