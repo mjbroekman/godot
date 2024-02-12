@@ -12,6 +12,24 @@ height = 1.2
 
 [node name="PlatformLarge" parent="." instance=ExtResource("1_p1www")]
 
+[node name="PlatformLarge2" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -0.107366, -1.12052, 1.77151)
+
+[node name="PlatformLarge3" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, -1.28102e-10, -0.999969, 0.420896, 0.907103, 0.00331314, 0.907075, -0.420909, 0.00714015, -0.0855989, 0.460195, 4.53679)
+
+[node name="PlatformLarge4" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.23471, 0.460195, 4.56158)
+
+[node name="PlatformLarge5" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.20649, -1.53324, 8.14686)
+
+[node name="PlatformLarge7" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, 3.80217, -1.53324, 10.8971)
+
+[node name="PlatformLarge6" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(-0.622474, 0, -0.782641, 0, 1, 0, 0.782641, 0, -0.622474, -0.398848, -0.729749, 10.6709)
+
 [node name="DirectionalLight1" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.5, 0.75, -0.433013, 1.74393e-16, 0.5, 0.866025, 0.866025, -0.433013, 0.25, -5, 5, 5)
 shadow_enabled = true
@@ -30,6 +48,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.594335, 0)
 shape = SubResource("CapsuleShape3D_5ix5q")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(-4.37114e-08, 0.374607, -0.927184, 3.2339e-16, 0.927184, 0.374607, 1, 1.63746e-08, -4.05285e-08, -2, 2, 2.08165e-12)
+transform = Transform3D(-4.37114e-08, 0.422618, -0.906308, 3.16108e-16, 0.906308, 0.422618, 1, 1.84732e-08, -3.9616e-08, -5, 2, 2.08165e-12)
 current = true
 fov = 60.0
