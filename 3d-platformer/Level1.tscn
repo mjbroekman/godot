@@ -19,16 +19,16 @@ transform = Transform3D(0.00787138, -2.06094e-19, -0.999969, 0.290843, 0.956768,
 transform = Transform3D(0.00787138, -1.28102e-10, -0.999969, 0.420896, 0.907103, 0.00331314, 0.907075, -0.420909, 0.00714015, -0.0855989, 0.823749, 5.08251)
 
 [node name="PlatformLarge4" parent="." instance=ExtResource("1_p1www")]
-transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.23471, 0.460195, 4.56158)
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.60715, 0.460195, 4.56158)
 
 [node name="PlatformLarge5" parent="." instance=ExtResource("1_p1www")]
-transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.20649, -1.53324, 8.14686)
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.50375, -1.53324, 8.14686)
 
 [node name="PlatformLarge7" parent="." instance=ExtResource("1_p1www")]
 transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, 3.80217, -1.53324, 10.8971)
 
 [node name="PlatformLarge6" parent="." instance=ExtResource("1_p1www")]
-transform = Transform3D(-0.622474, 0, -0.782641, 0, 1, 0, 0.782641, 0, -0.622474, -0.398848, -0.729749, 10.6709)
+transform = Transform3D(-0.622474, 0, -0.782641, 0, 1, 0, 0.782641, 0, -0.622474, -0.738797, -0.729749, 10.4941)
 
 [node name="DirectionalLight1" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.5, 0.75, -0.433013, 1.74393e-16, 0.5, 0.866025, 0.866025, -0.433013, 0.25, -5, 5, 5)
