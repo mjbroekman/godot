@@ -13,10 +13,10 @@ height = 1.2
 [node name="PlatformLarge" parent="." instance=ExtResource("1_p1www")]
 
 [node name="PlatformLarge2" parent="." instance=ExtResource("1_p1www")]
-transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -0.107366, -1.12052, 1.77151)
+transform = Transform3D(0.00787138, -2.06094e-19, -0.999969, 0.290843, 0.956768, 0.00228941, 0.956738, -0.290852, 0.00753108, -0.00263087, -0.642822, 2.09847)
 
 [node name="PlatformLarge3" parent="." instance=ExtResource("1_p1www")]
-transform = Transform3D(0.00787138, -1.28102e-10, -0.999969, 0.420896, 0.907103, 0.00331314, 0.907075, -0.420909, 0.00714015, -0.0855989, 0.460195, 4.53679)
+transform = Transform3D(0.00787138, -1.28102e-10, -0.999969, 0.420896, 0.907103, 0.00331314, 0.907075, -0.420909, 0.00714015, -0.0855989, 0.823749, 5.08251)
 
 [node name="PlatformLarge4" parent="." instance=ExtResource("1_p1www")]
 transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.23471, 0.460195, 4.56158)
