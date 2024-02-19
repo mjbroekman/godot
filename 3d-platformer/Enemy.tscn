@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://bt3o2uflisdhi"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_8alsf"]
+[ext_resource type="ArrayMesh" uid="uid://mvd3ie23bw83" path="res://Models/spikeBlock.obj" id="2_fdbg5"]
+
+[sub_resource type="Curve" id="Curve_uelmf"]
+_data = [Vector2(0.145695, 0.000565171), 0.0, 0.0, 0, 0, Vector2(0.307947, 0.739118), 0.0, 0.0, 0, 0, Vector2(0.990066, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_qnl1x"]
+curve = SubResource("Curve_uelmf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q8k5j"]
+albedo_color = Color(1, 0, 0.0196078, 1)
+albedo_texture = SubResource("CurveTexture_qnl1x")
+metallic = 0.75
+uv1_scale = Vector3(3, 3, 3)
+uv2_scale = Vector3(2, 2, 2)
+
+[sub_resource type="Gradient" id="Gradient_p7uva"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j1nek"]
+gradient = SubResource("Gradient_p7uva")
+fill_from = Vector2(0.228495, 0.094086)
+fill_to = Vector2(0.86828, 0.86828)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26tus"]
+albedo_color = Color(1, 0.54902, 0.145098, 0.996078)
+albedo_texture = SubResource("GradientTexture2D_j1nek")
+metallic = 1.0
+metallic_specular = 1.0
+emission_energy_multiplier = 1.81
+uv1_scale = Vector3(2, 2, 2)
+uv1_offset = Vector3(1, 2, 3)
+uv2_scale = Vector3(3, 3, 3)
+uv2_offset = Vector3(5, 3, 7)
+uv2_triplanar = true
+uv2_triplanar_sharpness = 2.2974
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ltuck"]
+radius = 0.401174
+
+[node name="Enemy" type="Area3D" groups=["Enemy"]]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -0.00263087, 0.255735, 3.12128)
+script = ExtResource("1_8alsf")
+
+[node name="SpikeBlock" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+mesh = ExtResource("2_fdbg5")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_q8k5j")
+surface_material_override/1 = SubResource("StandardMaterial3D_26tus")
+
+[node name="EnemyCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 4.95416e-08, 2.69188e-10, 3.20578e-08, 1, 4.36557e-10, 1.65269e-09, -1.21971e-10, 1, 0, 0.494885, 0)
+shape = SubResource("SphereShape3D_ltuck")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
