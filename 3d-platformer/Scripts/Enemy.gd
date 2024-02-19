@@ -24,3 +24,8 @@ func _process(delta):
 	
 	if global_position == start_pos:
 		target_pos = start_pos + move_direction
+
+
+func _on_body_entered(body):
+	if body.is_in_group("Player"):
+		body.game_over()

@@ -1,51 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://gqi3tjdp32ud"]
+[gd_scene load_steps=4 format=3 uid="uid://gqi3tjdp32ud"]
 
 [ext_resource type="PackedScene" uid="uid://q3h8rigw5kiy" path="res://Platforms/PlatformLarge.tscn" id="1_p1www"]
-[ext_resource type="ArrayMesh" uid="uid://gjuyfsvj5gs0" path="res://Models/characterVampire.obj" id="2_8ymkn"]
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="2_dth70"]
-[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="4_7pfnu"]
-[ext_resource type="ArrayMesh" uid="uid://mvd3ie23bw83" path="res://Models/spikeBlock.obj" id="4_lsmyu"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ix5q"]
-radius = 0.3
-height = 1.2
-
-[sub_resource type="Curve" id="Curve_uelmf"]
-_data = [Vector2(0.145695, 0.000565171), 0.0, 0.0, 0, 0, Vector2(0.307947, 0.739118), 0.0, 0.0, 0, 0, Vector2(0.990066, 1), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_qnl1x"]
-curve = SubResource("Curve_uelmf")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q8k5j"]
-albedo_color = Color(1, 0, 0.0196078, 1)
-albedo_texture = SubResource("CurveTexture_qnl1x")
-metallic = 0.75
-uv1_scale = Vector3(3, 3, 3)
-uv2_scale = Vector3(2, 2, 2)
-
-[sub_resource type="Gradient" id="Gradient_p7uva"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_j1nek"]
-gradient = SubResource("Gradient_p7uva")
-fill_from = Vector2(0.228495, 0.094086)
-fill_to = Vector2(0.86828, 0.86828)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26tus"]
-albedo_color = Color(1, 0.54902, 0.145098, 0.996078)
-albedo_texture = SubResource("GradientTexture2D_j1nek")
-metallic = 1.0
-metallic_specular = 1.0
-emission_energy_multiplier = 1.81
-uv1_scale = Vector3(2, 2, 2)
-uv1_offset = Vector3(1, 2, 3)
-uv2_scale = Vector3(3, 3, 3)
-uv2_offset = Vector3(5, 3, 7)
-uv2_triplanar = true
-uv2_triplanar_sharpness = 2.2974
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ltuck"]
-radius = 0.401174
+[ext_resource type="PackedScene" uid="uid://2io3tuk33nnh" path="res://Player.tscn" id="2_ayhmj"]
+[ext_resource type="PackedScene" uid="uid://bt3o2uflisdhi" path="res://Enemy.tscn" id="3_nutme"]
 
 [node name="Main" type="Node3D"]
 
@@ -73,35 +30,6 @@ transform = Transform3D(-0.622474, 0, -0.782641, 0, 1, 0, 0.782641, 0, -0.622474
 transform = Transform3D(0.5, 0.75, -0.433013, 1.74393e-16, 0.5, 0.866025, 0.866025, -0.433013, 0.25, -5, 5, 5)
 shadow_enabled = true
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0, 0, 0)
-script = ExtResource("2_dth70")
+[node name="Player" parent="." instance=ExtResource("2_ayhmj")]
 
-[node name="Model" type="MeshInstance3D" parent="Player"]
-transform = Transform3D(1.5, -5.2318e-16, 5.2318e-16, 5.2318e-16, 1.5, -5.2318e-16, -5.2318e-16, 5.2318e-16, 1.5, 2.08165e-12, 2.08165e-12, 2.08165e-12)
-mesh = ExtResource("2_8ymkn")
-skeleton = NodePath("../..")
-
-[node name="Collider" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.594335, 0)
-shape = SubResource("CapsuleShape3D_5ix5q")
-
-[node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(-4.37114e-08, 0.422618, -0.906308, 3.16108e-16, 0.906308, 0.422618, 1, 1.84732e-08, -3.9616e-08, -5, 2, 2.08165e-12)
-current = true
-fov = 60.0
-
-[node name="Enemy" type="Area3D" parent="."]
-transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -0.00263087, 0.255735, 3.12128)
-script = ExtResource("4_7pfnu")
-
-[node name="SpikeBlock" type="MeshInstance3D" parent="Enemy"]
-transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
-mesh = ExtResource("4_lsmyu")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_q8k5j")
-surface_material_override/1 = SubResource("StandardMaterial3D_26tus")
-
-[node name="EnemyCollider" type="CollisionShape3D" parent="Enemy"]
-transform = Transform3D(1, 4.95416e-08, 2.69188e-10, 3.20578e-08, 1, 4.36557e-10, 1.65269e-09, -1.21971e-10, 1, 0, 0.494885, 0)
-shape = SubResource("SphereShape3D_ltuck")
+[node name="Enemy" parent="." instance=ExtResource("3_nutme")]
