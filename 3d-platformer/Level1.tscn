@@ -32,4 +32,19 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_ayhmj")]
 
-[node name="Enemy" parent="." instance=ExtResource("3_nutme")]
+[node name="Enemy1" parent="." instance=ExtResource("3_nutme")]
+
+[node name="Enemy2" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -1.96176, 0, 4.13661)
+
+[node name="Enemy3" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -1.96176, -0.657063, 5.52351)
+
+[node name="Enemy4" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -3.47988, -0.657063, 6.33402)
+
+[node name="Enemy5" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 1.77801, -1.0088, 10.3486)
+
+[node name="Enemy6" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 1.79898, -0.657063, 11.545)
