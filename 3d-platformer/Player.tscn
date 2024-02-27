@@ -21,6 +21,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.594335, 0)
 shape = SubResource("CapsuleShape3D_5ix5q")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0.422618, -0.906308, 3.16108e-16, 0.906308, 0.422618, 1, 1.84732e-08, -3.9616e-08, -5, 2, 2.08165e-12)
+transform = Transform3D(-4.35702e-08, 0.348457, -0.937325, -3.51093e-09, 0.937325, 0.348457, 1, 1.84732e-08, -3.9616e-08, -6.59438, 2, 2.08109e-12)
 current = true
 fov = 60.0

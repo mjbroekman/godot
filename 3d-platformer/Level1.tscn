@@ -1,10 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://gqi3tjdp32ud"]
+[gd_scene load_steps=7 format=3 uid="uid://gqi3tjdp32ud"]
 
 [ext_resource type="PackedScene" uid="uid://q3h8rigw5kiy" path="res://Platforms/PlatformLarge.tscn" id="1_p1www"]
 [ext_resource type="PackedScene" uid="uid://2io3tuk33nnh" path="res://Player.tscn" id="2_ayhmj"]
 [ext_resource type="PackedScene" uid="uid://bt3o2uflisdhi" path="res://Enemy.tscn" id="3_nutme"]
 [ext_resource type="PackedScene" uid="uid://codppvy563p7j" path="res://Spikes.tscn" id="4_wfote"]
 [ext_resource type="PackedScene" uid="uid://d3kppfdcjo4r5" path="res://Coin_Gold.tscn" id="5_eb65c"]
+
+[sub_resource type="Environment" id="Environment_6m4l6"]
+background_mode = 1
+background_color = Color(0.054902, 0.27451, 0.658824, 1)
+fog_enabled = true
+fog_light_energy = 0.83
+fog_sun_scatter = 0.13
+fog_density = 0.0363
 
 [node name="Main" type="Node3D"]
 
@@ -83,3 +91,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.68902, 2.02776, 4.36376)
 
 [node name="CoinGold3" parent="." instance=ExtResource("5_eb65c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.876964, 0.468119, 9.88677)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6m4l6")
