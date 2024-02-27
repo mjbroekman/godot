@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://gqi3tjdp32ud"]
+[gd_scene load_steps=5 format=3 uid="uid://gqi3tjdp32ud"]
 
 [ext_resource type="PackedScene" uid="uid://q3h8rigw5kiy" path="res://Platforms/PlatformLarge.tscn" id="1_p1www"]
 [ext_resource type="PackedScene" uid="uid://2io3tuk33nnh" path="res://Player.tscn" id="2_ayhmj"]
 [ext_resource type="PackedScene" uid="uid://bt3o2uflisdhi" path="res://Enemy.tscn" id="3_nutme"]
+[ext_resource type="PackedScene" uid="uid://codppvy563p7j" path="res://Spikes.tscn" id="4_wfote"]
 
 [node name="Main" type="Node3D"]
 
@@ -48,3 +49,27 @@ transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-
 
 [node name="Enemy6" parent="." instance=ExtResource("3_nutme")]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 1.79898, -0.657063, 11.545)
+
+[node name="Spikes" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.24918, 1.47229, 4.1842)
+
+[node name="Spikes7" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 0.909185, 0.416392, 0, -0.416392, 0.909185, -0.084811, 1.95004, 5.14243)
+
+[node name="Spikes8" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 0.959388, 0.28209, 0, -0.28209, 0.959388, -0.421862, 0.210512, 1.47358)
+
+[node name="Spikes3" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.14263, -0.531971, 8.6277)
+
+[node name="Spikes4" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.14263, -0.528661, 7.72457)
+
+[node name="Spikes5" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.16412, -0.528993, 7.72457)
+
+[node name="Spikes6" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(0.811125, 0, -0.584873, 0, 1, 0, 0.584873, 0, 0.811125, -1.29932, 0.282229, 10.869)
+
+[node name="Spikes2" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06548, 1.4661, 5.23747)
