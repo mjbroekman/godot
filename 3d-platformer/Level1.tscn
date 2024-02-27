@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://gqi3tjdp32ud"]
+[gd_scene load_steps=6 format=3 uid="uid://gqi3tjdp32ud"]
 
 [ext_resource type="PackedScene" uid="uid://q3h8rigw5kiy" path="res://Platforms/PlatformLarge.tscn" id="1_p1www"]
 [ext_resource type="PackedScene" uid="uid://2io3tuk33nnh" path="res://Player.tscn" id="2_ayhmj"]
 [ext_resource type="PackedScene" uid="uid://bt3o2uflisdhi" path="res://Enemy.tscn" id="3_nutme"]
 [ext_resource type="PackedScene" uid="uid://codppvy563p7j" path="res://Spikes.tscn" id="4_wfote"]
+[ext_resource type="PackedScene" uid="uid://d3kppfdcjo4r5" path="res://Coin_Gold.tscn" id="5_eb65c"]
 
 [node name="Main" type="Node3D"]
 
@@ -34,6 +35,7 @@ shadow_enabled = true
 [node name="Player" parent="." instance=ExtResource("2_ayhmj")]
 
 [node name="Enemy1" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0.530479, 0.255735, 3.33882)
 
 [node name="Enemy2" parent="." instance=ExtResource("3_nutme")]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -1.96176, 0, 4.13661)
@@ -73,3 +75,11 @@ transform = Transform3D(0.811125, 0, -0.584873, 0, 1, 0, 0.584873, 0, 0.811125, 
 
 [node name="Spikes2" parent="." instance=ExtResource("4_wfote")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06548, 1.4661, 5.23747)
+
+[node name="CoinGold" parent="." instance=ExtResource("5_eb65c")]
+
+[node name="CoinGold2" parent="." instance=ExtResource("5_eb65c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.68902, 2.02776, 4.36376)
+
+[node name="CoinGold3" parent="." instance=ExtResource("5_eb65c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.876964, 0.468119, 9.88677)

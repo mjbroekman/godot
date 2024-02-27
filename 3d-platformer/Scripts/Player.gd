@@ -6,11 +6,12 @@ var gravity : float = 20.0
 
 var facing_angle : float
 
+var score : int
+
 @onready var model : MeshInstance3D = get_node("Model")
 
 func _physics_process(delta):
 	if not is_on_floor():
-		print(velocity.y)
 		velocity.y -= gravity * delta
 
 	if is_on_floor() and Input.is_action_pressed("jump"):
@@ -38,3 +39,7 @@ func _physics_process(delta):
 
 func game_over():
 	get_tree().reload_current_scene()
+
+func add_score(amount):
+	score += amount
+	print(score)
