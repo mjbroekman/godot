@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://gqi3tjdp32ud"]
+[gd_scene load_steps=10 format=3 uid="uid://gqi3tjdp32ud"]
 
 [ext_resource type="PackedScene" uid="uid://q3h8rigw5kiy" path="res://Platforms/PlatformLarge.tscn" id="1_p1www"]
 [ext_resource type="PackedScene" uid="uid://2io3tuk33nnh" path="res://Player.tscn" id="2_ayhmj"]
 [ext_resource type="PackedScene" uid="uid://bt3o2uflisdhi" path="res://Enemy.tscn" id="3_nutme"]
 [ext_resource type="PackedScene" uid="uid://codppvy563p7j" path="res://Spikes.tscn" id="4_wfote"]
 [ext_resource type="PackedScene" uid="uid://d3kppfdcjo4r5" path="res://Coin_Gold.tscn" id="5_eb65c"]
+[ext_resource type="Script" path="res://Scripts/EndFlag.gd" id="6_v5lbp"]
+[ext_resource type="ArrayMesh" uid="uid://cx3dwltkgs56g" path="res://Models/flag.obj" id="7_qw13h"]
 
 [sub_resource type="Environment" id="Environment_6m4l6"]
 background_mode = 1
@@ -13,6 +15,9 @@ fog_enabled = true
 fog_light_energy = 0.83
 fog_sun_scatter = 0.13
 fog_density = 0.0363
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_15as5"]
+size = Vector3(0.521484, 1.11523, 0.3526)
 
 [node name="Main" type="Node3D"]
 
@@ -94,3 +99,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.876964, 0.468119, 9.88677)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_6m4l6")
+
+[node name="EndFlag" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.91108, -0.241054, 10.9673)
+script = ExtResource("6_v5lbp")
+
+[node name="FlagModel" type="MeshInstance3D" parent="EndFlag"]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, -0.314817, 0)
+mesh = ExtResource("7_qw13h")
+skeleton = NodePath("../..")
+
+[node name="FlagCollider" type="CollisionShape3D" parent="EndFlag"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.239258, 0.277344, -0.019928)
+shape = SubResource("BoxShape3D_15as5")
+
+[connection signal="body_entered" from="EndFlag" to="EndFlag" method="_on_body_entered"]
