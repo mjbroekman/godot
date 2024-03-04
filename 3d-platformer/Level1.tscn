@@ -1,12 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://gqi3tjdp32ud"]
+[gd_scene load_steps=8 format=3 uid="uid://gqi3tjdp32ud"]
 
 [ext_resource type="PackedScene" uid="uid://q3h8rigw5kiy" path="res://Platforms/PlatformLarge.tscn" id="1_p1www"]
 [ext_resource type="PackedScene" uid="uid://2io3tuk33nnh" path="res://Player.tscn" id="2_ayhmj"]
 [ext_resource type="PackedScene" uid="uid://bt3o2uflisdhi" path="res://Enemy.tscn" id="3_nutme"]
 [ext_resource type="PackedScene" uid="uid://codppvy563p7j" path="res://Spikes.tscn" id="4_wfote"]
 [ext_resource type="PackedScene" uid="uid://d3kppfdcjo4r5" path="res://Coin_Gold.tscn" id="5_eb65c"]
-[ext_resource type="Script" path="res://Scripts/EndFlag.gd" id="6_v5lbp"]
-[ext_resource type="ArrayMesh" uid="uid://cx3dwltkgs56g" path="res://Models/flag.obj" id="7_qw13h"]
+[ext_resource type="PackedScene" uid="uid://c1ws0vg6ea6oa" path="res://EndFlag.tscn" id="6_xwgih"]
 
 [sub_resource type="Environment" id="Environment_6m4l6"]
 background_mode = 1
@@ -15,9 +14,6 @@ fog_enabled = true
 fog_light_energy = 0.83
 fog_sun_scatter = 0.13
 fog_density = 0.0363
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_15as5"]
-size = Vector3(0.521484, 1.11523, 0.3526)
 
 [node name="Main" type="Node3D"]
 
@@ -65,26 +61,17 @@ transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-
 [node name="Enemy6" parent="." instance=ExtResource("3_nutme")]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 1.79898, -0.657063, 11.545)
 
-[node name="Spikes" parent="." instance=ExtResource("4_wfote")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.24918, 1.47229, 4.1842)
-
 [node name="Spikes7" parent="." instance=ExtResource("4_wfote")]
 transform = Transform3D(1, 0, 0, 0, 0.909185, 0.416392, 0, -0.416392, 0.909185, -0.084811, 1.95004, 5.14243)
 
 [node name="Spikes8" parent="." instance=ExtResource("4_wfote")]
 transform = Transform3D(1, 0, 0, 0, 0.959388, 0.28209, 0, -0.28209, 0.959388, -0.421862, 0.210512, 1.47358)
 
-[node name="Spikes3" parent="." instance=ExtResource("4_wfote")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.14263, -0.531971, 8.6277)
-
 [node name="Spikes4" parent="." instance=ExtResource("4_wfote")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.14263, -0.528661, 7.72457)
 
 [node name="Spikes5" parent="." instance=ExtResource("4_wfote")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.16412, -0.528993, 7.72457)
-
-[node name="Spikes6" parent="." instance=ExtResource("4_wfote")]
-transform = Transform3D(0.811125, 0, -0.584873, 0, 1, 0, 0.584873, 0, 0.811125, -1.29932, 0.282229, 10.869)
 
 [node name="Spikes2" parent="." instance=ExtResource("4_wfote")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06548, 1.4661, 5.23747)
@@ -100,17 +87,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.876964, 0.468119, 9.88677)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_6m4l6")
 
-[node name="EndFlag" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.91108, -0.241054, 10.9673)
-script = ExtResource("6_v5lbp")
-
-[node name="FlagModel" type="MeshInstance3D" parent="EndFlag"]
-transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, -0.314817, 0)
-mesh = ExtResource("7_qw13h")
-skeleton = NodePath("../..")
-
-[node name="FlagCollider" type="CollisionShape3D" parent="EndFlag"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.239258, 0.277344, -0.019928)
-shape = SubResource("BoxShape3D_15as5")
-
-[connection signal="body_entered" from="EndFlag" to="EndFlag" method="_on_body_entered"]
+[node name="EndFlag" parent="." instance=ExtResource("6_xwgih")]
