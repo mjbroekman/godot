@@ -1,12 +1,14 @@
 extends Area3D
 
-var scene_name : String = "Level"
+var scene_base : String = "Level"
 var next_scene : int = 1
 var next_scene_file : String
 
 func _ready():
+	var scene_name = get_node("/root/Main").scene_file_path
+	print(scene_name)
 	next_scene += 1
-	next_scene_file = str(scene_name,next_scene,".tscn")
+	next_scene_file = str(scene_base,next_scene,".tscn")
 	print(str("Next Level is: ",next_scene_file))
 
 func _on_body_entered(body):
