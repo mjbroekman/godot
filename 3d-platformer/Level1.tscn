@@ -1,0 +1,90 @@
+[gd_scene load_steps=8 format=3 uid="uid://gqi3tjdp32ud"]
+
+[ext_resource type="PackedScene" uid="uid://q3h8rigw5kiy" path="res://Platforms/PlatformLarge.tscn" id="1_p1www"]
+[ext_resource type="PackedScene" uid="uid://2io3tuk33nnh" path="res://Player.tscn" id="2_ayhmj"]
+[ext_resource type="PackedScene" uid="uid://bt3o2uflisdhi" path="res://Enemy.tscn" id="3_nutme"]
+[ext_resource type="PackedScene" uid="uid://codppvy563p7j" path="res://Spikes.tscn" id="4_wfote"]
+[ext_resource type="PackedScene" uid="uid://d3kppfdcjo4r5" path="res://Coin_Gold.tscn" id="5_eb65c"]
+[ext_resource type="PackedScene" uid="uid://c1ws0vg6ea6oa" path="res://EndFlag.tscn" id="6_xwgih"]
+
+[sub_resource type="Environment" id="Environment_6m4l6"]
+background_mode = 1
+background_color = Color(0.054902, 0.27451, 0.658824, 1)
+fog_enabled = true
+fog_light_energy = 0.83
+fog_sun_scatter = 0.13
+fog_density = 0.0363
+
+[node name="Main" type="Node3D"]
+
+[node name="PlatformLarge" parent="." instance=ExtResource("1_p1www")]
+
+[node name="PlatformLarge2" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, -2.06094e-19, -0.999969, 0.290843, 0.956768, 0.00228941, 0.956738, -0.290852, 0.00753108, -0.00263087, -0.642822, 2.09847)
+
+[node name="PlatformLarge3" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, -1.28102e-10, -0.999969, 0.420896, 0.907103, 0.00331314, 0.907075, -0.420909, 0.00714015, -0.0855989, 0.823749, 5.08251)
+
+[node name="PlatformLarge4" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.60715, 0.460195, 4.56158)
+
+[node name="PlatformLarge5" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, -3.50375, -1.53324, 8.14686)
+
+[node name="PlatformLarge7" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(0.00787138, 0, -0.999969, 0, 1, 0, 0.999969, 0, 0.00787138, 3.80217, -1.53324, 10.8971)
+
+[node name="PlatformLarge6" parent="." instance=ExtResource("1_p1www")]
+transform = Transform3D(-0.622474, 0, -0.782641, 0, 1, 0, 0.782641, 0, -0.622474, -0.738797, -0.729749, 10.4941)
+
+[node name="DirectionalLight1" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.5, 0.75, -0.433013, 1.74393e-16, 0.5, 0.866025, 0.866025, -0.433013, 0.25, -5, 5, 5)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_ayhmj")]
+
+[node name="Enemy1" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0.530479, 0.255735, 3.33882)
+
+[node name="Enemy2" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -1.96176, 0, 4.13661)
+
+[node name="Enemy3" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -1.96176, -0.657063, 5.52351)
+
+[node name="Enemy4" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -3.47988, -0.657063, 6.33402)
+
+[node name="Enemy5" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 1.77801, -1.0088, 10.3486)
+
+[node name="Enemy6" parent="." instance=ExtResource("3_nutme")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 1.79898, -0.657063, 11.545)
+
+[node name="Spikes7" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 0.909185, 0.416392, 0, -0.416392, 0.909185, -0.084811, 1.95004, 5.14243)
+
+[node name="Spikes8" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 0.959388, 0.28209, 0, -0.28209, 0.959388, -0.421862, 0.210512, 1.47358)
+
+[node name="Spikes4" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.14263, -0.528661, 7.72457)
+
+[node name="Spikes5" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.16412, -0.528993, 7.72457)
+
+[node name="Spikes2" parent="." instance=ExtResource("4_wfote")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06548, 1.4661, 5.23747)
+
+[node name="CoinGold" parent="." instance=ExtResource("5_eb65c")]
+
+[node name="CoinGold2" parent="." instance=ExtResource("5_eb65c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.68902, 2.02776, 4.36376)
+
+[node name="CoinGold3" parent="." instance=ExtResource("5_eb65c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.876964, 0.468119, 9.88677)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6m4l6")
+
+[node name="EndFlag" parent="." instance=ExtResource("6_xwgih")]
