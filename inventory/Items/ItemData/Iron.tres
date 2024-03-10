@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://b47mo5f0r7oef"]
+
+[ext_resource type="Script" path="res://Scripts/Item.gd" id="1_krmbr"]
+[ext_resource type="Texture2D" uid="uid://d2twxtxeqy64" path="res://Items/Icons/Iron.png" id="1_l78jx"]
+
+[resource]
+script = ExtResource("1_krmbr")
+display_name = "Iron"
+icon = ExtResource("1_l78jx")
+max_stack_size = 6

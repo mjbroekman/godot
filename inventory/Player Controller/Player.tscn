@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=7 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
+[ext_resource type="Script" path="res://Scripts/Inventory.gd" id="3_l3vk4"]
+[ext_resource type="PackedScene" uid="uid://bqqomrnw4c2tx" path="res://Player Controller/InventoryButton.tscn" id="4_tuswl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
 radius = 0.3
@@ -40,3 +42,95 @@ grow_vertical = 2
 label_settings = SubResource("LabelSettings_cbwra")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("3_l3vk4")
+
+[node name="InventoryPanel" type="Panel" parent="Inventory"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -214.0
+offset_right = 280.0
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryGrid" type="GridContainer" parent="Inventory/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -156.0
+offset_right = 260.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(2.08165e-12, 2.08165e-12)
+tooltip_text = "Wood"
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="InventoryButton1" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton2" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton3" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton4" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton5" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton6" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton7" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton8" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton9" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton10" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton11" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton12" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton13" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton14" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InventoryButton15" parent="Inventory/InventoryPanel/InventoryGrid" instance=ExtResource("4_tuswl")]
+layout_mode = 2
+
+[node name="InfoText" type="Label" parent="Inventory/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Contain Information About Selected Item"
+horizontal_alignment = 1
