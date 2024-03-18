@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=10 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
 [ext_resource type="Script" path="res://Scripts/Inventory.gd" id="3_l3vk4"]
+[ext_resource type="Resource" uid="uid://bvd6vb8g6ml4t" path="res://Items/ItemData/Goo.tres" id="4_6tx8d"]
 [ext_resource type="PackedScene" uid="uid://bqqomrnw4c2tx" path="res://Player Controller/InventoryButton.tscn" id="4_tuswl"]
+[ext_resource type="Resource" uid="uid://b47mo5f0r7oef" path="res://Items/ItemData/Iron.tres" id="5_gkap2"]
+[ext_resource type="Resource" uid="uid://dkumtthsmwppy" path="res://Items/ItemData/Wood.tres" id="6_xieks"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
 radius = 0.3
@@ -45,6 +48,7 @@ vertical_alignment = 1
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("3_l3vk4")
+starter_items = Array[Resource("res://Scripts/Item.gd")]([ExtResource("4_6tx8d"), ExtResource("5_gkap2"), ExtResource("6_xieks")])
 
 [node name="InventoryPanel" type="Panel" parent="Inventory"]
 anchors_preset = 8
