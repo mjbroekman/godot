@@ -8,14 +8,31 @@ extends Node
 var inventory : Inventory
 
 func set_item(new_item : Item):
-	pass
+	item = new_item
+	quantity = 1
+
+	if item == null:
+		icon.visible = false
+	else:
+		icon.visible = true
+		icon.texture = item.icon
+
+	update_qty_text()
 
 func add_item():
-	pass
+	quantity += 1
+	update_qty_text()
 
 func remove_item():
-	pass
+	quantity -= 1
+	
+	if quantity == 0:
+		set_item(null)
+	else:
+		update_qty_text()
 
 func update_qty_text():
-	pass
-
+	if quantity <= 1:
+		quantity_text.text = ""
+	else:
+		quantity_text.text = str(quantity)
