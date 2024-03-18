@@ -15,6 +15,7 @@ func _ready():
 		slot.inventory = self
 
 	for item in starter_items:
+		print(str("Adding ",item.display_name))
 		add_item(item)
 
 func _process(delta):
@@ -40,7 +41,7 @@ func add_item(new_item : Item):
 		return
 
 	if slot.item == null:
-		slot.item = new_item
+		slot.set_item(new_item)
 	elif slot.item == new_item:
 		slot.add_item() # Call the add_item() function in the InventorySlot script
 

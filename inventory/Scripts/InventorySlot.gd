@@ -9,13 +9,13 @@ var inventory : Inventory
 
 func set_item(new_item : Item):
 	item = new_item
-	quantity = 1
-
-	if item == null:
+	if new_item == null:
 		icon.visible = false
+		quantity = 0
 	else:
+		quantity = 1
 		icon.visible = true
-		icon.texture = item.icon
+		icon.texture = new_item.icon
 
 	update_qty_text()
 
