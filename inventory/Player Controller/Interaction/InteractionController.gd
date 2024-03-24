@@ -2,7 +2,7 @@ extends RayCast3D
 
 @onready var interact_prompt_label : Label = get_node("InteractionPrompt")
 
-func _process(delta):
+func _process(_delta):
 	var object = get_collider()
 	interact_prompt_label.text = ""
 	

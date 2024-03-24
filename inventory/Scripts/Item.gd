@@ -7,6 +7,6 @@ extends Resource
 @export var world_item_scene : PackedScene
 @export var is_consumable = false
 
-func on_use (player) -> bool:
+func on_use (_player) -> bool:
 	print("Used")
 	return is_consumable

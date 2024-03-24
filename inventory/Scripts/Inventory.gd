@@ -5,6 +5,7 @@ var inventory_slots : Array[InventorySlot]
 @onready var window : Panel = get_node('InventoryPanel')
 @onready var info_text : Label = get_node('InventoryPanel/InfoText')
 @export var starter_items : Array[Item]
+var time_in_world : float = 0.0
 
 func _ready():
 	toggle_window(false)
@@ -18,9 +19,13 @@ func _ready():
 		print(str("Adding ",item.display_name))
 		add_item(item)
 
+	GlobalSignals.on_give_player_item.connect(on_give_player_item)
+
 func _process(delta):
 	if Input.is_action_just_pressed("inventory"):
 		toggle_window(!window.visible)
+	
+	time_in_world += delta
 
 func toggle_window(open : bool):
 	window.visible = open
