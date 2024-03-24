@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bqqomrnw4c2tx"]
 
-[ext_resource type="Script" path="res://Scripts/InventorySlot.gd" id="1_1qo6e"]
+[ext_resource type="Script" path="res://Scripts/InventorySlot.gd" id="1_c1diu"]
 [ext_resource type="Texture2D" uid="uid://ccjtljhtdisln" path="res://Items/Icons/Wood.png" id="2_85jp5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p4r7g"]
@@ -12,7 +12,7 @@ shadow_color = Color(0, 0, 0, 1)
 [node name="InventoryButton1" type="Button"]
 custom_minimum_size = Vector2(96, 96)
 tooltip_text = "Wood	"
-script = ExtResource("1_1qo6e")
+script = ExtResource("1_c1diu")
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 1
@@ -41,3 +41,6 @@ text = "52"
 label_settings = SubResource("LabelSettings_p4r7g")
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

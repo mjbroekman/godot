@@ -36,3 +36,14 @@ func update_qty_text():
 		quantity_text.text = ""
 	else:
 		quantity_text.text = str(quantity)
+
+
+func _on_mouse_entered():
+	if item == null:
+		inventory.info_text.text = ""
+	else:
+		inventory.info_text.text = item.display_name
+
+
+func _on_mouse_exited():
+	inventory.info_text.text = ""
