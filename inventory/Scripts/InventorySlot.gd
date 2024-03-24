@@ -37,13 +37,23 @@ func update_qty_text():
 	else:
 		quantity_text.text = str(quantity)
 
-
 func _on_mouse_entered():
 	if item == null:
 		inventory.info_text.text = ""
 	else:
 		inventory.info_text.text = item.display_name
 
-
 func _on_mouse_exited():
 	inventory.info_text.text = ""
+
+func _on_pressed():
+	if item == null:
+		return
+	
+	var remove_on_use = item.on_use(inventory.get_parent())
+	
+	if remove_on_use:
+		remove_item()
+
+func drop_item():
+	pass

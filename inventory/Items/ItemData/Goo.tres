@@ -8,3 +8,4 @@ script = ExtResource("1_75323")
 display_name = "Goo"
 icon = ExtResource("1_dukwd")
 max_stack_size = 20
+is_consumable = true
