@@ -1,10 +1,13 @@
-[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dkumtthsmwppy"]
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://dkumtthsmwppy"]
 
 [ext_resource type="Script" path="res://Scripts/Item.gd" id="1_0ehgf"]
 [ext_resource type="Texture2D" uid="uid://ccjtljhtdisln" path="res://Items/Icons/Wood.png" id="1_h1554"]
+[ext_resource type="PackedScene" uid="uid://cmotlab8aandi" path="res://Items/WorldItems/WorldItem_Wood.tscn" id="3_fxg3r"]
 
 [resource]
 script = ExtResource("1_0ehgf")
 display_name = "Wood"
 icon = ExtResource("1_h1554")
 max_stack_size = 12
+world_item_scene = ExtResource("3_fxg3r")
+is_consumable = false

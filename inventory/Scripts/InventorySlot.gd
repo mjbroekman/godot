@@ -56,4 +56,18 @@ func _on_pressed():
 		remove_item()
 
 func drop_item():
-	pass
+	if item == null:
+		return
+	
+	var world_item = item.world_item_scene.instantiate()
+	add_child(world_item)
+
+	# Sets position to be 1.5 above foot level and in front of the player	
+	world_item.position = inventory.get_parent().position + Vector3(0, 1.5, 0) - inventory.get_parent().basis.z
+	remove_item()
+
+
+func _on_gui_input(event):
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			drop_item()
