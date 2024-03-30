@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://dut3gyo4e7qbo"]
+
+[ext_resource type="Material" uid="uid://disdcqmbkftbi" path="res://Models/Pedestal/PedestalMaterial.tres" id="1_44e5k"]
+[ext_resource type="ArrayMesh" uid="uid://c1ldxdvsp4ywh" path="res://Models/Pedestal/Pedestal.obj" id="2_83v8d"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w0mig"]
+size = Vector3(0.7, 1.65814, 0.7)
+
+[sub_resource type="SphereMesh" id="SphereMesh_8nrnu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sruke"]
+emission_enabled = true
+emission = Color(1, 0.972549, 0.14902, 1)
+emission_energy_multiplier = 3.0
+
+[node name="Pedestal" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.90538, 0, -1.68467)
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+material_override = ExtResource("1_44e5k")
+mesh = ExtResource("2_83v8d")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.852811, 0)
+shape = SubResource("BoxShape3D_w0mig")
+
+[node name="LightBulb" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52291, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LightBulb"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = SubResource("SphereMesh_8nrnu")
+surface_material_override/0 = SubResource("StandardMaterial3D_sruke")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="LightBulb"]
+light_color = Color(1, 0.8, 0, 1)
+light_energy = 3.0
+light_size = 1.0

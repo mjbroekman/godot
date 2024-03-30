@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cd7nfwsu04i2f"]
+
+[ext_resource type="Texture2D" path="res://Models/Tree/leaf06.dds" id="1_naayo"]
+
+[resource]
+albedo_texture = ExtResource("1_naayo")
