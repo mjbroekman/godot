@@ -25,7 +25,7 @@ fog_light_color = Color(0.454902, 0.721569, 0.894118, 1)
 [node name="Terrain" type="StaticBody3D" parent="."]
 
 [node name="Terrain2" type="MeshInstance3D" parent="Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+transform = Transform3D(0.99958, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 material_override = ExtResource("1_xsucu")
 mesh = ExtResource("1_p3rcw")
 skeleton = NodePath("../..")
