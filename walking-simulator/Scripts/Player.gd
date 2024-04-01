@@ -7,7 +7,7 @@ class_name PlayerController
 @export var acceleration : float = 20.0
 @export var braking_speed : float = 20.0
 @export var air_accel : float = 4.0
-@export var jump_force : float = 5.0
+@export var jump_force : float = 8.0
 @export var gravity_mod : float = 1.5 # this is a modifier on the base project gravity
 @export var is_running : bool = false
 
@@ -23,13 +23,22 @@ func _ready():
 
 func _physics_process(delta):
 	var move_input = Input.get_vector("move_left","move_right","move_forward", "move_back")
-	if ! is_running:
-		velocity = Vector3(move_input.x,0,move_input.y) * walk_speed
-	else:
-		velocity = Vector3(move_input.x,0,move_input.y) * run_speed
 
-	move_and_slide()
+	if not is_on_floor():
+		velocity.y -= gravity * delta
 	
+	if Input.is_action_pressed("move_jump") and is_on_floor():
+		velocity.y += jump_force
+	
+	# Re-orient movement directions to the orientation of our player object (transform)
+	var move_direction = (transform.basis * Vector3(move_input.x,0,move_input.y)).normalized()
+	if ! is_running:
+		velocity.x = move_direction.x * walk_speed
+		velocity.z = move_direction.z * walk_speed
+	else:
+		velocity.x = move_direction.x * run_speed
+		velocity.z = move_direction.z * run_speed
+
 	# Camera Look
 	self.rotate_y(-camera_look_input.x * look_sensitivty)
 	camera.rotate_x(-camera_look_input.y * look_sensitivty)
@@ -38,6 +47,8 @@ func _physics_process(delta):
 
 	# Reset camera_look_input after using all its parts
 	camera_look_input = Vector2.ZERO
+	# move and sliiiiide
+	move_and_slide()
 
 
 func _unhandled_input(event):
