@@ -22,8 +22,6 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta):
-	var move_input = Input.get_vector("move_left","move_right","move_forward", "move_back")
-
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
@@ -31,17 +29,27 @@ func _physics_process(delta):
 		velocity.y += jump_force
 	
 	# Re-orient movement directions to the orientation of our player object (transform)
+	var move_input = Input.get_vector("move_left","move_right","move_forward", "move_back")
 	var move_direction = (transform.basis * Vector3(move_input.x,0,move_input.y)).normalized()
-	if ! is_running:
-		velocity.x = move_direction.x * walk_speed
-		velocity.z = move_direction.z * walk_speed
-	else:
-		velocity.x = move_direction.x * run_speed
-		velocity.z = move_direction.z * run_speed
+
+	is_running = Input.is_action_pressed("move_sprint")
+
+	var target_speed = walk_speed
+
+	if is_running:
+		target_speed = run_speed
+		# get the dot product between our facing (transform) and move direction
+		var run_dot = -move_direction.dot(transform.basis.z)
+		run_dot = clamp(run_dot,0,1)
+		move_direction *= run_dot
+	
+	velocity.x = move_direction.x * target_speed
+	velocity.z = move_direction.z * target_speed
 
 	# Camera Look
 	self.rotate_y(-camera_look_input.x * look_sensitivty)
 	camera.rotate_x(-camera_look_input.y * look_sensitivty)
+
 	# clamp() uses radians ... 1.5 == 90degrees
 	camera.rotation.x = clamp(camera.rotation.x,-1.5,1.4)
 
