@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dg36abthfv2dt"]
+
+[ext_resource type="Script" path="res://Scripts/WorldItem.gd" id="1_qvr4y"]
+[ext_resource type="ArrayMesh" uid="uid://8evg4gju7nl8" path="res://Items/Models/Iron.obj" id="2_h26uy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spsww"]
+albedo_color = Color(0.231373, 0.247059, 0.258824, 1)
+albedo_texture_force_srgb = true
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.62
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hqp08"]
+points = PackedVector3Array(-0.221618, 0.247006, -0.717487, 0.448486, -0.146143, 0.715881, 0.466124, -0.248023, 0.743918, -0.454872, -0.228683, 0.783757, 0.466124, -0.248023, -0.743918, 0.219293, 0.248451, 0.721752, -0.467054, -0.246521, -0.739482, 0.254087, 0.211196, -0.78016, -0.257033, 0.210569, 0.777801, -0.450919, -0.178094, -0.776919, 0.254087, 0.211196, 0.780161, -0.467054, -0.246521, 0.739482, 0.219293, 0.248451, -0.721752, 0.444234, -0.152765, -0.771631, -0.221618, 0.247006, 0.717487, -0.274096, 0.205211, -0.733897, -0.461762, -0.172889, 0.73107, 0.452279, -0.229215, 0.785547, 0.261981, 0.221929, -0.711267, 0.452279, -0.229215, -0.785547, -0.257033, 0.210569, -0.777801, -0.461762, -0.172889, -0.73107, -0.274096, 0.205211, 0.733897, 0.261981, 0.221929, 0.711267, -0.454872, -0.228683, -0.783757, 0.448486, -0.146143, -0.715881, -0.231546, 0.233767, 0.774148, -0.231546, 0.233767, -0.774148, 0.444241, -0.152767, 0.771643, 0.228455, 0.234305, -0.775958, 0.228455, 0.234305, 0.775958, 0.425583, -0.0999988, 0.71621)
+
+[node name="WorldItem_Iron" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+script = ExtResource("1_qvr4y")
+item_name = "Iron"
+interact_prompt = "Pickup Iron?"
+
+[node name="Iron" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+mesh = ExtResource("2_h26uy")
+surface_material_override/0 = SubResource("StandardMaterial3D_spsww")
+
+[node name="ItemCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.26, 0, 0, 0, 0.26, 0, 0, 0, 0.26, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+shape = SubResource("ConvexPolygonShape3D_hqp08")
