@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cm18vgs2ip1q5"]
+[gd_scene load_steps=15 format=3 uid="uid://cm18vgs2ip1q5"]
 
 [ext_resource type="ArrayMesh" uid="uid://cndcxj6gf0smr" path="res://Models/Terrain.obj" id="1_p3rcw"]
 [ext_resource type="Material" uid="uid://drm3clvqpis42" path="res://Models/TerrainMaterial.tres" id="1_xsucu"]
 [ext_resource type="PackedScene" uid="uid://cfr7h8g71lsm2" path="res://Models/Tree.tscn" id="3_4si4o"]
 [ext_resource type="PackedScene" uid="uid://dut3gyo4e7qbo" path="res://Models/Pedestal.tscn" id="4_f27ga"]
+[ext_resource type="Script" path="res://Scripts/PedestalInteraction.gd" id="5_cayhi"]
 [ext_resource type="PackedScene" uid="uid://dwxdl6tkvd55k" path="res://Models/Rock_0/Rock.tscn" id="5_qbkpn"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="6_mxsxy"]
 [ext_resource type="Script" path="res://Scripts/InteractionController.gd" id="7_f2fro"]
@@ -127,15 +128,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.868, 0.0497875, 20.7967)
 
 [node name="Pedestal" parent="." instance=ExtResource("4_f27ga")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.7746, 0.0033989, 14.2446)
+script = ExtResource("5_cayhi")
 
 [node name="Pedestal2" parent="." instance=ExtResource("4_f27ga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2911, 0.0033989, -28.6381)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4992, 0.0033989, 14.2446)
+script = ExtResource("5_cayhi")
 
 [node name="Pedestal3" parent="." instance=ExtResource("4_f27ga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4086, 0.00339508, 9.6283)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6004, 0.0033989, 1.59739)
+script = ExtResource("5_cayhi")
 
 [node name="Pedestal4" parent="." instance=ExtResource("4_f27ga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.0894, 0.00339508, -24.1995)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.372856, 0.0033989, -21.7673)
+script = ExtResource("5_cayhi")
 
 [node name="Rock" parent="." instance=ExtResource("5_qbkpn")]
 transform = Transform3D(2.3411, -3.44709, -2.76348, 4.41046, 1.64005, 1.69059, -0.259074, -3.22921, 3.80856, -15.7117, 0.00112534, -9.14572)
