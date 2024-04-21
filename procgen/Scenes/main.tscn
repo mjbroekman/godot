@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbvd58uxy8tq8"]
+
+[ext_resource type="Script" path="res://Scripts/TerrainGeneration.gd" id="1_pf7ty"]
+[ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="2_jvvnj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1pco7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_l77b2"]
+sky_material = SubResource("ProceduralSkyMaterial_1pco7")
+
+[sub_resource type="Environment" id="Environment_fy8xd"]
+background_mode = 2
+sky = SubResource("Sky_l77b2")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4ih0x"]
+noise_type = 0
+seed = 47137
+frequency = 0.003
+domain_warp_type = 1
+domain_warp_fractal_type = 2
+
+[sub_resource type="Curve" id="Curve_b0fyj"]
+_data = [Vector2(0, 0), 0.0, 0.026085, 0, 0, Vector2(1, 1), 0.0354409, 0.0, 0, 0]
+point_count = 2
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fy8xd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(0.956863, 0.890196, 0.792157, 1)
+light_energy = 0.75
+light_indirect_energy = 0.25
+shadow_enabled = true
+
+[node name="TerrainGeneration" type="Node" parent="."]
+script = ExtResource("1_pf7ty")
+noise = SubResource("FastNoiseLite_4ih0x")
+elevation_curve = SubResource("Curve_b0fyj")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.773818, 0.633408, 0, -0.633408, 0.773818, 0, 12.7682, 42.0393)
+fov = 90.0
+
+[node name="Player" parent="." instance=ExtResource("2_jvvnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9705, 103.952, 0.457336)

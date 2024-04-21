@@ -1,0 +1,188 @@
+[gd_resource type="VisualShader" load_steps=17 format=3 uid="uid://b8dq66dul8dn5"]
+
+[ext_resource type="Texture2D" uid="uid://dyo8fsrd02e38" path="res://Procedural Generation/Textures/Grass.jpg" id="1_rsweh"]
+[ext_resource type="Texture2D" uid="uid://b026v82butmpl" path="res://Procedural Generation/Textures/Stone.jpg" id="2_bo18w"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_4501o"]
+input_name = "view_matrix"
+
+[sub_resource type="VisualShaderNodeTransformVecMult" id="VisualShaderNodeTransformVecMult_k4s00"]
+operator = 1
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_ade3u"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(1, 1, 1), 2, 0.5]
+op_type = 4
+
+[sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_a7d78"]
+default_input_values = [0, 0.0, 1, 0.7, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector3(0, 0, 0), 5, Vector3(0, 0, 0)]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_3te2b"]
+default_input_values = [0, 0.0, 1, 0.7]
+operator = 1
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_j0v3y"]
+default_input_values = [0, 0.0, 1, 4.0]
+operator = 2
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_0sf8c"]
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_jlqo5"]
+default_input_values = [1, Vector2(30, 30), 2, Vector2(0, 0)]
+function = 1
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_uwcl7"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_q1asn"]
+texture = ExtResource("1_rsweh")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_ax1jf"]
+texture = ExtResource("2_bo18w")
+
+[sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_ku77g"]
+default_input_values = [0, 0.0, 1, 0.9, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector3(0, 0, 0), 5, Vector3(0, 0, 0)]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_5dwfd"]
+input_name = "normal"
+
+[sub_resource type="VisualShaderNodeDotProduct" id="VisualShaderNodeDotProduct_viq2f"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(0, 1, 0)]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D tex_frg_2;
+uniform sampler2D tex_frg_3;
+
+
+
+void fragment() {
+// Input:10
+	mat4 n_out10p0 = VIEW_MATRIX;
+
+
+// Input:7
+	vec3 n_out7p0 = NORMAL;
+
+
+// TransformVectorMult:11
+	vec3 n_out11p0 = (vec4(n_out7p0, 1.0) * n_out10p0).xyz;
+
+
+// DotProduct:8
+	vec3 n_in8p1 = vec3(0.00000, 1.00000, 0.00000);
+	float n_out8p0 = dot(n_out11p0, n_in8p1);
+
+
+// Input:18
+	vec2 n_out18p0 = UV;
+
+
+// UVFunc:17
+	vec2 n_in17p1 = vec2(30.00000, 30.00000);
+	vec2 n_in17p2 = vec2(0.00000, 0.00000);
+	vec2 n_out17p0 = (n_out18p0 - n_in17p2) * n_in17p1 + n_in17p2;
+
+
+// Texture2D:2
+	vec4 n_out2p0 = texture(tex_frg_2, n_out17p0);
+
+
+// Texture2D:3
+	vec4 n_out3p0 = texture(tex_frg_3, n_out17p0);
+
+
+// FloatOp:14
+	float n_in14p1 = 0.70000;
+	float n_out14p0 = n_out8p0 - n_in14p1;
+
+
+// FloatOp:15
+	float n_in15p1 = 4.00000;
+	float n_out15p0 = n_out14p0 * n_in15p1;
+
+
+// Mix:12
+	vec3 n_out12p0 = mix(vec3(n_out3p0.xyz), vec3(n_out2p0.xyz), n_out15p0);
+
+
+	vec3 n_out13p0;
+// If:13
+	float n_in13p1 = 0.70000;
+	float n_in13p2 = 0.00001;
+	if(abs(n_out8p0 - n_in13p1) < n_in13p2)
+	{
+		n_out13p0 = n_out12p0;
+	}
+	else if(n_out8p0 < n_in13p1)
+	{
+		n_out13p0 = vec3(n_out3p0.xyz);
+	}
+	else
+	{
+		n_out13p0 = n_out12p0;
+	}
+
+
+	vec3 n_out6p0;
+// If:6
+	float n_in6p1 = 0.90000;
+	float n_in6p2 = 0.00001;
+	if(abs(n_out8p0 - n_in6p1) < n_in6p2)
+	{
+		n_out6p0 = vec3(n_out2p0.xyz);
+	}
+	else if(n_out8p0 < n_in6p1)
+	{
+		n_out6p0 = n_out13p0;
+	}
+	else
+	{
+		n_out6p0 = vec3(n_out2p0.xyz);
+	}
+
+
+// FloatConstant:16
+	float n_out16p0 = 0.000000;
+
+
+// Output:0
+	ALBEDO = n_out6p0;
+	METALLIC = n_out16p0;
+	SPECULAR = n_out16p0;
+
+
+}
+"
+nodes/fragment/0/position = Vector2(1420, 140)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_q1asn")
+nodes/fragment/2/position = Vector2(-140, 100)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_ax1jf")
+nodes/fragment/3/position = Vector2(-120, 460)
+nodes/fragment/6/node = SubResource("VisualShaderNodeIf_ku77g")
+nodes/fragment/6/position = Vector2(1000, 220)
+nodes/fragment/7/node = SubResource("VisualShaderNodeInput_5dwfd")
+nodes/fragment/7/position = Vector2(-840, 80)
+nodes/fragment/8/node = SubResource("VisualShaderNodeDotProduct_viq2f")
+nodes/fragment/8/position = Vector2(-260, -40)
+nodes/fragment/10/node = SubResource("VisualShaderNodeInput_4501o")
+nodes/fragment/10/position = Vector2(-820, -20)
+nodes/fragment/11/node = SubResource("VisualShaderNodeTransformVecMult_k4s00")
+nodes/fragment/11/position = Vector2(-520, 0)
+nodes/fragment/12/node = SubResource("VisualShaderNodeMix_ade3u")
+nodes/fragment/12/position = Vector2(400, 340)
+nodes/fragment/13/node = SubResource("VisualShaderNodeIf_a7d78")
+nodes/fragment/13/position = Vector2(660, 360)
+nodes/fragment/14/node = SubResource("VisualShaderNodeFloatOp_3te2b")
+nodes/fragment/14/position = Vector2(-640, 260)
+nodes/fragment/15/node = SubResource("VisualShaderNodeFloatOp_j0v3y")
+nodes/fragment/15/position = Vector2(-406.91, 379.51)
+nodes/fragment/16/node = SubResource("VisualShaderNodeFloatConstant_0sf8c")
+nodes/fragment/16/position = Vector2(1180, 260)
+nodes/fragment/17/node = SubResource("VisualShaderNodeUVFunc_jlqo5")
+nodes/fragment/17/position = Vector2(-1020, 160)
+nodes/fragment/18/node = SubResource("VisualShaderNodeInput_uwcl7")
+nodes/fragment/18/position = Vector2(-1460, 240)
+nodes/fragment/connections = PackedInt32Array(6, 0, 0, 0, 8, 0, 6, 0, 10, 0, 11, 0, 7, 0, 11, 1, 11, 0, 8, 0, 13, 0, 6, 5, 2, 0, 6, 3, 2, 0, 6, 4, 3, 0, 13, 5, 12, 0, 13, 3, 12, 0, 13, 4, 8, 0, 13, 0, 3, 0, 12, 0, 2, 0, 12, 1, 8, 0, 14, 0, 14, 0, 15, 0, 15, 0, 12, 2, 16, 0, 0, 4, 16, 0, 0, 2, 18, 0, 17, 0, 17, 0, 2, 0, 17, 0, 3, 0)
+metadata/_edit_res_path = "res://Procedural Generation/TerrainShader.tres"

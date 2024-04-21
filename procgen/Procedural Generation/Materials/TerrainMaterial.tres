@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ci2e0b78p5qmu"]
+
+[ext_resource type="Shader" uid="uid://b8dq66dul8dn5" path="res://Procedural Generation/Materials/TerrainShader.tres" id="1_rrk4d"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_rrk4d")
