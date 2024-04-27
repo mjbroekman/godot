@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbvd58uxy8tq8"]
+[gd_scene load_steps=13 format=3 uid="uid://dbvd58uxy8tq8"]
 
 [ext_resource type="Script" path="res://Scripts/TerrainGeneration.gd" id="1_pf7ty"]
 [ext_resource type="Script" path="res://Scripts/SpawnableObject.gd" id="2_bk52f"]
@@ -34,8 +34,16 @@ domain_warp_type = 1
 domain_warp_fractal_type = 2
 
 [sub_resource type="Curve" id="Curve_b0fyj"]
-_data = [Vector2(0, 0), 0.0, 0.026085, 0, 0, Vector2(1, 1), 0.0354409, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0), 0.0, -0.329313, 0, 0, Vector2(0.259259, 0.239703), -0.412006, -0.412006, 0, 0, Vector2(1, 1), 0.0354409, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_748pl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5cnm"]
+transparency = 1
+depth_draw_mode = 1
+albedo_color = Color(0.141176, 0.611765, 0.74902, 1)
+roughness = 0.5
 
 [node name="Main" type="Node3D"]
 
@@ -53,6 +61,8 @@ shadow_enabled = true
 script = ExtResource("1_pf7ty")
 noise = SubResource("FastNoiseLite_4ih0x")
 elevation_curve = SubResource("Curve_b0fyj")
+water_level = 0.25
+roughness = 0.75
 
 [node name="SpawnableObject_Tree" type="Node" parent="TerrainGeneration"]
 script = ExtResource("2_bk52f")
@@ -67,6 +77,13 @@ scenes_to_spawn = Array[PackedScene]([ExtResource("4_p04su")])
 spawn_count = 400
 min_scale = 0.25
 max_scale = 2.0
+water_ok = true
+
+[node name="Water" type="MeshInstance3D" parent="TerrainGeneration"]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
+mesh = SubResource("PlaneMesh_748pl")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_r5cnm")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.773818, 0.633408, 0, -0.633408, 0.773818, 0, 12.7682, 42.0393)

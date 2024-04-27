@@ -19,11 +19,16 @@ extends Node
 @export_category("Spawn Settings")
 @export var spawnable_objects : Array[SpawnableObject]
 
+@export_category("Water")
+@export var water_level : float = 0.28
+@export var roughness : float = 0.5
+
+@onready var water : MeshInstance3D = get_node("Water")
 @onready var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Generate a random seed. randi() will give us something between 0 and (2^32 - 1)
+	# Generate a random seed. randi() will give us something between -2^32-1 and (2^32 - 1)
 	# 
 	# Keeping this for reference...
 	#     noise.seed = randi_range(0,Time.get_unix_time_from_datetime_string(Time.get_time_string_from_system()))
@@ -76,6 +81,10 @@ func generate():
 	mesh.add_to_group("NavSource")
 	add_child(mesh)
 	
+	water.position.y = water_level * max_height
+	# figure out how to adjust the roughness here
+	
+
 	for obj in spawnable_objects:
 		spawn_objects(obj)
 
@@ -118,8 +127,13 @@ func spawn_objects(spawnable : SpawnableObject):
 		var obj = spawnable.scenes_to_spawn[idx].instantiate()
 		obj.add_to_group("NavSource")
 		add_child(obj)
+
 		var pos = _get_random_position()
-		
+
+		if not spawnable.water_ok:
+			while pos.y < (water_level * max_height):
+				pos = _get_random_position()
+
 		obj.position = pos
 		obj.scale = Vector3.ONE * rng.randf_range(spawnable.min_scale,spawnable.max_scale)
 		obj.rotation_degrees.y = rng.randf_range(0,360)

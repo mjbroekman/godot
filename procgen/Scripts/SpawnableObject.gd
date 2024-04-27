@@ -5,4 +5,4 @@ extends Node
 @export var spawn_count : int = 0
 @export var min_scale : float = 1.0
 @export var max_scale : float = 1.0
-
+@export var water_ok : bool = false
