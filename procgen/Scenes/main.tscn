@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbvd58uxy8tq8"]
+[gd_scene load_steps=11 format=3 uid="uid://dbvd58uxy8tq8"]
 
 [ext_resource type="Script" path="res://Scripts/TerrainGeneration.gd" id="1_pf7ty"]
+[ext_resource type="Script" path="res://Scripts/SpawnableObject.gd" id="2_bk52f"]
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="2_jvvnj"]
+[ext_resource type="PackedScene" uid="uid://dju443moxaprb" path="res://Models/Tree/Tree.tscn" id="3_2xrfa"]
+[ext_resource type="PackedScene" uid="uid://crlk3u335xyr6" path="res://Models/Rock/Rock.tscn" id="4_p04su"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1pco7"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -14,7 +17,14 @@ sky_material = SubResource("ProceduralSkyMaterial_1pco7")
 background_mode = 2
 sky = SubResource("Sky_l77b2")
 tonemap_mode = 2
+ssao_enabled = true
 glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0149
+volumetric_fog_albedo = Color(0.717647, 1, 1, 1)
+adjustment_enabled = true
+adjustment_contrast = 1.13
+adjustment_saturation = 1.13
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_4ih0x"]
 noise_type = 0
@@ -43,6 +53,20 @@ shadow_enabled = true
 script = ExtResource("1_pf7ty")
 noise = SubResource("FastNoiseLite_4ih0x")
 elevation_curve = SubResource("Curve_b0fyj")
+
+[node name="SpawnableObject_Tree" type="Node" parent="TerrainGeneration"]
+script = ExtResource("2_bk52f")
+scenes_to_spawn = Array[PackedScene]([ExtResource("3_2xrfa")])
+spawn_count = 400
+min_scale = 0.75
+max_scale = 1.5
+
+[node name="SpawnableObject_Rock" type="Node" parent="TerrainGeneration"]
+script = ExtResource("2_bk52f")
+scenes_to_spawn = Array[PackedScene]([ExtResource("4_p04su")])
+spawn_count = 400
+min_scale = 0.25
+max_scale = 2.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.773818, 0.633408, 0, -0.633408, 0.773818, 0, 12.7682, 42.0393)

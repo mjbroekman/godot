@@ -3,8 +3,8 @@ extends Node
 
 @export_category("Mesh Sizing")
 @export var mesh : MeshInstance3D
-@export var size_depth : float = 100
-@export var size_width : float = 100
+@export var size_depth : float = 200
+@export var size_width : float = 200
 @export var mesh_resolution : float = 5
 @export var max_height : float = 50
 
@@ -16,12 +16,29 @@ extends Node
 @export var falloff_image : Image
 @export var use_falloff : bool = true
 
+@export_category("Spawn Settings")
+@export var spawnable_objects : Array[SpawnableObject]
+
+@onready var rng : RandomNumberGenerator = RandomNumberGenerator.new()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	noise.seed = randi_range(0,Time.get_unix_time_from_datetime_string(Time.get_time_string_from_system()))
+	# Generate a random seed. randi() will give us something between 0 and (2^32 - 1)
+	# 
+	# Keeping this for reference...
+	#     noise.seed = randi_range(0,Time.get_unix_time_from_datetime_string(Time.get_time_string_from_system()))
+	#
+	noise.seed = randi()
+	rng.seed = noise.seed
 	print(str("Using seed: ", noise.seed))
 	var falloff_texture = preload("res://Procedural Generation/Textures/TerrainFalloff.png")
 	falloff_image = falloff_texture.get_image()
+	
+	# Find spawnable objects in the scene
+	for obj in get_children():
+		if obj is SpawnableObject:
+			spawnable_objects.append(obj)
+
 	generate()
 
 func generate():
@@ -58,6 +75,9 @@ func generate():
 	mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	mesh.add_to_group("NavSource")
 	add_child(mesh)
+	
+	for obj in spawnable_objects:
+		spawn_objects(obj)
 
 # Take x and z coords and look up the location in the noise map
 func get_noise_y(x, z) -> float:
@@ -84,3 +104,22 @@ func get_noise_y(x, z) -> float:
 
 	return adjusted_value * max_height * falloff
 
+func _get_random_position() -> Vector3:
+	var x = rng.randf_range(-size_width / 2, size_width / 2)
+	var z = rng.randf_range(-size_depth / 2, size_depth / 2)
+	var y = get_noise_y(x, z)
+	return Vector3(x, y, z)
+
+func spawn_objects(spawnable : SpawnableObject):
+	for i in range(spawnable.spawn_count):
+		# initial thought was rng.randi_range(0, spawnable.scenes_to_spawn.size() - 1) but
+		# randi() mod spawnable.scenes_to_spawn.size() works fine too
+		var idx = rng.randi() % spawnable.scenes_to_spawn.size()
+		var obj = spawnable.scenes_to_spawn[idx].instantiate()
+		obj.add_to_group("NavSource")
+		add_child(obj)
+		var pos = _get_random_position()
+		
+		obj.position = pos
+		obj.scale = Vector3.ONE * rng.randf_range(spawnable.min_scale,spawnable.max_scale)
+		obj.rotation_degrees.y = rng.randf_range(0,360)
