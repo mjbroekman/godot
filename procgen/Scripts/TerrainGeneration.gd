@@ -25,6 +25,7 @@ extends Node
 
 @onready var water : MeshInstance3D = get_node("Water")
 @onready var rng : RandomNumberGenerator = RandomNumberGenerator.new()
+@onready var nav_region : NavigationRegion3D = get_node("NavigationRegion3D")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -83,10 +84,18 @@ func generate():
 	
 	water.position.y = water_level * max_height
 	# figure out how to adjust the roughness here
-	
+	# figure out how to make water more transparent
 
+	print("Add objects")
 	for obj in spawnable_objects:
 		spawn_objects(obj)
+	
+	print("Bake mesh")
+	# start baking...
+	nav_region.bake_navigation_mesh()
+	# wait (await verb) until the mesh is finished baking
+	await nav_region.bake_finished
+	# spawn in AI stuff
 
 # Take x and z coords and look up the location in the noise map
 func get_noise_y(x, z) -> float:

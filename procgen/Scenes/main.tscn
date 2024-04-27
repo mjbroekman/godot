@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbvd58uxy8tq8"]
+[gd_scene load_steps=14 format=3 uid="uid://dbvd58uxy8tq8"]
 
 [ext_resource type="Script" path="res://Scripts/TerrainGeneration.gd" id="1_pf7ty"]
 [ext_resource type="Script" path="res://Scripts/SpawnableObject.gd" id="2_bk52f"]
@@ -45,6 +45,11 @@ depth_draw_mode = 1
 albedo_color = Color(0.141176, 0.611765, 0.74902, 1)
 roughness = 0.5
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_o8c0n"]
+geometry_parsed_geometry_type = 2
+geometry_source_geometry_mode = 2
+geometry_source_group_name = &"NavSource"
+
 [node name="Main" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -61,7 +66,7 @@ shadow_enabled = true
 script = ExtResource("1_pf7ty")
 noise = SubResource("FastNoiseLite_4ih0x")
 elevation_curve = SubResource("Curve_b0fyj")
-water_level = 0.25
+water_level = 0.15
 roughness = 0.75
 
 [node name="SpawnableObject_Tree" type="Node" parent="TerrainGeneration"]
@@ -84,6 +89,9 @@ transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
 mesh = SubResource("PlaneMesh_748pl")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_r5cnm")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="TerrainGeneration"]
+navigation_mesh = SubResource("NavigationMesh_o8c0n")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.773818, 0.633408, 0, -0.633408, 0.773818, 0, 12.7682, 42.0393)
