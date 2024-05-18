@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://drm3clvqpis42"]
+
+[ext_resource type="Texture2D" uid="uid://jr3lpgh0exer" path="res://Assets/Models/Terrain/Rock029_1K-JPG_Color.jpg" id="1_pkbyi"]
+[ext_resource type="Texture2D" uid="uid://imy0jcuatn1s" path="res://Assets/Models/Terrain/Rock029_1K-JPG_NormalGL.jpg" id="2_rql2y"]
+
+[resource]
+albedo_texture = ExtResource("1_pkbyi")
+normal_enabled = true
+normal_texture = ExtResource("2_rql2y")
