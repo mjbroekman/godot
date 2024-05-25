@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://drm3clvqpis42" path="res://Assets/Models/Terrain/TerrainMaterial.tres" id="2_728tv"]
 [ext_resource type="ArrayMesh" uid="uid://cndcxj6gf0smr" path="res://Assets/Models/Terrain/Terrain.obj" id="3_fl50f"]
 [ext_resource type="PackedScene" uid="uid://dwxdl6tkvd55k" path="res://Assets/Models/Terrain/Rock_0/Rock.tscn" id="4_tuh1r"]
-[ext_resource type="Script" path="res://Assets/Scripts/AI.gd" id="5_atmwu"]
+[ext_resource type="Script" path="res://Assets/Scripts/AIController.gd" id="5_atmwu"]
 [ext_resource type="PackedScene" uid="uid://c2tcjs26j25ww" path="res://Assets/Models/Alien/alien-bug.glb" id="5_p8wwn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mar6u"]
