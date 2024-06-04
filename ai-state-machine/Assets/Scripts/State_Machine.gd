@@ -21,6 +21,7 @@ func _ready():
 
 func change_state(state_name):
 	var new_state = states.get(state_name)
+	print("Changing state to " + state_name)
 
 	if new_state == null:
 		return

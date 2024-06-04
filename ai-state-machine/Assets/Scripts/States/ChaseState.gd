@@ -30,6 +30,9 @@ func update(delta):
 
 	if controller.player_distance < stop_range:
 		controller.is_stopped = true
-	
+
+	if controller.player_distance < (stop_range / 2):
+		state_machine.change_state("Flee")
+
 	if controller.player_distance > lose_interest_range:
 		state_machine.change_state("Wander")
