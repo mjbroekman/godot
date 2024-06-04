@@ -3,7 +3,7 @@ extends CharacterBody3D
 
 @export_category("Movement")
 @export var walk_speed : float = 1.0
-@export var run_speed : float = 2.5
+@export var run_speed : float = 2.0
 @export var target_y_rot : float
 
 var is_running : bool = false
