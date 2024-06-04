@@ -1,0 +1,16 @@
+extends State
+
+var home_position : Vector3
+
+@export var max_wander_range : float = 6.0
+@export var min_wait_time : float = 0.2
+@export var max_wait_time : float = 2.0
+
+func enter():
+	super.enter()
+	home_position = controller.position
+	_new_wander_pos()
+
+func _new_wander_pos():
+	var pos = home_position + random_offset() * randf_range(0,max_wander_range)
+	controller.move_to_position(pos)
