@@ -14,3 +14,11 @@ func enter():
 func _new_wander_pos():
 	var pos = home_position + random_offset() * randf_range(0,max_wander_range)
 	controller.move_to_position(pos)
+
+func navigation_complete():
+	await get_tree().create_timer(randf_range(min_wait_time,max_wait_time)).timeout
+
+	if not active:
+		return
+
+	_new_wander_pos()

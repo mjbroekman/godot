@@ -7,7 +7,6 @@ var controller : AIController
 
 @export_node_path("AIController") var controller_path : NodePath
 
-
 func initialize():
 	state_machine = get_parent()
 	controller = get_node(controller_path)

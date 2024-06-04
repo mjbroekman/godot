@@ -8,6 +8,8 @@ var current_state : State
 var states : Dictionary = {}
 
 func _ready():
+	await get_tree().create_timer(0.5).timeout
+
 	for child in get_children():
 		if child is State:
 			states[child.name] = child
@@ -19,7 +21,7 @@ func _ready():
 
 func change_state(state_name):
 	var new_state = states.get(state_name)
-	
+
 	if new_state == null:
 		return
 
@@ -31,8 +33,6 @@ func change_state(state_name):
 
 	current_state = new_state
 	new_state.enter()
-
-	print("Change State: " + state_name)
 
 
 func _process(delta):
@@ -48,5 +48,3 @@ func _physics_process(delta):
 func _on_navigation_agent_3d_target_reached():
 	if current_state != null:
 		current_state.navigation_complete()
-
-

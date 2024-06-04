@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cc5kdc0jn8drq"]
+[gd_scene load_steps=17 format=3 uid="uid://cc5kdc0jn8drq"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Assets/Player Controller/Player.tscn" id="1_bh2f2"]
 [ext_resource type="Material" uid="uid://drm3clvqpis42" path="res://Assets/Models/Terrain/TerrainMaterial.tres" id="2_728tv"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://c2tcjs26j25ww" path="res://Assets/Models/Alien/alien-bug.glb" id="5_p8wwn"]
 [ext_resource type="Script" path="res://Assets/Scripts/State_Machine.gd" id="7_g21qu"]
 [ext_resource type="Script" path="res://Assets/Scripts/States/WanderState.gd" id="8_pj5a2"]
+[ext_resource type="Script" path="res://Assets/Scripts/States/ChaseState.gd" id="9_nhbsq"]
+[ext_resource type="Script" path="res://Assets/Scripts/States/FleeState.gd" id="10_kdihu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mar6u"]
 
@@ -109,15 +111,20 @@ shape = SubResource("CapsuleShape3D_h4icc")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="AI"]
 
-[node name="StateMachine" type="Node" parent="AI"]
+[node name="StateMachine" type="Node" parent="AI" node_paths=PackedStringArray("default_state")]
 script = ExtResource("7_g21qu")
+default_state = NodePath("Wander")
 
 [node name="Wander" type="Node" parent="AI/StateMachine"]
 script = ExtResource("8_pj5a2")
-controller_path = null
+controller_path = NodePath("../..")
 
 [node name="Chase" type="Node" parent="AI/StateMachine"]
+script = ExtResource("9_nhbsq")
+controller_path = NodePath("../..")
 
 [node name="Flee" type="Node" parent="AI/StateMachine"]
+script = ExtResource("10_kdihu")
+controller_path = NodePath("../..")
 
 [connection signal="target_reached" from="AI/NavigationAgent3D" to="AI/StateMachine" method="_on_navigation_agent_3d_target_reached"]
