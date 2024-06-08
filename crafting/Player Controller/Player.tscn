@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=11 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bqqomrnw4c2tx" path="res://Player Controller/InventoryButton.tscn" id="4_tuswl"]
 [ext_resource type="Resource" uid="uid://b47mo5f0r7oef" path="res://Items/ItemData/Iron.tres" id="5_gkap2"]
 [ext_resource type="Resource" uid="uid://dkumtthsmwppy" path="res://Items/ItemData/Wood.tres" id="6_xieks"]
+[ext_resource type="Script" path="res://Crafting System/Crafting.gd" id="8_xli6s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
 radius = 0.3
@@ -138,3 +139,24 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Contain Information About Selected Item"
 horizontal_alignment = 1
+
+[node name="Crafting" type="Node" parent="."]
+script = ExtResource("8_xli6s")
+
+[node name="CraftingWindow" type="Panel" parent="Crafting"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RecipeContainer" type="VBoxContainer" parent="Crafting/CraftingWindow"]
+layout_mode = 0
+offset_right = 495.0
+offset_bottom = 495.0
