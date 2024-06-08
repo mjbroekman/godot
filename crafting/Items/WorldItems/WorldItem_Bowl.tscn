@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://tdmligwpxn3"]
+
+[ext_resource type="Script" path="res://WorldItem.gd" id="1_s3f7n"]
+[ext_resource type="ArrayMesh" uid="uid://dbfga6aq8ltog" path="res://Items/Models/Bowl.obj" id="2_5tjhj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rv6yr"]
+albedo_color = Color(0.572549, 0.337255, 0.054902, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_slu5t"]
+height = 0.124994
+radius = 0.247508
+
+[node name="WorldItem_Bowl" type="RigidBody3D"]
+script = ExtResource("1_s3f7n")
+item_name = "Bowl"
+interact_prompt = "Pickup Bowl"
+
+[node name="Bowl" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("2_5tjhj")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_rv6yr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_slu5t")

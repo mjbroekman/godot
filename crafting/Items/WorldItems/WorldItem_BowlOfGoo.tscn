@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://b30m8yfkhy072"]
+
+[ext_resource type="Script" path="res://WorldItem.gd" id="1_dlns5"]
+[ext_resource type="ArrayMesh" uid="uid://cla0ch7hkwwom" path="res://Items/Models/BowlOfGoo.obj" id="2_2mne1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7t3tt"]
+albedo_color = Color(0.439216, 0.258824, 0.0823529, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y14sn"]
+albedo_color = Color(1, 0.180392, 0.658824, 1)
+roughness = 0.48
+clearcoat_enabled = true
+clearcoat = 0.05
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_r11ce"]
+height = 0.192342
+radius = 0.247508
+
+[node name="WorldItem_BowlOfGoo" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12137, 0.457425, 1.19209e-07)
+script = ExtResource("1_dlns5")
+item_name = "BowlOfGoo"
+interact_prompt = "Pickup Bowl of Goo"
+
+[node name="BowlOfGoo" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("2_2mne1")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7t3tt")
+surface_material_override/1 = SubResource("StandardMaterial3D_y14sn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0350532, 0)
+shape = SubResource("CylinderShape3D_r11ce")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://57fn1oiik5jr"]
+
+[ext_resource type="Texture2D" uid="uid://1wpw31jlnjql" path="res://Items/Icons/BowlOfGoo.png" id="1_3bqoo"]
+[ext_resource type="Script" path="res://Item.gd" id="1_mima4"]
+[ext_resource type="PackedScene" uid="uid://b30m8yfkhy072" path="res://Items/World Items/WorldItem_BowlOfGoo.tscn" id="3_8t6i7"]
+
+[resource]
+script = ExtResource("1_mima4")
+display_name = "Bowl of Goo"
+icon = ExtResource("1_3bqoo")
+max_stack_size = 12
+world_item_scene = ExtResource("3_8t6i7")

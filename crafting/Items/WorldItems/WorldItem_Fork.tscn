@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1vu3cx8jsrcj"]
+
+[ext_resource type="Script" path="res://WorldItem.gd" id="1_vnyfk"]
+[ext_resource type="ArrayMesh" uid="uid://bbxg2y58bunlw" path="res://Items/Models/Fork.obj" id="2_af2ip"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ebtm4"]
+albedo_color = Color(0.752941, 0.752941, 0.752941, 1)
+metallic = 0.84
+roughness = 0.47
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ltn4l"]
+size = Vector3(0.673828, 0.0744629, 0.126953)
+
+[node name="WorldItem_Fork" type="RigidBody3D"]
+script = ExtResource("1_vnyfk")
+item_name = "Fork"
+interact_prompt = "Pickup Fork"
+
+[node name="Fork" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0, 0)
+mesh = ExtResource("2_af2ip")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ebtm4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0517578, 0, 0)
+shape = SubResource("BoxShape3D_ltn4l")
