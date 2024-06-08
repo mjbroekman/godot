@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b30m8yfkhy072"]
 
-[ext_resource type="Script" path="res://WorldItem.gd" id="1_dlns5"]
+[ext_resource type="Script" path="res://Scripts/WorldItem.gd" id="1_dlns5"]
 [ext_resource type="ArrayMesh" uid="uid://cla0ch7hkwwom" path="res://Items/Models/BowlOfGoo.obj" id="2_2mne1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7t3tt"]

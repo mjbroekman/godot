@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://hfwtnlmkjhlc"]
 
 [ext_resource type="Texture2D" uid="uid://cytof3yokxyd6" path="res://Items/Icons/Fork.png" id="1_fqbeg"]
-[ext_resource type="Script" path="res://Item.gd" id="1_h4whr"]
+[ext_resource type="Script" path="res://Scripts/Item.gd" id="1_h4whr"]
 [ext_resource type="PackedScene" uid="uid://c1vu3cx8jsrcj" path="res://Items/World Items/WorldItem_Fork.tscn" id="3_gmjtw"]
 
 [resource]

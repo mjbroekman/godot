@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1vu3cx8jsrcj"]
 
-[ext_resource type="Script" path="res://WorldItem.gd" id="1_vnyfk"]
+[ext_resource type="Script" path="res://Scripts/WorldItem.gd" id="1_vnyfk"]
 [ext_resource type="ArrayMesh" uid="uid://bbxg2y58bunlw" path="res://Items/Models/Fork.obj" id="2_af2ip"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ebtm4"]
