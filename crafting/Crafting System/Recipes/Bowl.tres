@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=6 format=3 uid="uid://b1qd45rgo7ohs"]
+
+[ext_resource type="Resource" uid="uid://dn8bqf0vxpj45" path="res://Items/ItemData/Bowl.tres" id="1_jis74"]
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipe.gd" id="1_pgxt8"]
+[ext_resource type="Resource" uid="uid://dkumtthsmwppy" path="res://Items/ItemData/Wood.tres" id="2_j15fu"]
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipeRequirement.gd" id="3_0a1a6"]
+
+[sub_resource type="Resource" id="Resource_3jre6"]
+script = ExtResource("3_0a1a6")
+item = ExtResource("2_j15fu")
+quantity = 1
+
+[resource]
+script = ExtResource("1_pgxt8")
+item = ExtResource("1_jis74")
+requirements = Array[ExtResource("3_0a1a6")]([SubResource("Resource_3jre6")])
