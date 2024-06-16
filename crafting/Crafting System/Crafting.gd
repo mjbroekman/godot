@@ -20,3 +20,16 @@ func _ready():
 		recipe_node.crafting = self
 		recipe_uis.append(recipe_node)
 
+func craft(recipe : CraftingRecipe):
+	pass
+
+func _process(delta):
+	pass
+
+func open():
+	pass
+
+func close():
+	pass
+
+
