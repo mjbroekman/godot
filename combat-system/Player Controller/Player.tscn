@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=13 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
 [ext_resource type="Script" path="res://Inventory/Inventory.gd" id="3_ilfm3"]
 [ext_resource type="PackedScene" uid="uid://n7ekj3yl42y2" path="res://Inventory/InventorySlot.tscn" id="4_w1ngo"]
 [ext_resource type="Script" path="res://Combat/Health.gd" id="5_2ahmx"]
+[ext_resource type="Script" path="res://Combat/ProgressBar.gd" id="6_gjil2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
 radius = 0.3
@@ -15,6 +16,20 @@ font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_fsrsb"]
 font_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4txpu"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_verdw"]
+bg_color = Color(1, 0.105882, 0.0117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c71vd"]
+font_size = 28
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 9
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 2)
 
 [node name="Player" type="CharacterBody3D" groups=["Player"]]
 script = ExtResource("1_krxqb")
@@ -143,3 +158,26 @@ horizontal_alignment = 1
 script = ExtResource("5_2ahmx")
 max_health = 20
 post_death_action = 1
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = 12.0
+offset_top = 14.0
+offset_right = 416.0
+offset_bottom = 59.0
+theme_override_styles/background = SubResource("StyleBoxFlat_4txpu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_verdw")
+value = 40.0
+show_percentage = false
+script = ExtResource("6_gjil2")
+
+[node name="HealthText" type="Label" parent="HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "100 / 100"
+label_settings = SubResource("LabelSettings_c71vd")
+horizontal_alignment = 1
+vertical_alignment = 1

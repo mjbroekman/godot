@@ -1,9 +1,9 @@
 class_name Health
 extends Node
 
-signal on_change (current : int, max_health : int)
-signal on_take_damage ()
-signal on_die ()
+signal on_change(current : int, max_health : int)
+signal on_take_damage()
+signal on_die()
 
 enum PostDeath {DestroyNode, RestartScene}
 
