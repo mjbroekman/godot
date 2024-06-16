@@ -16,6 +16,7 @@ func enter ():
 	home_position = controller.position
 	_new_wander_position()
 	controller.is_stopped = false
+	controller.look_at_player = false
 
 
 # Called when we exit the state.
