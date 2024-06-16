@@ -1,11 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=19 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
 [ext_resource type="Script" path="res://Inventory/Inventory.gd" id="3_ilfm3"]
+[ext_resource type="ArrayMesh" uid="uid://dpv7j4etlnn48" path="res://Combat/Models/Sword/Short Sword.obj" id="3_yl06l"]
+[ext_resource type="Material" uid="uid://3t244ggpacj1" path="res://Combat/Models/Sword/ShortSwordMaterial.tres" id="4_oxpj0"]
 [ext_resource type="PackedScene" uid="uid://n7ekj3yl42y2" path="res://Inventory/InventorySlot.tscn" id="4_w1ngo"]
 [ext_resource type="Script" path="res://Combat/Health.gd" id="5_2ahmx"]
 [ext_resource type="Script" path="res://Combat/ProgressBar.gd" id="6_gjil2"]
+[ext_resource type="Script" path="res://Combat/FallDamage.gd" id="7_udwld"]
+[ext_resource type="Script" path="res://Combat/EquipController.gd" id="8_falo5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
 radius = 0.3
@@ -13,6 +17,28 @@ height = 1.8
 
 [sub_resource type="LabelSettings" id="LabelSettings_cbwra"]
 font_size = 24
+
+[sub_resource type="Animation" id="Animation_omlge"]
+resource_name = "Attack"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.11542, 1, 0.311208, -0.0930645, -0.377933, 0.258565, 1, 0.390459, 0.0775449, -0.292251, 0.402194, 1, 0.390459, 0.0775449, -0.292251, 0.681399, 1, 0.306088, 0.0181559, -0.430973, 0.8, 1, 0.160151, 0.00282693, -0.47794, 0.965979, 1, 0.160151, 0.00282693, -0.47794)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0.116122, 1, 0, 0, 0, 1, 0.258565, 1, 0.118071, 0.363048, 0.0464367, 0.923092, 0.402194, 1, 0.118071, 0.363048, 0.0464367, 0.923092, 0.499627, 1, 0.158368, 0.505521, -0.185429, 0.827638, 0.8, 1, -0.000704114, 0.809511, -0.560711, 0.174054, 0.951239, 1, -0.000704137, 0.809511, -0.560711, 0.174054)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qtde2"]
+_data = {
+"Attack": SubResource("Animation_omlge")
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_fsrsb"]
 font_size = 18
@@ -61,6 +87,25 @@ grow_vertical = 2
 label_settings = SubResource("LabelSettings_cbwra")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EquipOrigin" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.348665, 0)
+
+[node name="EquipObject_Sword" type="Node3D" parent="Camera3D/EquipOrigin"]
+
+[node name="Visual" type="Node3D" parent="Camera3D/EquipOrigin/EquipObject_Sword"]
+transform = Transform3D(-0.939409, 0.194048, 0.282587, -0.196328, 0.371205, -0.907559, -0.281008, -0.908049, -0.310616, 0.160151, 0.00282693, -0.47794)
+
+[node name="ShortSword" type="MeshInstance3D" parent="Camera3D/EquipOrigin/EquipObject_Sword/Visual"]
+transform = Transform3D(0.722559, 0.506846, 0.470124, -0.351941, 0.85502, -0.380892, -0.595019, 0.109761, 0.796182, 0.0274287, -0.123017, -0.0551177)
+mesh = ExtResource("3_yl06l")
+skeleton = NodePath("../../../../..")
+surface_material_override/0 = ExtResource("4_oxpj0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/EquipOrigin/EquipObject_Sword"]
+libraries = {
+"": SubResource("AnimationLibrary_qtde2")
+}
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("3_ilfm3")
@@ -156,7 +201,6 @@ horizontal_alignment = 1
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("5_2ahmx")
-max_health = 20
 post_death_action = 1
 
 [node name="HealthBar" type="ProgressBar" parent="."]
@@ -181,3 +225,9 @@ text = "100 / 100"
 label_settings = SubResource("LabelSettings_c71vd")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="FallDamage" type="Node" parent="."]
+script = ExtResource("7_udwld")
+
+[node name="EquipController" type="Node" parent="."]
+script = ExtResource("8_falo5")

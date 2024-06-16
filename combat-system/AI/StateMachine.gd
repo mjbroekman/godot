@@ -49,10 +49,6 @@ func _physics_process(delta):
 	if current_state != null:
 		current_state.physics_update(delta)
 
-#func on_target_reached ():
-	#if current_state != null:
-		#current_state.navigation_complete()
-
 func _on_enemy_navigation_agent_target_reached():
 	if current_state != null:
 		current_state.navigation_complete()
