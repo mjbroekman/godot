@@ -19,17 +19,29 @@ func _ready():
 		recipe_node.recipe = recipe
 		recipe_node.crafting = self
 		recipe_uis.append(recipe_node)
+	
+	close()
+
 
 func craft(recipe : CraftingRecipe):
 	pass
 
 func _process(delta):
-	pass
+	if Input.is_action_just_pressed("Crafting"):
+		if window.visible:
+			close()
+		else:
+			open()
 
 func open():
-	pass
+	window.visible = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+	for recipe in recipe_uis:
+		recipe.update_recipe(inventory)
+
 
 func close():
-	pass
-
+	window.visible = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
