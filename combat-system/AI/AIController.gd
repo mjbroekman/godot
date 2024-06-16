@@ -10,7 +10,7 @@ var look_at_player : bool = false
 var move_direction : Vector3
 var target_y_rot : float
 
-@onready var agent : NavigationAgent3D = get_node("NavigationAgent3D")
+@onready var agent : NavigationAgent3D = get_node("EnemyNavigationAgent")
 @onready var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var player : PlayerController = get_tree().get_nodes_in_group("Player")[0]
 

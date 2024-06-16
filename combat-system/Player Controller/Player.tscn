@@ -141,4 +141,5 @@ horizontal_alignment = 1
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("5_2ahmx")
+max_health = 20
 post_death_action = 1
