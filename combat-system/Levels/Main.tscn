@@ -99,3 +99,5 @@ controller_path = NodePath("../..")
 [node name="Attack" type="Node" parent="Enemy/StateMachine"]
 script = ExtResource("9_kcus6")
 controller_path = NodePath("../..")
+
+[connection signal="target_reached" from="Enemy/EnemyNavigationAgent" to="Enemy/StateMachine" method="_on_enemy_navigation_agent_target_reached"]
