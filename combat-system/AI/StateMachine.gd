@@ -2,7 +2,7 @@ class_name StateMachine
 extends Node
 
 @export var default_state : State
-@export var min_time_in_state : float = 1.0
+@export var min_time_in_state : float = 0.25
 
 var current_state : State
 var last_state_change : float = 0
