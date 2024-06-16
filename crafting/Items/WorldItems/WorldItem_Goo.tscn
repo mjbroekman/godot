@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwe4ggqciji86"]
+
+[ext_resource type="Script" path="res://Scripts/WorldItem.gd" id="1_0g3ni"]
+[ext_resource type="ArrayMesh" uid="uid://bjlhco0x10xv7" path="res://Items/Models/Goo.obj" id="2_11xj4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rdod0"]
+albedo_color = Color(0.505882, 0.0235294, 1, 1)
+roughness = 0.5
+rim_enabled = true
+rim = 0.3
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_utruf"]
+points = PackedVector3Array(0.443532, 0.278604, 0.978102, 0.12713, 0.3558, -1.15111, 0.0485505, 0.0415697, -1.07783, -1.1703, 0.31635, 0.186128, 0.800826, -0.829871, 0.227764, -0.973218, -0.626928, 0.028501, 0.756332, 0.749012, 0.264685, 1.36887, -0.0775238, 0.190876, -0.311202, -0.356958, 0.868914, -0.618369, 0.825867, 0.185535, -0.467551, -0.434178, -0.92208, -0.268193, 0.635331, -0.999383, 0.714762, 0.315187, -0.872576, 0.959645, -0.433724, 0.742956, 0.206852, 0.834206, -0.762467, 0.482685, -0.0766914, -0.997086, -1.19393, -0.318053, -0.249216, -0.505199, -0.868014, -0.0102948, -0.621187, 0.592749, 0.541091, -0.541884, -0.745903, -0.600762, 1.00257, 0.598652, 0.467551, 0.363247, -0.666816, 0.697572, 1.23154, 0.317333, -0.0102968, 1.15035, -0.470098, -0.0104722, -0.303245, 0.823335, 0.380147, -0.970585, 0.629134, -0.0499327, -0.622872, -0.234798, -0.957949, -0.856746, -0.549172, 0.38311, 0.509297, -0.458228, -0.587027, 0.840746, -0.0768999, 0.901241, -0.504794, 0.120373, 0.780163, 0.324867, 0.475971, 0.89869)
+
+[node name="WorldItem_Goo" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+script = ExtResource("1_0g3ni")
+item_name = "Goo"
+interact_prompt = "Pickup Goo?"
+
+[node name="Goo" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+mesh = ExtResource("2_11xj4")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_rdod0")
+
+[node name="ItemCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.26, 0, 0, 0, 0.26, 0, 0, 0, 0.26, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+shape = SubResource("ConvexPolygonShape3D_utruf")
