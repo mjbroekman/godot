@@ -24,7 +24,17 @@ func _ready():
 
 
 func craft(recipe : CraftingRecipe):
-	pass
+	# Remove each of the recipe requirements
+	for req in recipe.requirements:
+		for qty in req.quantity:
+			inventory.remove_item(req.item)
+	
+	# Add the crafted item
+	inventory.add_item(recipe.item)
+	
+	# Update the crafting UI again.
+	_update()
+
 
 func _process(delta):
 	if Input.is_action_just_pressed("Crafting"):
@@ -36,7 +46,11 @@ func _process(delta):
 func open():
 	window.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	_update()
 
+# Separate update function so we don't perform unnecessary window / mouse_mode operations
+func _update():
 	for recipe in recipe_uis:
 		recipe.update_recipe(inventory)
 
