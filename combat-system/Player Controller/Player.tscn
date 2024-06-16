@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=9 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
 [ext_resource type="Script" path="res://Inventory/Inventory.gd" id="3_ilfm3"]
 [ext_resource type="PackedScene" uid="uid://n7ekj3yl42y2" path="res://Inventory/InventorySlot.tscn" id="4_w1ngo"]
+[ext_resource type="Script" path="res://Combat/Health.gd" id="5_2ahmx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
 radius = 0.3
@@ -137,3 +138,7 @@ grow_horizontal = 2
 grow_vertical = 0
 label_settings = SubResource("LabelSettings_fsrsb")
 horizontal_alignment = 1
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("5_2ahmx")
+post_death_action = 1
