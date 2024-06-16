@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=15 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
@@ -8,6 +8,10 @@
 [ext_resource type="Resource" uid="uid://b47mo5f0r7oef" path="res://Items/ItemData/Iron.tres" id="5_gkap2"]
 [ext_resource type="Resource" uid="uid://dkumtthsmwppy" path="res://Items/ItemData/Wood.tres" id="6_xieks"]
 [ext_resource type="Script" path="res://Crafting System/Crafting.gd" id="8_xli6s"]
+[ext_resource type="Resource" uid="uid://b1qd45rgo7ohs" path="res://Crafting System/Recipes/Bowl.tres" id="9_spdx6"]
+[ext_resource type="PackedScene" uid="uid://dwcvocr02vrup" path="res://Crafting System/CraftingRecipeUI.tscn" id="9_suj5k"]
+[ext_resource type="Resource" uid="uid://4r4wjj5ifdlm" path="res://Crafting System/Recipes/Fork.tres" id="10_xs4k7"]
+[ext_resource type="Resource" uid="uid://cgj58r7bdkby4" path="res://Crafting System/Recipes/BowlOfGoo.tres" id="11_y4ixw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
 radius = 0.3
@@ -142,6 +146,8 @@ horizontal_alignment = 1
 
 [node name="Crafting" type="Node" parent="."]
 script = ExtResource("8_xli6s")
+crafting_recipeui_scene = ExtResource("9_suj5k")
+recipes = Array[Resource("res://Crafting System/CraftingRecipe.gd")]([ExtResource("9_spdx6"), ExtResource("10_xs4k7"), ExtResource("11_y4ixw")])
 
 [node name="CraftingWindow" type="Panel" parent="Crafting"]
 anchors_preset = 8
