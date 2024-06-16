@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cf7mj0drlgfxw"]
+
+[ext_resource type="Texture2D" uid="uid://c57gdefpy5bad" path="res://AI/Zombie/Zombie_zombieA.png" id="1_uokg4"]
+
+[resource]
+albedo_texture = ExtResource("1_uokg4")
