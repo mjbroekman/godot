@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwcvocr02vrup"]
+
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipeUI.gd" id="1_vifki"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_20x5t"]
+
+[sub_resource type="SystemFont" id="SystemFont_mal6c"]
+font_names = PackedStringArray("Fantasy", "Cursive", "Georgia")
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ydeqv"]
+line_spacing = 5.0
+font = SubResource("SystemFont_mal6c")
+
+[node name="CraftingRecipeUI" type="Panel"]
+custom_minimum_size = Vector2(2.08165e-12, 80)
+offset_right = 495.0
+offset_bottom = 95.0
+script = ExtResource("1_vifki")
+
+[node name="ItemIcon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 15.5
+offset_top = -32.0
+offset_right = 79.5
+offset_bottom = 32.0
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_20x5t")
+expand_mode = 1
+
+[node name="RecipeText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 90.0
+offset_top = -32.0
+offset_right = 405.0
+offset_bottom = 32.0
+grow_vertical = 2
+text = "Default Text
+Requires x2 Empty Items"
+label_settings = SubResource("LabelSettings_ydeqv")
+
+[node name="CraftButton" type="Button" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -79.5
+offset_top = -32.0
+offset_right = -15.5
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Craft"
+
+[connection signal="pressed" from="CraftButton" to="." method="_on_craft_button_pressed"]

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://dn8bqf0vxpj45"]
+
+[ext_resource type="Script" path="res://Scripts/Item.gd" id="1_f5nyl"]
+[ext_resource type="Texture2D" uid="uid://42a154wfh4vo" path="res://Items/Icons/Bowl.png" id="1_vo6uu"]
+[ext_resource type="PackedScene" uid="uid://tdmligwpxn3" path="res://Items/WorldItems/WorldItem_Bowl.tscn" id="3_xydma"]
+
+[resource]
+script = ExtResource("1_f5nyl")
+display_name = "Bowl"
+icon = ExtResource("1_vo6uu")
+max_stack_size = 5
+world_item_scene = ExtResource("3_xydma")
+is_consumable = false

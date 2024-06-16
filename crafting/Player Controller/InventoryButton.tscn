@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqqomrnw4c2tx"]
+
+[ext_resource type="Script" path="res://Scripts/InventorySlot.gd" id="1_c1diu"]
+[ext_resource type="Texture2D" uid="uid://ccjtljhtdisln" path="res://Items/Icons/Wood.png" id="2_85jp5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_p4r7g"]
+font_size = 32
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="InventoryButton1" type="Button"]
+custom_minimum_size = Vector2(96, 96)
+tooltip_text = "Wood	"
+script = ExtResource("1_c1diu")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_85jp5")
+expand_mode = 1
+
+[node name="QuantityLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 58.0
+offset_right = 93.0
+offset_bottom = 103.0
+text = "52"
+label_settings = SubResource("LabelSettings_p4r7g")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
