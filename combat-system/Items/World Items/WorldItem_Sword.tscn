@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bu0u5g5admon4"]
+
+[ext_resource type="Script" path="res://Items/WorldItem.gd" id="1_v54bx"]
+[ext_resource type="ArrayMesh" uid="uid://dpv7j4etlnn48" path="res://Combat/Models/Sword/Short Sword.obj" id="2_6uyot"]
+[ext_resource type="Material" uid="uid://3t244ggpacj1" path="res://Combat/Models/Sword/ShortSwordMaterial.tres" id="3_hnlmg"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7p4kq"]
+height = 0.97813
+radius = 0.0634044
+
+[node name="WorldItem_Sword" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.165798, 0)
+script = ExtResource("1_v54bx")
+item_name = "Sword"
+interact_prompt = "Pickup Sword"
+
+[node name="ShortSword" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+mesh = ExtResource("2_6uyot")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("3_hnlmg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.342601, 0)
+shape = SubResource("CylinderShape3D_7p4kq")
