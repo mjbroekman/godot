@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EquipItem" load_steps=5 format=3 uid="uid://cnd62eyfr16xe"]
+
+[ext_resource type="Texture2D" uid="uid://1ng6pfes7pok" path="res://Items/Icons/Sword.png" id="1_cqd5x"]
+[ext_resource type="Script" path="res://Items/EquipItem.gd" id="1_isigr"]
+[ext_resource type="PackedScene" uid="uid://bmtiixob6b5r4" path="res://Items/Equip Items/EquipItem_Sword.tscn" id="1_n5e71"]
+[ext_resource type="PackedScene" uid="uid://bu0u5g5admon4" path="res://Items/World Items/WorldItem_Sword.tscn" id="4_poyx2"]
+
+[resource]
+script = ExtResource("1_isigr")
+equip_scene = ExtResource("1_n5e71")
+display_name = "Sword"
+icon = ExtResource("1_cqd5x")
+max_stack_size = 1
+world_item_scene = ExtResource("4_poyx2")

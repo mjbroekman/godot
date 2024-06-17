@@ -1,0 +1,55 @@
+[gd_scene load_steps=13 format=3 uid="uid://cvub4ngkfp107"]
+
+[ext_resource type="Script" path="res://AI/AIController.gd" id="1_qtkt7"]
+[ext_resource type="ArrayMesh" uid="uid://bnkgsu5fpuix0" path="res://AI/Zombie/Zombie.obj" id="2_ekei0"]
+[ext_resource type="Material" uid="uid://cf7mj0drlgfxw" path="res://AI/Zombie/ZombieMaterial.tres" id="3_qh54h"]
+[ext_resource type="Script" path="res://AI/StateMachine.gd" id="4_kkx1l"]
+[ext_resource type="Script" path="res://AI/States/WanderState.gd" id="5_cp7t2"]
+[ext_resource type="Script" path="res://AI/States/ChaseState.gd" id="6_mjgch"]
+[ext_resource type="Script" path="res://AI/States/AttackState.gd" id="7_1jtnf"]
+[ext_resource type="Script" path="res://Combat/Health.gd" id="8_4l56r"]
+[ext_resource type="PackedScene" uid="uid://c8myljfurwjb7" path="res://Items/World Items/WorldItem_Wood.tscn" id="9_yb2g6"]
+[ext_resource type="PackedScene" uid="uid://c5n18oub1kqxy" path="res://Items/World Items/WorldItem_Iron.tscn" id="10_taxpe"]
+[ext_resource type="PackedScene" uid="uid://bsbpnvl0blmcu" path="res://Items/World Items/WorldItem_Goo.tscn" id="11_pvkun"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2y4tv"]
+height = 1.88727
+
+[node name="Enemy" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.94575)
+script = ExtResource("1_qtkt7")
+
+[node name="Zombie" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+mesh = ExtResource("2_ekei0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("3_qh54h")
+
+[node name="EnemyCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.953734, 0)
+shape = SubResource("CapsuleShape3D_2y4tv")
+
+[node name="EnemyNavigationAgent" type="NavigationAgent3D" parent="."]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
+script = ExtResource("4_kkx1l")
+default_state = NodePath("Wander")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("5_cp7t2")
+controller_path = NodePath("../..")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("6_mjgch")
+controller_path = NodePath("../..")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("7_1jtnf")
+controller_path = NodePath("../..")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("8_4l56r")
+max_health = 20
+drop_on_death = Array[PackedScene]([ExtResource("9_yb2g6"), ExtResource("10_taxpe"), ExtResource("11_pvkun")])
+
+[connection signal="target_reached" from="EnemyNavigationAgent" to="StateMachine" method="_on_enemy_navigation_agent_target_reached"]

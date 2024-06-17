@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5n18oub1kqxy"]
+
+[ext_resource type="ArrayMesh" uid="uid://8evg4gju7nl8" path="res://Items/Models/Iron.obj" id="1_0b0my"]
+[ext_resource type="Script" path="res://Items/WorldItem.gd" id="1_22c0x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_866gx"]
+albedo_color = Color(0.862745, 0.862745, 0.862745, 1)
+metallic = 0.74
+roughness = 0.33
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0gqim"]
+points = PackedVector3Array(-0.221618, 0.247006, -0.717487, 0.448486, -0.146143, 0.715881, 0.466124, -0.248023, 0.743918, -0.454872, -0.228683, 0.783757, 0.466124, -0.248023, -0.743918, 0.219293, 0.248451, 0.721752, -0.467054, -0.246521, -0.739482, 0.254087, 0.211196, -0.78016, -0.257033, 0.210569, 0.777801, -0.450919, -0.178094, -0.776919, 0.254087, 0.211196, 0.780161, -0.467054, -0.246521, 0.739482, 0.219293, 0.248451, -0.721752, 0.444234, -0.152765, -0.771631, -0.221618, 0.247006, 0.717487, -0.274096, 0.205211, -0.733897, -0.461762, -0.172889, 0.73107, 0.452279, -0.229215, 0.785547, 0.261981, 0.221929, -0.711267, 0.452279, -0.229215, -0.785547, -0.257033, 0.210569, -0.777801, -0.461762, -0.172889, -0.73107, -0.274096, 0.205211, 0.733897, 0.261981, 0.221929, 0.711267, -0.454872, -0.228683, -0.783757, 0.448486, -0.146143, -0.715881, -0.231546, 0.233767, 0.774148, -0.231546, 0.233767, -0.774148, 0.444241, -0.152767, 0.771643, 0.228455, 0.234305, -0.775958, 0.228455, 0.234305, 0.775958, 0.425583, -0.0999988, 0.71621)
+
+[node name="WorldItem_Iron" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43468, 1.26731, -3.78875)
+script = ExtResource("1_22c0x")
+item_name = "Iron"
+interact_prompt = "Pickup Iron"
+
+[node name="Iron" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = ExtResource("1_0b0my")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_866gx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_0gqim")

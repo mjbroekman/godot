@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmtiixob6b5r4"]
+
+[ext_resource type="Script" path="res://Combat/EquipSword.gd" id="1_avlek"]
+[ext_resource type="ArrayMesh" uid="uid://dpv7j4etlnn48" path="res://Combat/Models/Sword/Short Sword.obj" id="2_nouvh"]
+[ext_resource type="Material" uid="uid://3t244ggpacj1" path="res://Combat/Models/Sword/ShortSwordMaterial.tres" id="3_8dyp5"]
+
+[sub_resource type="Animation" id="Animation_omlge"]
+resource_name = "Attack"
+length = 0.5
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(-0.00256039, 1, 0.311208, -0.0930645, -0.377933, 0.0473673, 1, 0.311208, 0.0491978, -0.377933, 0.111377, 1, 0.287736, 0.0855601, -0.377933, 0.207392, 1, 0.196735, 0.0855601, -0.377933, 0.292525, 1, 0.0330257, 0.0855601, -0.382755, 0.372537, 1, -0.0214491, 0.0551443, -0.382755)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(-0.0012802, 1, 0, 0, 0.315823, 0.948818, 0.0486475, 1, 0.165616, 0.181495, 0.284112, 0.926775, 0.110097, 1, 0.193819, 0.151008, 0.123957, 0.961387, 0.207392, 1, 0.0979819, 0.276582, -0.0554538, 0.954372, 0.290605, 1, -0.0431552, 0.531506, -0.318304, 0.783787, 0.401342, 1, -0.0234157, 0.729166, -0.645078, 0.227251, 0.489675, 1, -0.239493, 0.763094, -0.599431, -0.0318421)
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.350134),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_hit"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qtde2"]
+_data = {
+"Attack": SubResource("Animation_omlge")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7x8d3"]
+
+[node name="EquipObject_Sword" type="Node3D"]
+script = ExtResource("1_avlek")
+
+[node name="Visual" type="Node3D" parent="."]
+transform = Transform3D(0.801193, -0.598293, 0.0116302, 0.598373, 0.801201, -0.00517921, -0.00621942, 0.0111087, 0.999919, 0.311208, -0.085769, -0.377933)
+
+[node name="ShortSword" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.722559, 0.506846, 0.470124, -0.351941, 0.85502, -0.380892, -0.595019, 0.109761, 0.796182, 0.0274287, -0.123017, -0.0551177)
+mesh = ExtResource("2_nouvh")
+skeleton = NodePath("../../../../..")
+surface_material_override/0 = ExtResource("3_8dyp5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qtde2")
+}
+
+[node name="HitCollider" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0628241, 0, -0.815784)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+shape = SubResource("SphereShape3D_7x8d3")
