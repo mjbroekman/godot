@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bb07bnqksvvu5"]
+[gd_scene load_steps=14 format=3 uid="uid://bb07bnqksvvu5"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_p2hn2"]
 [ext_resource type="PackedScene" uid="uid://crvwglv0qgjy0" path="res://City/CityMap.tscn" id="2_m4u1e"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://cv0q3i16m4gyq" path="res://Audio/Sound Effects/Car_Engine_Loop.ogg" id="5_qtm6a"]
 [ext_resource type="AudioStream" uid="uid://bxel47geti0y8" path="res://Audio/Music/Alexander Ehlers - Twists.mp3" id="7_syadw"]
 [ext_resource type="PackedScene" uid="uid://dun2qelmuxito" path="res://ReverbZone.tscn" id="8_cnmjn"]
+[ext_resource type="Script" path="res://Scripts/AudioManager.gd" id="9_qussk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uah4o"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -26,6 +27,9 @@ glow_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.227451, 0.439216, 0.196078, 1)
 fog_density = 0.05
+
+[sub_resource type="LabelSettings" id="LabelSettings_js41n"]
+font_size = 46
 
 [node name="Main" type="Node3D"]
 
@@ -72,3 +76,116 @@ bus = &"Music"
 
 [node name="ReverbZone" parent="." instance=ExtResource("8_cnmjn")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -7.90768, 1.44936, -15.0838)
+
+[node name="AudioManager" type="Node" parent="."]
+script = ExtResource("9_qussk")
+
+[node name="AudioWindow" type="Panel" parent="AudioManager"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AudioControlBox" type="VBoxContainer" parent="AudioManager/AudioWindow"]
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -125.0
+offset_right = 250.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="AudioManager/AudioWindow/AudioControlBox"]
+layout_mode = 2
+text = "Audio Controls"
+label_settings = SubResource("LabelSettings_js41n")
+horizontal_alignment = 1
+
+[node name="MasterVolumeContainer" type="HSplitContainer" parent="AudioManager/AudioWindow/AudioControlBox"]
+custom_minimum_size = Vector2(500, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MasterVolumeLabel" type="Label" parent="AudioManager/AudioWindow/AudioControlBox/MasterVolumeContainer"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+text = "Master Volume "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterVolumeSlider" type="HSlider" parent="AudioManager/AudioWindow/AudioControlBox/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 2.08165e-12
+
+[node name="Spacer" type="Label" parent="AudioManager/AudioWindow/AudioControlBox"]
+layout_mode = 2
+
+[node name="AmbientVolumeContainer" type="HSplitContainer" parent="AudioManager/AudioWindow/AudioControlBox"]
+custom_minimum_size = Vector2(500, 40)
+layout_mode = 2
+size_flags_horizontal = 12
+split_offset = 59
+
+[node name="AmbientVolumeLabel" type="Label" parent="AudioManager/AudioWindow/AudioControlBox/AmbientVolumeContainer"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+text = "Ambient Volume "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AmbientVolumeSlider" type="HSlider" parent="AudioManager/AudioWindow/AudioControlBox/AmbientVolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 2.08165e-12
+
+[node name="Spacer2" type="Label" parent="AudioManager/AudioWindow/AudioControlBox"]
+layout_mode = 2
+
+[node name="MusicVolumeContainer" type="HSplitContainer" parent="AudioManager/AudioWindow/AudioControlBox"]
+custom_minimum_size = Vector2(500, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MusicVolumeLabel" type="Label" parent="AudioManager/AudioWindow/AudioControlBox/MusicVolumeContainer"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+text = "Music Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolumeSlider" type="HSlider" parent="AudioManager/AudioWindow/AudioControlBox/MusicVolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 2.08165e-12
+
+[node name="Spacer3" type="Label" parent="AudioManager/AudioWindow/AudioControlBox"]
+layout_mode = 2
+
+[node name="SFXVolumeContainer" type="HSplitContainer" parent="AudioManager/AudioWindow/AudioControlBox"]
+custom_minimum_size = Vector2(500, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SFXVolumeLabel" type="Label" parent="AudioManager/AudioWindow/AudioControlBox/SFXVolumeContainer"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+text = "Effects Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXVolumeSlider" type="HSlider" parent="AudioManager/AudioWindow/AudioControlBox/SFXVolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 2.08165e-12
