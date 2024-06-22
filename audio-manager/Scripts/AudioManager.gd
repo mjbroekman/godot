@@ -26,3 +26,19 @@ func _get_volume(bus_index : int) -> float:
 func _set_volume(bus_index : int, volume : float):
 	var db_volume = linear_to_db(volume)
 	AudioServer.set_bus_volume_db(bus_index, db_volume)
+
+
+func _on_master_volume_slider_value_changed(value):
+	_set_volume(master_index, value)
+
+
+func _on_ambient_volume_slider_value_changed(value):
+	_set_volume(ambient_index, value)
+
+
+func _on_music_volume_slider_value_changed(value):
+	_set_volume(music_index, value)
+
+
+func _on_sfx_volume_slider_value_changed(value):
+	_set_volume(sfx_index, value)

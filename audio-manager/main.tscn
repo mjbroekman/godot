@@ -189,3 +189,8 @@ layout_mode = 2
 size_flags_vertical = 4
 max_value = 1.0
 step = 2.08165e-12
+
+[connection signal="value_changed" from="AudioManager/AudioWindow/AudioControlBox/MasterVolumeContainer/MasterVolumeSlider" to="AudioManager" method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="AudioManager/AudioWindow/AudioControlBox/AmbientVolumeContainer/AmbientVolumeSlider" to="AudioManager" method="_on_ambient_volume_slider_value_changed"]
+[connection signal="value_changed" from="AudioManager/AudioWindow/AudioControlBox/MusicVolumeContainer/MusicVolumeSlider" to="AudioManager" method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="AudioManager/AudioWindow/AudioControlBox/SFXVolumeContainer/SFXVolumeSlider" to="AudioManager" method="_on_sfx_volume_slider_value_changed"]
