@@ -1,3 +1,36 @@
-[gd_scene format=3 uid="uid://bb07bnqksvvu5"]
+[gd_scene load_steps=6 format=3 uid="uid://bb07bnqksvvu5"]
+
+[ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_p2hn2"]
+[ext_resource type="PackedScene" uid="uid://crvwglv0qgjy0" path="res://City/CityMap.tscn" id="2_m4u1e"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uah4o"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_d2hto"]
+sky_material = SubResource("ProceduralSkyMaterial_uah4o")
+
+[sub_resource type="Environment" id="Environment_4qcpq"]
+background_mode = 2
+sky = SubResource("Sky_d2hto")
+tonemap_mode = 2
+ssao_enabled = true
+ssao_power = 2.78661
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.227451, 0.439216, 0.196078, 1)
+fog_density = 0.05
 
 [node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4qcpq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_color = Color(1, 1, 0.811765, 1)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_p2hn2")]
+
+[node name="CityMap" parent="." instance=ExtResource("2_m4u1e")]
