@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bb07bnqksvvu5"]
+[gd_scene load_steps=10 format=3 uid="uid://bb07bnqksvvu5"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_p2hn2"]
 [ext_resource type="PackedScene" uid="uid://crvwglv0qgjy0" path="res://City/CityMap.tscn" id="2_m4u1e"]
 [ext_resource type="AudioStream" uid="uid://c23ls77ap1eb8" path="res://Audio/Sound Effects/StreetAmbience (2).ogg" id="3_p8c4m"]
+[ext_resource type="PackedScene" uid="uid://dwt2me8jiwhde" path="res://City/Models/taxi.glb" id="4_4n3km"]
+[ext_resource type="Script" path="res://Scripts/Taxi.gd" id="4_65nw7"]
+[ext_resource type="AudioStream" uid="uid://cv0q3i16m4gyq" path="res://Audio/Sound Effects/Car_Engine_Loop.ogg" id="5_qtm6a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uah4o"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -42,3 +45,17 @@ volume_db = -28.0
 unit_size = 1.0
 autoplay = true
 panning_strength = 0.0
+
+[node name="Taxi" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.0462)
+script = ExtResource("4_65nw7")
+
+[node name="taxi2" parent="Taxi" instance=ExtResource("4_4n3km")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.007, 2.08165e-12)
+
+[node name="CarAudio" type="AudioStreamPlayer3D" parent="Taxi"]
+stream = ExtResource("5_qtm6a")
+volume_db = -15.0
+autoplay = true
+max_distance = 25.0
+doppler_tracking = 1
