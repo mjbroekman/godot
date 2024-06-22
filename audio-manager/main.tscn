@@ -47,7 +47,7 @@ shadow_enabled = true
 
 [node name="Ambience" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_p8c4m")
-volume_db = -28.0
+volume_db = -20.0
 unit_size = 1.0
 autoplay = true
 panning_strength = 0.0
