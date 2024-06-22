@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=9 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_xq075"]
+[ext_resource type="Script" path="res://Scripts/Footsteps.gd" id="3_0jp3c"]
+[ext_resource type="AudioStream" uid="uid://04e06cg7sxgg" path="res://Audio/Sound Effects/Footsteps/footstep03.ogg" id="4_oun8l"]
+[ext_resource type="AudioStream" uid="uid://bfam3l24ekn07" path="res://Audio/Sound Effects/Footsteps/footstep04.ogg" id="5_5x0vr"]
+[ext_resource type="AudioStream" uid="uid://dinulh7w3kusf" path="res://Audio/Sound Effects/Footsteps/footstep06.ogg" id="6_icmnf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
 radius = 0.3
@@ -40,3 +44,9 @@ grow_vertical = 2
 label_settings = SubResource("LabelSettings_cbwra")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Footsteps" type="AudioStreamPlayer3D" parent="."]
+volume_db = -15.0
+max_db = 0.429
+script = ExtResource("3_0jp3c")
+footstep_sounds = Array[AudioStream]([ExtResource("4_oun8l"), ExtResource("5_5x0vr"), ExtResource("6_icmnf")])

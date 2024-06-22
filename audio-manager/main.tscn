@@ -36,7 +36,7 @@ shadow_enabled = true
 
 [node name="CityMap" parent="." instance=ExtResource("2_m4u1e")]
 
-[node name="CityAmbiencePlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="Ambience" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_p8c4m")
 volume_db = -28.0
 unit_size = 1.0
