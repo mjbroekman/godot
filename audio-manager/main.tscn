@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bb07bnqksvvu5"]
+[gd_scene load_steps=7 format=3 uid="uid://bb07bnqksvvu5"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_p2hn2"]
 [ext_resource type="PackedScene" uid="uid://crvwglv0qgjy0" path="res://City/CityMap.tscn" id="2_m4u1e"]
+[ext_resource type="AudioStream" uid="uid://c23ls77ap1eb8" path="res://Audio/Sound Effects/StreetAmbience (2).ogg" id="3_p8c4m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uah4o"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,5 +33,11 @@ light_color = Color(1, 1, 0.811765, 1)
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_p2hn2")]
+
+[node name="CityAmbiencePlayer" type="AudioStreamPlayer3D" parent="Player"]
+stream = ExtResource("3_p8c4m")
+volume_db = -28.0
+unit_size = 1.0
+autoplay = true
 
 [node name="CityMap" parent="." instance=ExtResource("2_m4u1e")]
