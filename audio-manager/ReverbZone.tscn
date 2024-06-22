@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dun2qelmuxito"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lhm5x"]
+size = Vector3(1.74054, 2.55841, 5.1377)
+
+[node name="ReverbZone" type="Area3D"]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+audio_bus_override = true
+audio_bus_name = &"SFX Reverb"
+reverb_bus_enabled = true
+reverb_bus_name = &"SFX Reverb"
+reverb_bus_amount = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+shape = SubResource("BoxShape3D_lhm5x")
