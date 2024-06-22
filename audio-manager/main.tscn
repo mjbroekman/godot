@@ -51,7 +51,7 @@ volume_db = -28.0
 unit_size = 1.0
 autoplay = true
 panning_strength = 0.0
-bus = &"SFX"
+bus = &"Ambient"
 
 [node name="Taxi" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.0462)

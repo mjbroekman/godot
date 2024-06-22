@@ -16,6 +16,24 @@ func _ready():
 	ambient_index = AudioServer.get_bus_index("Ambient")
 	music_index = AudioServer.get_bus_index("Music")
 	sfx_index = AudioServer.get_bus_index("SFX")
+	
+	master_slider.value = _get_volume(master_index)
+	ambient_slider.value = _get_volume(ambient_index)
+	music_slider.value = _get_volume(music_index)
+	sfx_slider.value = _get_volume(sfx_index)
+	
+	window.visible = false
+
+
+func _process(_delta):
+	if Input.is_action_pressed("ui_cancel"):
+		window.visible = ! window.visible
+	
+	if window.visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	if ! window.visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _get_volume(bus_index : int) -> float:
