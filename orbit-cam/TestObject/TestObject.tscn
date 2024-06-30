@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0u6u4u323nco"]
+
+[ext_resource type="Script" path="res://TestObject/TestObject.gd" id="1_2fdig"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5yigq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_usosa"]
+
+[node name="TestObject" type="Area3D"]
+script = ExtResource("1_2fdig")
+
+[node name="TestObjectCollider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_5yigq")
+
+[node name="TestObjectMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_usosa")
+
+[node name="BlueLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 10)
+light_color = Color(0, 0, 1, 1)
+light_energy = 10.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.1
+
+[node name="RedLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, -3.48787e-16, -3.48787e-16, -3.48787e-16, -1, 8.74228e-08, -3.48787e-16, -8.74228e-08, -1, 2.08165e-12, 2.08165e-12, -10)
+light_color = Color(1, 0, 0, 1)
+light_energy = 10.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.1
+
+[node name="GreenLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, -6.66422e-31, -1.5246e-23, -1.5246e-23, -4.37114e-08, -1, 0, 1, -4.37114e-08, 2.08165e-12, -10, 2.08165e-12)
+light_color = Color(0, 1, 0, 1)
+light_energy = 10.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.1
+
+[node name="YellowLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 2.08165e-12, 10, 2.08165e-12)
+light_color = Color(1, 1, 0, 1)
+light_energy = 10.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.1
+
+[node name="PurpleLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, 3.48787e-16, 1, 3.48787e-16, 1, -3.48787e-16, -1, 3.48787e-16, -4.37114e-08, 10, 2.08165e-12, 2.08165e-12)
+light_color = Color(0.760784, 0, 0.760784, 1)
+light_energy = 10.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.1
+
+[node name="WhiteLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787e-16, 1, -3.48787e-16, -4.37114e-08, -10, 2.08165e-12, 2.08165e-12)
+light_energy = 10.0
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.1
