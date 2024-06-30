@@ -1,3 +1,29 @@
-[gd_scene format=3 uid="uid://dlrjnpmf4ubyq"]
+[gd_scene load_steps=6 format=3 uid="uid://dlrjnpmf4ubyq"]
+
+[ext_resource type="Script" path="res://Scripts/Generator.gd" id="1_deu2i"]
+[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_smhua"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ftw8y"]
+sky_top_color = Color(0.0313726, 0.0431373, 0.0666667, 1)
+sky_horizon_color = Color(0.0117647, 0.0117647, 0.0156863, 1)
+
+[sub_resource type="Sky" id="Sky_kbs43"]
+sky_material = SubResource("ProceduralSkyMaterial_ftw8y")
+
+[sub_resource type="Environment" id="Environment_76bej"]
+background_mode = 2
+sky = SubResource("Sky_kbs43")
 
 [node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_76bej")
+
+[node name="Generator" type="Node" parent="."]
+script = ExtResource("1_deu2i")
+
+[node name="CameraController" type="CharacterBody3D" parent="."]
+motion_mode = 1
+script = ExtResource("2_smhua")
+
+[node name="Camera3D" type="Camera3D" parent="CameraController"]
