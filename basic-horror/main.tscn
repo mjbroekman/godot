@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://stfwh0h3b"]
+[gd_scene load_steps=21 format=3 uid="uid://stfwh0h3b"]
 
 [ext_resource type="Script" path="res://GameManager.gd" id="1_oayqs"]
 [ext_resource type="PackedScene" uid="uid://c30r2vbecu44d" path="res://Player Controller/Player.tscn" id="1_xsw68"]
+[ext_resource type="Resource" uid="uid://dji30yocqpted" path="res://Items/Item Data/Chalice.tres" id="2_2i2ia"]
 [ext_resource type="ArrayMesh" uid="uid://cndcxj6gf0smr" path="res://Models/Terrain.obj" id="2_cyuhv"]
 [ext_resource type="Material" uid="uid://drm3clvqpis42" path="res://Models/TerrainMaterial.tres" id="3_13d4d"]
 [ext_resource type="PackedScene" uid="uid://dwxdl6tkvd55k" path="res://Models/Rock_0/Rock.tscn" id="4_kvppc"]
@@ -35,14 +36,18 @@ adjustment_saturation = 1.75
 [sub_resource type="LabelSettings" id="LabelSettings_hfjgc"]
 font_size = 36
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dxbw"]
-bg_color = Color(0.133333, 0.333333, 0.0117647, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1qhn"]
+bg_color = Color(0.47451, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_j6qop"]
 font_size = 48
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dxbw"]
+bg_color = Color(0.109804, 0.298039, 0, 1)
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_oayqs")
+chalice_item = ExtResource("2_2i2ia")
 
 [node name="Player" parent="." groups=["Player"] instance=ExtResource("1_xsw68")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.1, 2.08165e-12)
@@ -352,7 +357,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_8dxbw")
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1qhn")
 
 [node name="Label" type="Label" parent="LoseScreen"]
 layout_mode = 1

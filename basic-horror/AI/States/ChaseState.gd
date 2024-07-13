@@ -1,6 +1,6 @@
 extends State
 
-@export var attack_range : float = 1.0
+@export var attack_range : float = 1.5
 @export var lose_interest_range : float = 7.0
 
 var path_update_rate : float = 0.1
@@ -21,6 +21,10 @@ func update (_delta):
 		controller.move_to_position(controller.player.position, false)
 		last_path_update_time = Time.get_unix_time_from_system()
 	
+	print(controller.player_distance)
 	# State transitions.
 	if controller.player_distance > lose_interest_range:
 		state_machine.set_state("Wander")
+	
+	if controller.player_distance <= attack_range:
+		get_node("/root/Main").lose_game()
