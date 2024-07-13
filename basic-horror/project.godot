@@ -11,16 +11,17 @@ config_version=5
 [application]
 
 config/name="Basic Horror Game"
+run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
-
-[dotnet]
-
-project/assembly_name="Basic Horror Game"
 
 [autoload]
 
 GlobalSignals="*res://Global Signals/GlobalSignals.gd"
+
+[dotnet]
+
+project/assembly_name="Basic Horror Game"
 
 [input]
 
