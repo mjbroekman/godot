@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dji30yocqpted"]
+
+[ext_resource type="Texture2D" uid="uid://bc1xxvuqhkdwn" path="res://Items/Icons/Chalice.png" id="1_2efby"]
+[ext_resource type="Script" path="res://Items/Item.gd" id="1_pgrji"]
+
+[resource]
+script = ExtResource("1_pgrji")
+display_name = "Chalice"
+icon = ExtResource("1_2efby")
+max_stack_size = 12
+can_drop = false

@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://mj84qqr0mc2g"]
+
+[ext_resource type="Texture2D" uid="uid://do2bsbo2s6clo" path="res://Models/Chalice/Metal008_1K-JPG_Color.jpg" id="1_aober"]
+
+[resource]
+albedo_texture = ExtResource("1_aober")
+metallic = 0.66
+roughness = 0.48

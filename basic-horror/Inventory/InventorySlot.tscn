@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbkrq4u8m0qvg"]
+
+[ext_resource type="Script" path="res://Inventory/InventorySlot.gd" id="1_iq2e0"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_iegau"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bajys"]
+font_size = 42
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.694118)
+
+[node name="InventorySlot" type="Button"]
+custom_minimum_size = Vector2(96, 96)
+script = ExtResource("1_iq2e0")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("PlaceholderTexture2D_iegau")
+expand_mode = 1
+
+[node name="QuantityText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = -56.0
+offset_right = -8.0
+offset_bottom = 2.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "5"
+label_settings = SubResource("LabelSettings_bajys")
+horizontal_alignment = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -1,0 +1,13 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl Main
+Ns 426.512306
+Ka 0.772947 0.772947 0.772947
+Kd 0.800000 0.800000 0.800000
+Ks 0.456522 0.456522 0.456522
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd Metal008_1K-JPG_Color.jpg
