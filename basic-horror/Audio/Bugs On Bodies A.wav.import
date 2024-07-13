@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bo56asixqbdi2"
+path="res://.godot/imported/Bugs On Bodies A.wav-3475c9a8101a98468b5d1ed140636d34.sample"
+
+[deps]
+
+source_file="res://Audio/Bugs On Bodies A.wav"
+dest_files=["res://.godot/imported/Bugs On Bodies A.wav-3475c9a8101a98468b5d1ed140636d34.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

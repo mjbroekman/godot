@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 @export var walk_speed : float = 1.0
 @export var run_speed : float = 2.5
+
 var running : bool = false
 var is_stopped : bool = false
 var look_at_player : bool = false
@@ -13,10 +14,12 @@ var target_y_rot : float
 @onready var agent : NavigationAgent3D = get_node("NavigationAgent3D")
 @onready var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var player : PlayerController = get_tree().get_nodes_in_group("Player")[0]
+@onready var statemachine : StateMachine = get_node("StateMachine")
+@onready var last_pos : Vector3 = self.position
 
 var player_distance : float
 
-func _process(delta):
+func _process(_delta):
 	if player:
 		player_distance = position.distance_to(player.position)
 
@@ -40,7 +43,7 @@ func _physics_process(delta):
 	
 	var current_speed = walk_speed
 	
-	if running:
+	if self.running:
 		current_speed = run_speed
 	
 	# Set velocity.
@@ -57,6 +60,7 @@ func _physics_process(delta):
 	rotation.y = lerp_angle(rotation.y, target_y_rot, 0.1)
 	
 	move_and_slide()
+
 
 func move_to_position (to_position : Vector3, adjust_pos : bool = true):
 	if not agent:

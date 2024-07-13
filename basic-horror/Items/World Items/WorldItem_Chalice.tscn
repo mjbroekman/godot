@@ -12,7 +12,8 @@ height = 0.335039
 radius = 0.114729
 
 [node name="WorldItem_Chalice" type="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.190053, 2.07674)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.19, 2.08165e-12)
+collision_layer = 2
 script = ExtResource("1_lomrt")
 item_name = "Chalice"
 interact_prompt = "Pickup Chalice?"
@@ -26,3 +27,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_26pq6")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 shape = SubResource("CylinderShape3D_5l2xk")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.670588, 0.0901961, 1)
+light_energy = 0.5
+light_indirect_energy = 0.1
+light_size = 1.0
+distance_fade_enabled = true
+omni_range = 20.0
+omni_attenuation = 1.51572

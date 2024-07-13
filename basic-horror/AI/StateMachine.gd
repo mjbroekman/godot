@@ -36,6 +36,12 @@ func set_state (state_name):
 	state.enter()
 	current_state = state
 
+func get_state():
+	if current_state == null:
+		return "None"
+	
+	return current_state.name
+
 func _process(delta):
 	if current_state != null:
 		current_state.update(delta)

@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://s83njhekgxmv"]
+
+[ext_resource type="Script" path="res://AI/AIController.gd" id="1_k7qkr"]
+[ext_resource type="PackedScene" uid="uid://c2tcjs26j25ww" path="res://AI/Alien/alien-bug.glb" id="2_skh48"]
+[ext_resource type="Script" path="res://AI/AlienSounds.gd" id="3_gbvh7"]
+[ext_resource type="AudioStream" uid="uid://n6q2fwp0qtdn" path="res://Audio/Bugs On Bodies B.wav" id="4_1k8x3"]
+[ext_resource type="Script" path="res://AI/StateMachine.gd" id="5_sj1v2"]
+[ext_resource type="Script" path="res://AI/States/WanderState.gd" id="6_8ee7l"]
+[ext_resource type="Script" path="res://AI/States/ChaseState.gd" id="7_p80h0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hccjo"]
+size = Vector3(0.814, 0.523, 0.5)
+
+[node name="Enemy" type="CharacterBody3D"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+script = ExtResource("1_k7qkr")
+
+[node name="EnemyModel" parent="." instance=ExtResource("2_skh48")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[node name="EnemyFootsteps" type="AudioStreamPlayer3D" parent="."]
+volume_db = 10.667
+max_db = -6.143
+max_distance = 58.52
+script = ExtResource("3_gbvh7")
+footstep_sounds = Array[AudioStream]([ExtResource("4_1k8x3")])
+minimum_velocity = 0.05
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.262795, 2.08165e-12)
+shape = SubResource("BoxShape3D_hccjo")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
+script = ExtResource("5_sj1v2")
+default_state = NodePath("Wander")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("6_8ee7l")
+controller_path = NodePath("../..")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("7_p80h0")
+lose_interest_range = 15.0
+controller_path = NodePath("../..")
+
+[connection signal="target_reached" from="NavigationAgent3D" to="StateMachine" method="on_target_reached"]

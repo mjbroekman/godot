@@ -34,6 +34,7 @@ fov = 60.0
 
 [node name="InteractionController" type="RayCast3D" parent="Camera"]
 target_position = Vector3(0, 0, -2)
+collision_mask = 3
 script = ExtResource("2_eradf")
 
 [node name="InteractionPrompt" type="Label" parent="Camera/InteractionController"]

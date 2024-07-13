@@ -20,8 +20,9 @@ func _process(_delta):
 	
 	if Time.get_unix_time_from_system() - last_play_time < play_rate:
 		return
-	
-	last_play_time = Time.get_unix_time_from_system()
-	stream = footstep_sounds[randi() % len(footstep_sounds)]
-	play()
+
+	if ! self.playing:
+		last_play_time = Time.get_unix_time_from_system()
+		stream = footstep_sounds[randi() % len(footstep_sounds)]
+		play()
 	

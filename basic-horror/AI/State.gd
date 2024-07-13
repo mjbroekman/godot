@@ -21,11 +21,11 @@ func exit ():
 	active = false
 
 # Called every frame while in the state.
-func update (delta):
+func update (_delta):
 	pass
 
 # Called every physics update while in the state.
-func physics_update (delta):
+func physics_update (_delta):
 	pass
 
 # Called when the controller has completed a navigation path.
