@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://stfwh0h3b"]
+[gd_scene load_steps=19 format=3 uid="uid://stfwh0h3b"]
 
+[ext_resource type="Script" path="res://GameManager.gd" id="1_oayqs"]
 [ext_resource type="PackedScene" uid="uid://c30r2vbecu44d" path="res://Player Controller/Player.tscn" id="1_xsw68"]
 [ext_resource type="ArrayMesh" uid="uid://cndcxj6gf0smr" path="res://Models/Terrain.obj" id="2_cyuhv"]
 [ext_resource type="Material" uid="uid://drm3clvqpis42" path="res://Models/TerrainMaterial.tres" id="3_13d4d"]
@@ -34,7 +35,14 @@ adjustment_saturation = 1.75
 [sub_resource type="LabelSettings" id="LabelSettings_hfjgc"]
 font_size = 36
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dxbw"]
+bg_color = Color(0.133333, 0.333333, 0.0117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_j6qop"]
+font_size = 48
+
 [node name="Main" type="Node3D"]
+script = ExtResource("1_oayqs")
 
 [node name="Player" parent="." groups=["Player"] instance=ExtResource("1_xsw68")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.1, 2.08165e-12)
@@ -334,5 +342,61 @@ grow_horizontal = 2
 size_flags_vertical = 0
 text = "Find 5 / 5 chalices"
 label_settings = SubResource("LabelSettings_hfjgc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoseScreen" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8dxbw")
+
+[node name="Label" type="Label" parent="LoseScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -353.0
+offset_top = -173.0
+offset_right = 353.0
+offset_bottom = 173.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game over!
+Press [R] to restart"
+label_settings = SubResource("LabelSettings_j6qop")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WinScreen" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8dxbw")
+
+[node name="Label" type="Label" parent="WinScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -353.0
+offset_top = -173.0
+offset_right = 353.0
+offset_bottom = 173.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You win!
+Press [R] to restart"
+label_settings = SubResource("LabelSettings_j6qop")
 horizontal_alignment = 1
 vertical_alignment = 1
