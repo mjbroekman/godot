@@ -20,7 +20,7 @@ func _ready ():
 	#for item in starter_items:
 	#	add_item(item)
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("inventory"):
 		toggle_window(!window.visible)
 

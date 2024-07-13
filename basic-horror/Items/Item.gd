@@ -7,5 +7,5 @@ extends Resource
 @export var world_item_scene : PackedScene
 @export var can_drop : bool = true
 
-func _on_use (player) -> bool:
+func _on_use (_player) -> bool:
 	return false

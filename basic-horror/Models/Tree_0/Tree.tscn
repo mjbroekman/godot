@@ -1,8 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfr7h8g71lsm2"]
+[gd_scene load_steps=12 format=3 uid="uid://cfr7h8g71lsm2"]
 
 [ext_resource type="ArrayMesh" uid="uid://cn1fag3jvwd8" path="res://Models/Tree_0/tree_obj.obj" id="1_6g01t"]
 [ext_resource type="Texture2D" path="res://Models/Tree_0/leaf04.dds" id="2_kia3e"]
 [ext_resource type="Texture2D" path="res://Models/Tree_0/leaf06.dds" id="3_swekg"]
+[ext_resource type="AudioStream" uid="uid://bddldur1yef5f" path="res://Audio/Flesh Trees Grow B.wav" id="4_shcqu"]
+[ext_resource type="AudioStream" uid="uid://bfhoxtlbpd1ej" path="res://Audio/Body Burst A.wav" id="5_g1arh"]
+[ext_resource type="Script" path="res://Models/Tree_0/TreeSounds.gd" id="5_jajea"]
+[ext_resource type="AudioStream" uid="uid://roqftt00hr48" path="res://Audio/Body Burst B.wav" id="6_qxrrt"]
+[ext_resource type="AudioStream" uid="uid://d2x1vpnj7a00m" path="res://Audio/Flesh Trees Grow A.wav" id="7_qswv6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmqb2"]
 transparency = 2
@@ -32,3 +37,12 @@ surface_material_override/2 = SubResource("StandardMaterial3D_w3cjt")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74587, 0)
 shape = SubResource("CylinderShape3D_ronxl")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = -18.471
+autoplay = true
+max_distance = 100.0
+bus = &"ObjectAudio"
+doppler_tracking = 2
+script = ExtResource("5_jajea")
+sounds = Array[AudioStream]([ExtResource("5_g1arh"), ExtResource("6_qxrrt"), ExtResource("7_qswv6"), ExtResource("4_shcqu")])

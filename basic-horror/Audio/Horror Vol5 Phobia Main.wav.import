@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bxrpnp2qviivs"
+path="res://.godot/imported/Horror Vol5 Phobia Main.wav-953a0d8d79183a47454c0b7ef7734fff.sample"
+
+[deps]
+
+source_file="res://Audio/Horror Vol5 Phobia Main.wav"
+dest_files=["res://.godot/imported/Horror Vol5 Phobia Main.wav-953a0d8d79183a47454c0b7ef7734fff.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

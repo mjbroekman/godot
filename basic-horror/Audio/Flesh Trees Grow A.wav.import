@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d2x1vpnj7a00m"
+path="res://.godot/imported/Flesh Trees Grow A.wav-5e1dacbcf9b744f945a8b4fa33fa81ee.sample"
+
+[deps]
+
+source_file="res://Audio/Flesh Trees Grow A.wav"
+dest_files=["res://.godot/imported/Flesh Trees Grow A.wav-5e1dacbcf9b744f945a8b4fa33fa81ee.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c30r2vbecu44d"]
+[gd_scene load_steps=13 format=3 uid="uid://c30r2vbecu44d"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_1c3dk"]
 [ext_resource type="Script" path="res://Player Controller/InteractionController.gd" id="2_eradf"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://Inventory/Inventory.gd" id="3_p2kwb"]
 [ext_resource type="PackedScene" uid="uid://cbkrq4u8m0qvg" path="res://Inventory/InventorySlot.tscn" id="4_2afjl"]
 [ext_resource type="Material" uid="uid://cx3b2ijwm8h7q" path="res://Models/Lantern/LanternGlass.tres" id="4_k4taa"]
+[ext_resource type="Script" path="res://Player Controller/Footsteps.gd" id="7_o8gor"]
+[ext_resource type="AudioStream" uid="uid://dgk52t7gonbcs" path="res://Audio/Shoe_Step_Grass_Medium_A.wav" id="7_yf0h8"]
+[ext_resource type="AudioStream" uid="uid://bxrpnp2qviivs" path="res://Audio/Horror Vol5 Phobia Main.wav" id="9_1jg6r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_irf6d"]
 radius = 0.3
@@ -60,10 +63,12 @@ surface_material_override/1 = ExtResource("4_k4taa")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Camera/Lantern"]
 light_color = Color(1, 0.741176, 0, 1)
-light_energy = 2.0
+light_energy = 3.0
+light_indirect_energy = 1.5
+light_specular = 0.419
 shadow_enabled = true
 omni_range = 20.0
-omni_attenuation = 1.5
+omni_attenuation = 1.72305
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("3_p2kwb")
@@ -155,3 +160,16 @@ grow_vertical = 0
 label_settings = SubResource("LabelSettings_ka0cv")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Footsteps" type="AudioStreamPlayer3D" parent="."]
+volume_db = -11.429
+bus = &"Footsteps"
+script = ExtResource("7_o8gor")
+footstep_sounds = Array[AudioStream]([ExtResource("7_yf0h8")])
+minimum_velocity = 0.25
+
+[node name="PlayerAmbient" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_1jg6r")
+volume_db = -20.179
+autoplay = true
+bus = &"PlayerAmbient"
