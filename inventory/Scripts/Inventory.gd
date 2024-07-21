@@ -83,5 +83,3 @@ func get_num_of_item(item : Item) -> int:
 			total += slot.quantity
 
 	return total
-
-
