@@ -39,4 +39,9 @@ public partial class HexTileMap : Node2D
 			}
 		}
 	}
+
+	public Vector2 MapToLocal(Vector2I coords)
+	{
+		return baseLayer.MapToLocal(coords);
+	}
 }

@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://b7ggdkk37cq86"]
+[gd_scene load_steps=11 format=3 uid="uid://b7ggdkk37cq86"]
 
 [ext_resource type="Script" path="res://HexTileMap.cs" id="1_r68v5"]
 [ext_resource type="Texture2D" uid="uid://4phrfhi3t0qj" path="res://Textures/hex_128.png" id="2_1bl3p"]
 [ext_resource type="Texture2D" uid="uid://b3wha0vuvqwhf" path="res://Textures/hex_overlays.png" id="3_uhgco"]
+[ext_resource type="Script" path="res://Camera.cs" id="4_k386t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k7xbb"]
 resource_name = "Terrains"
@@ -50,8 +51,6 @@ sources/0 = SubResource("TileSetAtlasSource_b3l3a")
 
 [node name="HexTileMap" type="Node2D" parent="."]
 script = ExtResource("1_r68v5")
-width = 10
-height = 6
 
 [node name="BaseLayer" type="TileMapLayer" parent="HexTileMap"]
 tile_set = SubResource("TileSet_s5re6")
@@ -63,3 +62,5 @@ tile_set = SubResource("TileSet_vg47d")
 tile_set = SubResource("TileSet_2vtvn")
 
 [node name="Camera" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+script = ExtResource("4_k386t")
