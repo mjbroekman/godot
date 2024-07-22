@@ -1,5 +1,20 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+
+public enum TerrainType { PLAINS, WATER, DESERT, MOUNTAIN, BEACH, SHALLOW_WATER, ICE, FOREST }
+//                          0,0    0,1     1,0     1,1      2,0      2,1         3,0     3,1
+
+public class Hex
+{
+	public readonly Vector2I coordinates;
+	public TerrainType terrainType;
+
+	public Hex(Vector2I coords)
+	{
+		this.coordinates = coords;
+	}
+}
 
 public partial class HexTileMap : Node2D
 {
@@ -9,19 +24,27 @@ public partial class HexTileMap : Node2D
 	[Export]
 	public int height = 60;
 
+	// Map data
 	TileMapLayer baseLayer, borderLayer, overlayLayer;
 
-	// Called when the node enters the scene tree for the first time.
+	Dictionary<Vector2I, Hex> mapData = new Dictionary<Vector2I, Hex>();
+	Dictionary<TerrainType, Vector2I> terrainTextures = new Dictionary<TerrainType, Vector2I>();
+
 	public override void _Ready()
 	{
 		baseLayer = GetNode<TileMapLayer>("BaseLayer");
 		borderLayer = GetNode<TileMapLayer>("HexBorderLayer");
 		overlayLayer = GetNode<TileMapLayer>("SelectionOverlayLayer");
 
+		// Initialize map data
+		foreach (TerrainType terrain in Enum.GetValues<TerrainType>())
+		{
+			Vector2I tileLocation = new Vector2I((int)terrain/2,(int)terrain%2);
+			terrainTextures.Add(terrain, tileLocation);
+		}
 		GenerateTerrain();	
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
@@ -40,6 +63,7 @@ public partial class HexTileMap : Node2D
 		}
 	}
 
+	// Utility Functions
 	public Vector2 MapToLocal(Vector2I coords)
 	{
 		return baseLayer.MapToLocal(coords);
