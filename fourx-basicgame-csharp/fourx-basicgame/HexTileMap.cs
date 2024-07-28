@@ -20,33 +20,34 @@ public class Hex
 
 public partial class HexTileMap : Node2D
 {
+	[ExportCategory("Map Size")]
 	[Export]
 	public int width = 100;
-
 	[Export]
 	public int height = 60;
-
 	[Export]
-	public float deepWaterLevel = 2.5f;
 
+	[ExportCategory("Water Levels")]
+	public float deepWaterLevel = 25f;
 	[Export]
-	public float shallowWaterLevel = 4f;
-
+	public float shallowWaterLevel = 40f;
 	[Export]
-	public float beachLevel = 0.5f; // How far above the shallow water should the beach extend.
+	public float beachLevel = 5f; // How far above the shallow water should the beach extend.
 
+	[ExportCategory("Land Frequency")]
 	[Export]
 	public float forestPercent = 30f;
 	[Export]
 	public float desertPercent = 40f;
 	[Export]
 	public float mountainPercent = 10f;
+	[ExportCategory("Polar Cap Size")]
 	[Export]
 	public int minIceDepth = 2;
 	[Export]
 	public int maxIceDepth = 5;
 
-	// This is purely to play around with the noise and find aesthetic values
+	[ExportCategory("Noise Maps")]
 	[Export]
 	FastNoiseLite noiseBase;
 	[Export]
@@ -55,7 +56,6 @@ public partial class HexTileMap : Node2D
 	FastNoiseLite noiseDesert;
 	[Export]
 	FastNoiseLite noiseMountain;
-
 
 	// Map data
 	TileMapLayer baseLayer, borderLayer, overlayLayer;
@@ -68,6 +68,30 @@ public partial class HexTileMap : Node2D
 		baseLayer = GetNode<TileMapLayer>("BaseLayer");
 		borderLayer = GetNode<TileMapLayer>("HexBorderLayer");
 		overlayLayer = GetNode<TileMapLayer>("SelectionOverlayLayer");
+
+		noiseBase.NoiseType = FastNoiseLite.NoiseTypeEnum.Perlin;
+		noiseBase.Frequency = 0.008f;
+		noiseBase.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
+		noiseBase.FractalOctaves = 4;
+		noiseBase.FractalLacunarity = 2.25f;
+
+		noiseForest.NoiseType = FastNoiseLite.NoiseTypeEnum.Cellular;
+		noiseForest.Frequency = 0.006f;
+		noiseForest.FractalType = FastNoiseLite.FractalTypeEnum.Ridged;
+		noiseForest.FractalOctaves = 5;
+		noiseForest.FractalLacunarity = 4f;
+
+		noiseDesert.NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth;
+		noiseDesert.Frequency = 0.015f;
+		noiseDesert.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
+		noiseDesert.FractalOctaves = 4;
+		noiseDesert.FractalLacunarity = 2f;
+
+		noiseMountain.NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex;
+		noiseMountain.Frequency = 0.02f;
+		noiseMountain.FractalType = FastNoiseLite.FractalTypeEnum.Ridged;
+		noiseMountain.FractalOctaves = 4;
+		noiseMountain.FractalLacunarity = 2f;
 
 		// Initialize map data
 		foreach (TerrainType terrain in Enum.GetValues<TerrainType>())
@@ -93,49 +117,17 @@ public partial class HexTileMap : Node2D
 
 		Random r = new Random();
 		int seed = r.Next(100000);
-		GD.Print(seed);
+		GD.Print("Game seed: " + seed);
 
-		// Base Terrain (water,beach, plains)
-		FastNoiseLite baseNoise = new FastNoiseLite();
-		// Forest Terrain
-		FastNoiseLite forestNoise = new FastNoiseLite();
-		// Desert Terrain
-		FastNoiseLite desertNoise = new FastNoiseLite();
-		// Mountain Terrain
-		FastNoiseLite mountainNoise = new FastNoiseLite();
+		noiseBase.Seed = seed;
+		noiseForest.Seed = seed;
+		noiseDesert.Seed = seed;
+		noiseMountain.Seed = seed;
 
-		baseNoise.NoiseType = FastNoiseLite.NoiseTypeEnum.Perlin;
-		baseNoise.Seed = seed;
-		baseNoise.Frequency = 0.008f;
-		baseNoise.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
-		baseNoise.FractalOctaves = 4;
-		baseNoise.FractalLacunarity = 2.25f;
-
-		forestNoise.NoiseType = FastNoiseLite.NoiseTypeEnum.Cellular;
-		forestNoise.Seed = seed;
-		forestNoise.Frequency = 0.006f;
-		forestNoise.FractalType = FastNoiseLite.FractalTypeEnum.Ridged;
-		forestNoise.FractalOctaves = 5;
-		forestNoise.FractalLacunarity = 4f;
-
-		desertNoise.NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth;
-		desertNoise.Seed = seed;
-		desertNoise.Frequency = 0.015f;
-		desertNoise.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
-		// desestNoise.FractalOctaves = 4;
-		desertNoise.FractalLacunarity = 2f;
-
-		mountainNoise.NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex;
-		mountainNoise.Seed = seed;
-		mountainNoise.Frequency = 0.02f;
-		mountainNoise.FractalType = FastNoiseLite.FractalTypeEnum.Ridged;
-		mountainNoise.FractalOctaves = 4;
-		mountainNoise.FractalLacunarity = 2f;
-
-		float baseNoiseMax = 0f;
-		float forestNoiseMax = 0f;
-		float desertNoiseMax = 0f;
-		float mountainNoiseMax = 0f;
+		float noiseBaseMax = 0f;
+		float noiseForestMax = 0f;
+		float noiseDesertMax = 0f;
+		float noiseMountainMax = 0f;
 
 		// Generate noise values
 		for (int x = 0; x < width; x++)
@@ -143,34 +135,41 @@ public partial class HexTileMap : Node2D
 			for (int y = 0; y < height; y++)
 			{
 				// Base terrain
-				noiseMap[x,y] = Math.Abs(baseNoise.GetNoise2D(x,y));
-				if (noiseMap[x,y] > baseNoiseMax ) baseNoiseMax = noiseMap[x,y];
+				noiseMap[x,y] = Math.Abs(noiseBase.GetNoise2D(x,y));
+				if (noiseMap[x,y] > noiseBaseMax ) noiseBaseMax = noiseMap[x,y];
 				// Forest terrain
-				forestMap[x,y] = Math.Abs(forestNoise.GetNoise2D(x,y));
-				if (forestMap[x,y] > forestNoiseMax ) forestNoiseMax = forestMap[x,y];
+				forestMap[x,y] = Math.Abs(noiseForest.GetNoise2D(x,y));
+				if (forestMap[x,y] > noiseForestMax ) noiseForestMax = forestMap[x,y];
 
 				// Desert terrain
-				desertMap[x,y] = Math.Abs(desertNoise.GetNoise2D(x,y));
-				if (desertMap[x,y] > desertNoiseMax ) desertNoiseMax = desertMap[x,y];
+				desertMap[x,y] = Math.Abs(noiseDesert.GetNoise2D(x,y));
+				if (desertMap[x,y] > noiseDesertMax ) noiseDesertMax = desertMap[x,y];
 
 				// Mountain terrain
-				mountainMap[x,y] = Math.Abs(desertNoise.GetNoise2D(x,y));
-				if (mountainMap[x,y] > mountainNoiseMax ) mountainNoiseMax = mountainMap[x,y];
+				mountainMap[x,y] = Math.Abs(noiseDesert.GetNoise2D(x,y));
+				if (mountainMap[x,y] > noiseMountainMax ) noiseMountainMax = mountainMap[x,y];
 			}
 		}
+
+		float terrainThreshold = noiseBaseMax/100f;
+		float forestThreshold = noiseForestMax/100f;
+		float desertThreshold = noiseDesertMax/100f;
+		float mountainThreshold = noiseMountainMax/100f;
 
 		// __BASE__ terrain generation (Water, Shallows, Beach, and Plains)
 		List<(float Min, float Max, TerrainType Type)> terrainGenValues = new List<(float Min, float Max, TerrainType Type)>
 		{
-			(0f, baseNoiseMax/10f * deepWaterLevel, TerrainType.WATER),
-			(baseNoiseMax/10f * deepWaterLevel, baseNoiseMax/10f * shallowWaterLevel, TerrainType.SHALLOW_WATER),
-			(baseNoiseMax/10f * shallowWaterLevel, baseNoiseMax/10f * (shallowWaterLevel + beachLevel), TerrainType.BEACH),
-			(baseNoiseMax/10f * (shallowWaterLevel + beachLevel), baseNoiseMax + 0.05f, TerrainType.PLAINS)
+			(0f, terrainThreshold * deepWaterLevel, TerrainType.WATER),
+			(terrainThreshold * deepWaterLevel, terrainThreshold * shallowWaterLevel, TerrainType.SHALLOW_WATER),
+			(terrainThreshold * shallowWaterLevel, terrainThreshold * (shallowWaterLevel + beachLevel), TerrainType.BEACH),
+			(terrainThreshold * (shallowWaterLevel + beachLevel), noiseBaseMax + 0.05f, TerrainType.PLAINS)
 		};
 
-		float forestGenValue = forestNoiseMax/100f * ( 100f - forestPercent );
-		float desertGenValue = desertNoiseMax/100f * ( 100f- desertPercent );
-		float mountainGenValue = mountainNoiseMax/100f * ( 100f - mountainPercent );
+		// These are more simple overrides of the terrain based on their own noise map.
+		// There is no need to go through the mess of making a tuple-list like with the base terrain
+		float forestGenValue = forestThreshold * ( 100f - forestPercent );
+		float desertGenValue = desertThreshold * ( 100f - desertPercent );
+		float mountainGenValue = mountainThreshold * ( 100f - mountainPercent );
 
 		for (int x = 0; x < width; x++)
 		{
@@ -184,7 +183,7 @@ public partial class HexTileMap : Node2D
 
 				h.terrainType = terrainGenValues.First(range => noiseValue >= range.Min && noiseValue < range.Max).Type;
 
-				if ( noiseValue > (baseNoiseMax/10f * (shallowWaterLevel + beachLevel) ) ) {
+				if ( noiseValue > (terrainThreshold * (shallowWaterLevel + beachLevel) ) ) {
 					if (forestValue > forestGenValue) {
 						h.terrainType = TerrainType.FOREST;
 					} else if (desertValue > desertGenValue) {
@@ -192,7 +191,7 @@ public partial class HexTileMap : Node2D
 					}
 				}
 
-				if ( noiseValue > (baseNoiseMax/10f * (shallowWaterLevel) ) ) {
+				if ( noiseValue > (terrainThreshold * (shallowWaterLevel) ) ) {
 					if ( mountainValue > mountainGenValue ) {
 						h.terrainType = TerrainType.MOUNTAIN;
 					}
@@ -221,12 +220,14 @@ public partial class HexTileMap : Node2D
 				hs.terrainType = TerrainType.ICE;
 				baseLayer.SetCell(new Vector2I(x,(mapBottom - y)), 0, terrainTextures[hs.terrainType]);
 			}
+
 			for (int y = 0; y < r.Next(maxIceDepth) + 1; y++)
 			{
 				Hex hn = mapData[new Vector2I(x,y)];
 				if ( hn.terrainType != TerrainType.MOUNTAIN) hn.terrainType = TerrainType.ICE;
 				baseLayer.SetCell(new Vector2I(x,y), 0, terrainTextures[hn.terrainType]);
 			}
+
 			for (int y = mapBottom; y > (mapBottom - r.Next(maxIceDepth) - 1); y--)
 			{
 				Hex hs = mapData[new Vector2I(x,y)];
