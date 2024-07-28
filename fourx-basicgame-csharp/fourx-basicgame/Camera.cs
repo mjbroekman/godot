@@ -4,7 +4,7 @@ using System;
 public partial class Camera : Camera2D
 {
 	[Export]
-	public int velocity = 15;
+	public int velocity = 25;
 
 	[Export]
 	public float zoom_speed = 0.05f;
@@ -29,10 +29,10 @@ public partial class Camera : Camera2D
 	{
 		map = GetNode<HexTileMap>("../HexTileMap");
 
-		leftBound = ToGlobal(map.MapToLocal(new Vector2I(0,0))).X + 100;
-		rightBound = ToGlobal(map.MapToLocal(new Vector2I(map.width,0))).X - 100;
-		topBound = ToGlobal(map.MapToLocal(new Vector2I(0,0))).Y + 50;
-		bottomBound = ToGlobal(map.MapToLocal(new Vector2I(0,map.height))).Y - 50;
+		leftBound = ToGlobal(map.MapToLocal(new Vector2I(0,0))).X + 500;
+		rightBound = ToGlobal(map.MapToLocal(new Vector2I(map.width,0))).X - 500;
+		topBound = ToGlobal(map.MapToLocal(new Vector2I(0,0))).Y + 100;
+		bottomBound = ToGlobal(map.MapToLocal(new Vector2I(0,map.height))).Y - 100;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

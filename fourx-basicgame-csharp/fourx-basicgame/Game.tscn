@@ -1,9 +1,37 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7ggdkk37cq86"]
+[gd_scene load_steps=15 format=3 uid="uid://b7ggdkk37cq86"]
 
 [ext_resource type="Script" path="res://HexTileMap.cs" id="1_r68v5"]
 [ext_resource type="Texture2D" uid="uid://4phrfhi3t0qj" path="res://Textures/hex_128.png" id="2_1bl3p"]
 [ext_resource type="Texture2D" uid="uid://b3wha0vuvqwhf" path="res://Textures/hex_overlays.png" id="3_uhgco"]
 [ext_resource type="Script" path="res://Camera.cs" id="4_k386t"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k71nq"]
+noise_type = 3
+seed = 11730
+frequency = 0.008
+fractal_octaves = 4
+fractal_lacunarity = 2.25
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lhhg0"]
+noise_type = 2
+seed = 11730
+frequency = 0.006
+offset = Vector3(2.08167e-14, 2.08167e-14, 2.08167e-14)
+fractal_type = 2
+fractal_lacunarity = 4.5
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jaur0"]
+seed = 11730
+frequency = 0.015
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gkcpx"]
+noise_type = 0
+seed = 8591
+frequency = 0.02
+fractal_type = 2
+fractal_octaves = 4
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k7xbb"]
 resource_name = "Terrains"
@@ -51,6 +79,12 @@ sources/0 = SubResource("TileSetAtlasSource_b3l3a")
 
 [node name="HexTileMap" type="Node2D" parent="."]
 script = ExtResource("1_r68v5")
+mountainPercent = 40.0
+minIceDepth = 1
+noiseBase = SubResource("FastNoiseLite_k71nq")
+noiseForest = SubResource("FastNoiseLite_lhhg0")
+noiseDesert = SubResource("FastNoiseLite_jaur0")
+noiseMountain = SubResource("FastNoiseLite_gkcpx")
 
 [node name="BaseLayer" type="TileMapLayer" parent="HexTileMap"]
 tile_set = SubResource("TileSet_s5re6")
