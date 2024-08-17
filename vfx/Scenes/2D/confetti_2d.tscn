@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dippg4c5mjmlt"]
+
+[ext_resource type="Script" path="res://Scripts/particles_2d.gd" id="1_2srra"]
+
+[sub_resource type="Curve" id="Curve_ognwl"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_itugu"]
+offsets = PackedFloat32Array(0.500952, 1)
+colors = PackedColorArray(0.72549, 0.752941, 0.0666667, 1, 1, 0.0156863, 0.0392157, 0.415686)
+
+[sub_resource type="Curve" id="Curve_86acv"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.507719, 0.112012), 0.0, 0.0, 0, 0, Vector2(1, -0.971635), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Confetti2D" type="CPUParticles2D"]
+position = Vector2(504, 230)
+emitting = false
+amount = 50
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.6
+randomness = 0.5
+lifetime_randomness = 0.5
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2(0, -8)
+spread = 25.0
+initial_velocity_min = 500.0
+initial_velocity_max = 1000.0
+scale_amount_min = 15.0
+scale_amount_max = 20.0
+scale_amount_curve = SubResource("Curve_ognwl")
+color_ramp = SubResource("Gradient_itugu")
+hue_variation_min = 1.0
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_86acv")
+script = ExtResource("1_2srra")

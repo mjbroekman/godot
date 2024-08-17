@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://s065x8pkdu1l"]
+
+[ext_resource type="Texture2D" uid="uid://dbsj7r8spmlav" path="res://Assets/Circle.png" id="1_j7df3"]
+[ext_resource type="Script" path="res://Scripts/particles_2d.gd" id="2_x1v0l"]
+
+[sub_resource type="Curve" id="Curve_gjl2t"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.284734, 0.317077), -0.492772, -0.492772, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Hit2D" type="CPUParticles2D"]
+position = Vector2(573, 340)
+emitting = false
+amount = 15
+lifetime = 0.5
+one_shot = true
+speed_scale = 0.7
+explosiveness = 1.0
+texture = ExtResource("1_j7df3")
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+scale_amount_curve = SubResource("Curve_gjl2t")
+script = ExtResource("2_x1v0l")

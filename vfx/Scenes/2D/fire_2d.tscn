@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbjuwhrus6mos"]
+
+[ext_resource type="Script" path="res://Scripts/particles_2d.gd" id="1_yrp8m"]
+
+[sub_resource type="Curve" id="Curve_3lieh"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, -138.64), 0.0, 0.0, 0, 0, Vector2(0.500858, -110.796), 0.0, 0.0, 0, 0, Vector2(1, -183.792), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_0qr56"]
+max_value = 5.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.301887, 3.79595), 0.0, 0.0, 0, 0, Vector2(1, 0.273806), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_e6skm"]
+offsets = PackedFloat32Array(0.0190476, 0.281905, 0.605714, 0.958095)
+colors = PackedColorArray(0.901961, 0.027451, 0.0156863, 0.94902, 0.94902, 0.368627, 0.0745098, 1, 1, 0.756863, 0.141176, 0.870588, 1, 1, 1, 0.113725)
+
+[sub_resource type="Curve" id="Curve_11kxp"]
+min_value = -1.0
+_data = [Vector2(0.0874786, 0.153401), 0.0, 0.0, 0, 0, Vector2(0.962264, -0.00463092), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Fire2D" type="CPUParticles2D"]
+position = Vector2(574, 536)
+amount = 1000
+lifetime = 0.5
+emission_shape = 1
+emission_sphere_radius = 50.0
+gravity = Vector2(0, -3000)
+radial_accel_max = 50.0
+radial_accel_curve = SubResource("Curve_3lieh")
+scale_amount_min = 10.0
+scale_amount_max = 20.0
+scale_amount_curve = SubResource("Curve_0qr56")
+color_ramp = SubResource("Gradient_e6skm")
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_11kxp")
+script = ExtResource("1_yrp8m")
