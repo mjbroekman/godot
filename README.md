@@ -1,14 +1,15 @@
-= Godot Projects =
+# Godot Projects
 
-== Overview ==
-These are godot projects that are being created during courses (mostly through Zenva).
+## Overview
+These are Godot projects created during courses (mostly through Zenva).
 
-== List ==
-These are _my_ implementations of various course work
+## List
+These are _my_ implementations of various coursework
 
 * Basics
   * godot101 - Zenva's Godot 101 course
-  * loops - a simple godot project dealing with loops
+  * loops - a simple Godot mini-project dealing with loops
+    * This is part of Zenva's "Godot 4 Mini-Projects" course available in both learning paths below
   * vfx - Zenva's VFX w/ particles course
 * Systems
   * ai-state-machine - Zenva's AI State machine course/project
@@ -29,7 +30,11 @@ These are _my_ implementations of various course work
   * basic-horror - Zenva's Horror game course
   * tower-defense - Zenva's Tower Defense course
   * fourx-basicgame-csharp - Zenva's 4X Game using C#
-    * This is NOT part of the Godot 4 Game Development Mini-Degree or Godot Open World Gaming Academy learning paths 
-* My Own Creations
-  * orbit-cam - A simple orbit camera implementation and demo
+    * Part 1: https://academy.zenva.com/course/godot-csharp-4x-hex-map/
+* My Creations
+  * orbit-cam - A simple orbit-camera implementation and demo
   * galaxy - The start of something more...
+
+## References
+* Zenva's Godot 4 Game Development Mini-Degree learning path: https://academy.zenva.com/course/godot-4-game-development-mini-degree/
+* Zenva's Godot Open World Gaming Academy learning path: https://academy.zenva.com/course/godot-open-world-gaming-academy/
