@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://vr03kw5x8ck"]
+
+[ext_resource type="ArrayMesh" uid="uid://drkf5xaw60eh1" path="res://Models/tile_cornerSquare.obj" id="1_1p4yx"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dd8db"]
+data = PackedVector3Array(0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 0.1, 0.5, 0.5, 0.1, -0.5, 0.5, 0.1, 0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, 0.1, 0.5, 0.5, 0, 0.5, 0.5, 0.1, 0.5, -0.5, 0, 0.5, -0.5, 0.1, 0.5, -0.5, 0.1, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0.1, -0.5, -0.5, 0.1, 0.5, 0.5, 0, -0.5, -0.5, 0.1, -0.5, -0.5, 0, -0.5, -0.5, 0.1, -0.5, 0.5, 0, -0.5, 0.5, 0.1, -0.5, 0.5, 0.2, 0.5, -0.5, 0.2, -0.5, 0.5, 0.2, -0.5, -0.5, 0.2, -0.5, 0.5, 0.2, 0.5, -0.5, 0.2, 0.5, 0.5, 0.1, -0.5, 0.5, 0.2, 0.5, 0.5, 0.2, -0.5, 0.5, 0.2, 0.5, 0.5, 0.1, -0.5, 0.5, 0.1, 0.5, 0.5, 0.1, -0.5, -0.5, 0.2, -0.5, -0.5, 0.1, -0.5, -0.5, 0.2, -0.5, 0.5, 0.1, -0.5, 0.5, 0.2, -0.5, -0.5, 0.2, -0.5, -0.5, 0.1, 0.5, -0.5, 0.1, -0.5, -0.5, 0.1, 0.5, -0.5, 0.2, -0.5, -0.5, 0.2, 0.5, -0.5, 0.1, 0.5, 0.5, 0.2, 0.5, 0.5, 0.1, 0.5, 0.5, 0.2, 0.5, -0.5, 0.1, 0.5, -0.5, 0.2, 0.5)
+
+[node name="Tile_CornerSquare" type="StaticBody3D" groups=["Path"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_dd8db")
+
+[node name="Tile" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_1p4yx")

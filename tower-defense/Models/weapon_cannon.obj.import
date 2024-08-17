@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ctfkdseimvxni"
+path="res://.godot/imported/weapon_cannon.obj-e50b2f1e42363a38533ebc02627a804b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/weapon_cannon.obj-e50b2f1e42363a38533ebc02627a804b.mesh"]
+
+source_file="res://Models/weapon_cannon.obj"
+dest_files=["res://.godot/imported/weapon_cannon.obj-e50b2f1e42363a38533ebc02627a804b.mesh", "res://.godot/imported/weapon_cannon.obj-e50b2f1e42363a38533ebc02627a804b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
