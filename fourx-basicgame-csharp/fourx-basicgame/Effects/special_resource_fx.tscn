@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf1rj3t63k8lb"]
+
+[sub_resource type="Curve" id="Curve_1k1md"]
+max_value = 3.0
+_data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(1, 0.519681), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="SpecialResource_fx" type="CPUParticles2D"]
+position = Vector2(1054, 568)
+amount = 200
+lifetime = 1.5
+lifetime_randomness = 1.0
+local_coords = true
+draw_order = 1
+emission_shape = 3
+emission_rect_extents = Vector2(50, 50)
+gravity = Vector2(0, -100)
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_1k1md")

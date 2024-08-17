@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://chs0aa50slajb"]
+
+[sub_resource type="Curve" id="Curve_7bxgw"]
+max_value = 3.0
+_data = [Vector2(0, 1.79739), 0.0, 0.0, 0, 0, Vector2(1, 0.428533), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_qum0y"]
+offsets = PackedFloat32Array(0, 0.551843, 1)
+colors = PackedColorArray(0, 1, 0, 0.639216, 0.212781, 0.725537, 0.646645, 0.855769, 0.672249, 0.558138, 5.77569e-07, 1)
+
+[sub_resource type="Curve" id="Curve_xt367"]
+min_value = -1.0
+_data = [Vector2(0, 0.431707), 0.0, 0.0, 0, 0, Vector2(0.508639, -0.518592), 0.0, 0.0, 0, 0, Vector2(1, -1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="FertilePlains_fx" type="CPUParticles2D"]
+position = Vector2(996, 474)
+amount = 200
+lifetime = 2.0
+lifetime_randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(50, 50)
+particle_flag_align_y = true
+gravity = Vector2(0, -400)
+scale_amount_curve = SubResource("Curve_7bxgw")
+color = Color(0, 1, 0, 0.627451)
+color_ramp = SubResource("Gradient_qum0y")
+hue_variation_curve = SubResource("Curve_xt367")
