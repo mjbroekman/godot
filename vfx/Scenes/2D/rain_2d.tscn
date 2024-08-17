@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://c52pfok0kkmpb"]
+
+[ext_resource type="Texture2D" uid="uid://dbsj7r8spmlav" path="res://Assets/Circle.png" id="1_rmci1"]
+
+[node name="Rain2D" type="CPUParticles2D"]
+position = Vector2(672, -2)
+amount = 1000
+lifetime = 1.2
+texture = ExtResource("1_rmci1")
+emission_shape = 3
+emission_rect_extents = Vector2(700, 1)
+gravity = Vector2(-300, 980)
+scale_amount_min = 0.0
+scale_amount_max = 0.1
+color = Color(0.164706, 0.905882, 1, 0.752941)

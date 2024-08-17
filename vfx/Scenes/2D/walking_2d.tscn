@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c652xwif15mr5"]
+
+[ext_resource type="Texture2D" uid="uid://by4iokyhcreu" path="res://icon.svg" id="1_e1a0t"]
+
+[sub_resource type="Curve" id="Curve_qt850"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0.274443, 53.8698), 0.0, 0.0, 0, 0, Vector2(0.506003, -42.3039), 0.0, 0.0, 0, 0, Vector2(0.749571, -154.732), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_hjmys"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.802744, 0.495803), -1.00649, -1.00649, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_espa4"]
+colors = PackedColorArray(1, 1, 1, 1, 0.980392, 0.980392, 0.980392, 0.223529)
+
+[node name="Walking2D" type="CPUParticles2D"]
+position = Vector2(646, 346)
+amount = 5
+lifetime = 0.3
+texture = ExtResource("1_e1a0t")
+spread = 0.0
+gravity = Vector2(0, 0)
+angle_max = 90.0
+angle_curve = SubResource("Curve_qt850")
+scale_amount_curve = SubResource("Curve_hjmys")
+color = Color(0.511488, 0.30174, 0.217346, 1)
+color_ramp = SubResource("Gradient_espa4")

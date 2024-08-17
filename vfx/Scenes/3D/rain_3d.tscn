@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://btv5o3xgtut1q"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w7r2h"]
+emission_shape = 3
+emission_box_extents = Vector3(10, 0.1, 10)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 15.0
+initial_velocity_max = 15.0
+
+[sub_resource type="Curve" id="Curve_l8abm"]
+_data = [Vector2(0.132275, 0), 0.0, 0.0, 0, 0, Vector2(0.82716, 0.148556), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kk0yp"]
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.564962, 0.564962, 0.564962, 1)
+refraction_enabled = true
+refraction_scale = 1.0
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_1y43m"]
+material = SubResource("StandardMaterial3D_kk0yp")
+radius = 0.1
+sections = 8
+section_length = 0.01
+cap_top = false
+cap_bottom = false
+curve = SubResource("Curve_l8abm")
+
+[node name="Rain3D" type="GPUParticles3D"]
+amount = 500
+lifetime = 3.0
+trail_enabled = true
+trail_lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_w7r2h")
+draw_pass_1 = SubResource("TubeTrailMesh_1y43m")
