@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bofahq2hge1ys"]
+
+[ext_resource type="Script" path="res://Scripts/Bullet.gd" id="1_ualev"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ntfxm"]
+radial_segments = 128
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wv470"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.0980392, 1, 0.105882, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vbn1g"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h5iup"]
+
+[node name="Bolt" type="CharacterBody3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+script = ExtResource("1_ualev")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_ntfxm")
+material = SubResource("StandardMaterial3D_wv470")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_vbn1g")
+
+[node name="Collision" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(-4.5897e-08, -1.05, 0, 1.05, -4.5897e-08, 0, 0, 0, 1.05, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_h5iup")
+
+[connection signal="body_entered" from="Collision" to="." method="_on_collision_body_entered"]
