@@ -12,3 +12,6 @@ data_*/
 
 # Ignore the Zenva course files
 Zenva/
+
+# Ignore VSCode stuff
+.vscode/
