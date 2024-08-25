@@ -1,0 +1,280 @@
+[gd_scene load_steps=19 format=4 uid="uid://b8634lohgnmid"]
+
+[ext_resource type="Script" path="res://Scripts/MiniProject/Main.gd" id="1_6d4wt"]
+[ext_resource type="Texture2D" uid="uid://w3mpyaf2i6f8" path="res://Assets/MiniProject/Background.png" id="1_sbely"]
+[ext_resource type="Texture2D" uid="uid://d2ukbjb1yekm7" path="res://Assets/MiniProject/Tiles/Dirt.png" id="2_ohm14"]
+[ext_resource type="Texture2D" uid="uid://cymykyjlostt0" path="res://Assets/MiniProject/Tiles/Grass.png" id="3_qwvn7"]
+[ext_resource type="Texture2D" uid="uid://dn75t7ewwk6yy" path="res://Assets/MiniProject/Player/Jump.png" id="4_5esd4"]
+[ext_resource type="Script" path="res://Scripts/MiniProject/Player.gd" id="4_dlso0"]
+[ext_resource type="Texture2D" uid="uid://ducsyjd58ro0x" path="res://Assets/MiniProject/Player/Idle.png" id="4_qc6e8"]
+[ext_resource type="PackedScene" uid="uid://c83hjxjwscj1p" path="res://Scenes/MiniProject/Coin.tscn" id="8_aocfu"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ordir"]
+texture = ExtResource("2_ohm14")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eeaui"]
+texture = ExtResource("3_qwvn7")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSet" id="TileSet_y162p"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_ordir")
+sources/1 = SubResource("TileSetAtlasSource_eeaui")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6d6vc"]
+size = Vector2(80, 74)
+
+[sub_resource type="Animation" id="Animation_ynma4"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_qc6e8")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:can_jump")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_new_coin"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LandingParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_b3b0i"]
+resource_name = "Jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_5esd4")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [8.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:can_jump")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [Vector2(0, -100000)],
+"method": &"apply_central_force"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ideob"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_qc6e8")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [8.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:can_jump")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LandingParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ya7kv"]
+_data = {
+"Idle": SubResource("Animation_ynma4"),
+"Jump": SubResource("Animation_b3b0i"),
+"RESET": SubResource("Animation_ideob")
+}
+
+[sub_resource type="Curve" id="Curve_b8x0t"]
+min_value = 1.0
+max_value = 4.0
+_data = [Vector2(0.00558659, 4), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_fkd3u"]
+colors = PackedColorArray(0.815686, 0.419608, 0, 1, 1, 1, 1, 0)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_6d4wt")
+coin = ExtResource("8_aocfu")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576, 217)
+scale = Vector2(1.14, 1.14)
+texture = ExtResource("1_sbely")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." groups=["TileMapLayer"]]
+tile_map_data = PackedByteArray("AAAAAAgAAQAAAAAAAAABAAgAAQAAAAAAAAACAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAQAAAAAAAAAFAAgAAQAAAAAAAAAGAAgAAQAAAAAAAAAHAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAKAAgAAQAAAAAAAAALAAgAAQAAAAAAAAAMAAgAAQAAAAAAAAANAAgAAQAAAAAAAAAOAAgAAQAAAAAAAAAPAAgAAQAAAAAAAAAQAAgAAQAAAAAAAAARAAgAAQAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAPAAkAAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAADAAoAAAAAAAAAAAACAAoAAAAAAAAAAAABAAoAAAAAAAAAAAAAAAoAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_y162p")
+
+[node name="Player" type="RigidBody2D" parent="." groups=["Player"]]
+position = Vector2(576, 398)
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("4_dlso0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 11)
+shape = SubResource("RectangleShape2D_6d6vc")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("4_qc6e8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_ya7kv")
+}
+speed_scale = 8.0
+
+[node name="LandingParticles" type="CPUParticles2D" parent="Player"]
+position = Vector2(0, 48)
+emitting = false
+amount = 15
+one_shot = true
+explosiveness = 0.7
+emission_shape = 3
+emission_rect_extents = Vector2(40, 1)
+direction = Vector2(0, -1)
+spread = 75.0
+gravity = Vector2(0, 75)
+initial_velocity_min = 75.0
+initial_velocity_max = 75.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_b8x0t")
+color = Color(0.814716, 0.419367, 5.77569e-07, 1)
+color_ramp = SubResource("Gradient_fkd3u")
+
+[connection signal="body_entered" from="Player" to="Player" method="_on_body_entered"]

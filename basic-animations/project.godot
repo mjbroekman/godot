@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Basic Animations"
-run/main_scene="res://Scenes/Basics/Ship.tscn"
+run/main_scene="res://Scenes/MiniProject/Main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,3 +22,7 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="Basic Animations"
+
+[physics]
+
+2d/default_gravity_vector=Vector2(0, 2)
