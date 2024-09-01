@@ -1,0 +1,61 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://c6ig1ws3otuhc"]
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_bg5ih"]
+default_input_values = [0, 0.5, 1, 0.3, 2, 0.0, 3, 0.0]
+op_type = 0
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_re1ri"]
+constant = 0.8
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_lc0as"]
+default_input_values = [0, Vector2(0, 0)]
+op_type = 0
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_hpk75"]
+output_port_for_preview = 0
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+
+
+
+void fragment() {
+// VectorCompose:2
+	float n_in2p0 = 0.50000;
+	float n_in2p1 = 0.30000;
+	vec2 n_out2p0 = vec2(n_in2p0, n_in2p1);
+
+
+// VectorDecompose:6
+	float n_out6p0 = n_out2p0.x;
+	float n_out6p1 = n_out2p0.y;
+
+
+// FloatConstant:3
+	float n_out3p0 = 0.800000;
+
+
+// VectorCompose:7
+	vec3 n_out7p0 = vec3(n_out6p0, n_out6p1, n_out3p0);
+
+
+// Output:0
+	COLOR.rgb = n_out7p0;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(1240, -200)
+nodes/fragment/2/node = SubResource("VisualShaderNodeVectorCompose_bg5ih")
+nodes/fragment/2/position = Vector2(-200, -340)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFloatConstant_re1ri")
+nodes/fragment/3/position = Vector2(-200, -40)
+nodes/fragment/6/node = SubResource("VisualShaderNodeVectorDecompose_lc0as")
+nodes/fragment/6/position = Vector2(200, -340)
+nodes/fragment/7/node = SubResource("VisualShaderNodeVectorCompose_hpk75")
+nodes/fragment/7/position = Vector2(680, -340)
+nodes/fragment/connections = PackedInt32Array(2, 0, 6, 0, 6, 0, 7, 0, 6, 1, 7, 1, 3, 0, 7, 2, 7, 0, 0, 0)
