@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://po4ii1r8jxox"]
+
+[ext_resource type="Shader" path="res://OpenGL ES Shaders/2 uv and texture/uv_texture.gdshader" id="1_ii1dx"]
+[ext_resource type="Texture2D" uid="uid://gtlnt6txtqsj" path="res://icon.svg" id="2_pakev"]
+
+[sub_resource type="Gradient" id="Gradient_qi33y"]
+colors = PackedColorArray(0, 0.0509804, 0.980392, 1, 0.0156863, 1, 0.0156863, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rx1qs"]
+gradient = SubResource("Gradient_qi33y")
+fill = 1
+fill_from = Vector2(0.356838, 0.376068)
+fill_to = Vector2(0.944444, 0.959402)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fdqoe"]
+shader = ExtResource("1_ii1dx")
+shader_parameter/offset = 0.213
+shader_parameter/gradient_texture = SubResource("GradientTexture2D_rx1qs")
+
+[node name="UvTexture" type="Sprite2D"]
+material = SubResource("ShaderMaterial_fdqoe")
+texture = ExtResource("2_pakev")
