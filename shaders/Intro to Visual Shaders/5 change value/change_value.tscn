@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ie78il5f4vwp"]
 
-[ext_resource type="Shader" uid="uid://c8s2ipkrvhvwx" path="res://5 change value/change_value.tres" id="1_w6hft"]
+[ext_resource type="Shader" uid="uid://c8s2ipkrvhvwx" path="res://Intro to Visual Shaders/5 change value/change_value.tres" id="1_w6hft"]
 [ext_resource type="Texture2D" uid="uid://gtlnt6txtqsj" path="res://icon.svg" id="2_j622x"]
-[ext_resource type="Script" path="res://5 change value/change_value.gd" id="3_wt38d"]
+[ext_resource type="Script" path="res://Intro to Visual Shaders/5 change value/change_value.gd" id="3_wt38d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4p1n0"]
 shader = ExtResource("1_w6hft")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://byph77ocjve17"]
 
-[ext_resource type="Shader" uid="uid://pmhc3u3qsd3r" path="res://7 dissolve challenge/dissolve.tres" id="1_ir4r6"]
+[ext_resource type="Shader" uid="uid://pmhc3u3qsd3r" path="res://Intro to Visual Shaders/7 dissolve challenge/dissolve.tres" id="1_ir4r6"]
 [ext_resource type="Texture2D" uid="uid://gtlnt6txtqsj" path="res://icon.svg" id="2_66jub"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xvhr1"]
