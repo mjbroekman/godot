@@ -1,0 +1,45 @@
+[gd_resource type="VisualShader" load_steps=3 format=3 uid="uid://c8s2ipkrvhvwx"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_0utfj"]
+parameter_name = "Alpha"
+hint = 1
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_qxxov"]
+parameter_name = "Color"
+default_value_enabled = true
+default_value = Color(1, 0.0666667, 0.0352941, 1)
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform vec4 Color : source_color = vec4(1.000000, 0.066667, 0.035294, 1.000000);
+uniform float Alpha : hint_range(0, 1) = 0;
+
+
+
+void fragment() {
+// ColorParameter:3
+	vec4 n_out3p0 = Color;
+
+
+// FloatParameter:2
+	float n_out2p0 = Alpha;
+
+
+// Output:0
+	COLOR.rgb = vec3(n_out3p0.xyz);
+	COLOR.a = n_out2p0;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(1540, 240)
+nodes/fragment/2/node = SubResource("VisualShaderNodeFloatParameter_0utfj")
+nodes/fragment/2/position = Vector2(960, 420)
+nodes/fragment/3/node = SubResource("VisualShaderNodeColorParameter_qxxov")
+nodes/fragment/3/position = Vector2(380, 180)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 1, 3, 0, 0, 0)

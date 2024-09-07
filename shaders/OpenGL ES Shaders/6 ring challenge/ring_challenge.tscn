@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://ldqlv2xrtq3i"]
+
+[ext_resource type="Shader" path="res://OpenGL ES Shaders/6 ring challenge/ring_challenge.gdshader" id="1_brxhu"]
+[ext_resource type="Texture2D" uid="uid://gtlnt6txtqsj" path="res://icon.svg" id="2_7lpt7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ftb2m"]
+shader = ExtResource("1_brxhu")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/ring_outer = 0.47
+shader_parameter/ring_inner = 0.29
+shader_parameter/color = Color(1, 0.0901961, 0.407843, 1)
+
+[node name="RingChallenge" type="Sprite2D"]
+material = SubResource("ShaderMaterial_ftb2m")
+texture = ExtResource("2_7lpt7")

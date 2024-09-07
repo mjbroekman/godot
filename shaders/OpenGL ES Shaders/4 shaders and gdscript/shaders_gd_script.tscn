@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbwj7wm4m73np"]
+
+[ext_resource type="Shader" path="res://OpenGL ES Shaders/4 shaders and gdscript/shaders_gd_script.gdshader" id="1_57yxr"]
+[ext_resource type="Script" path="res://OpenGL ES Shaders/4 shaders and gdscript/shaders_gd_script.gd" id="1_mwi17"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3xhkv"]
+shader = ExtResource("1_57yxr")
+shader_parameter/progress = 0.0
+
+[node name="ShadersGDScript" type="Node"]
+script = ExtResource("1_mwi17")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_3xhkv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 1)

@@ -1,0 +1,73 @@
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://dkw7ytgwvcx4"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_nysos"]
+output_port_for_preview = 1
+expanded_output_ports = [0]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_8c1rn"]
+default_input_values = [0, 0.5, 1, 0.5, 2, 0.0]
+op_type = 0
+
+[sub_resource type="VisualShaderNodeVectorDistance" id="VisualShaderNodeVectorDistance_5elcf"]
+output_port_for_preview = 0
+default_input_values = [0, Vector2(0, 0), 1, Vector2(0, 0)]
+op_type = 0
+
+[sub_resource type="VisualShaderNodeStep" id="VisualShaderNodeStep_l51h2"]
+output_port_for_preview = 0
+default_input_values = [0, 0.4, 1, 0.0]
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_727ri"]
+constant = 0.411
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+
+
+
+void fragment() {
+// FloatConstant:6
+	float n_out6p0 = 0.411000;
+
+
+// VectorCompose:3
+	float n_in3p0 = 0.50000;
+	float n_in3p1 = 0.50000;
+	vec2 n_out3p0 = vec2(n_in3p0, n_in3p1);
+
+
+// Input:2
+	vec2 n_out2p0 = UV;
+
+
+// Distance:4
+	float n_out4p0 = distance(n_out3p0, n_out2p0);
+
+
+// Step:5
+	float n_out5p0 = step(n_out6p0, n_out4p0);
+
+
+// Output:0
+	COLOR.a = n_out5p0;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(220, -260)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_nysos")
+nodes/fragment/2/position = Vector2(-1560, -60)
+nodes/fragment/3/node = SubResource("VisualShaderNodeVectorCompose_8c1rn")
+nodes/fragment/3/position = Vector2(-1300, -380)
+nodes/fragment/4/node = SubResource("VisualShaderNodeVectorDistance_5elcf")
+nodes/fragment/4/position = Vector2(-860, -200)
+nodes/fragment/5/node = SubResource("VisualShaderNodeStep_l51h2")
+nodes/fragment/5/position = Vector2(-460, -260)
+nodes/fragment/6/node = SubResource("VisualShaderNodeFloatConstant_727ri")
+nodes/fragment/6/position = Vector2(-840, -420)
+nodes/fragment/connections = PackedInt32Array(2, 0, 4, 1, 3, 0, 4, 0, 4, 0, 5, 1, 5, 0, 0, 1, 6, 0, 5, 0)
