@@ -10,10 +10,28 @@ config_version=5
 
 [application]
 
-config/name="IGA Sanya Maze"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/name="IGA Maze"
+config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/window_width_override=1920
+window/size/window_height_override=1080
 
 [dotnet]
 
 project/assembly_name="IGA Sanya Maze"
+
+[layer_names]
+
+2d_physics/layer_1="Environment"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemy"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

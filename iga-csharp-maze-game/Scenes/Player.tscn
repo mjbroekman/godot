@@ -1,0 +1,135 @@
+[gd_scene load_steps=12 format=3 uid="uid://bsntie6munwwx"]
+
+[ext_resource type="Texture2D" uid="uid://dp5bex416nbp5" path="res://Resources/Characters/Player/Soldier/Soldier with shadows/Soldier-Idle.png" id="1_6vaam"]
+
+[sub_resource type="Animation" id="Animation_w6nii"]
+resource_name = "Attack"
+step = 0.166667
+
+[sub_resource type="Animation" id="Animation_ryabe"]
+resource_name = "Death"
+step = 0.166667
+
+[sub_resource type="Animation" id="Animation_k4ncr"]
+resource_name = "Hurt"
+step = 0.166667
+
+[sub_resource type="Animation" id="Animation_gneap"]
+resource_name = "Idle"
+step = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_6vaam")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_j4pg7"]
+resource_name = "Move"
+step = 0.166667
+
+[sub_resource type="Animation" id="Animation_j11hy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i8miq"]
+_data = {
+"Attack": SubResource("Animation_w6nii"),
+"Death": SubResource("Animation_ryabe"),
+"Hurt": SubResource("Animation_k4ncr"),
+"Idle": SubResource("Animation_gneap"),
+"Move": SubResource("Animation_j4pg7"),
+"RESET": SubResource("Animation_j11hy")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8alto"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hvayt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2x2m5"]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="PlaerManager" type="Node" parent="."]
+
+[node name="PlayerStateMachine" type="Node" parent="."]
+
+[node name="IdleState" type="Node" parent="PlayerStateMachine"]
+
+[node name="MoveState" type="Node" parent="PlayerStateMachine"]
+
+[node name="AttackState" type="Node" parent="PlayerStateMachine"]
+
+[node name="DeathState" type="Node" parent="PlayerStateMachine"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6vaam")
+hframes = 6
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i8miq")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CapsuleShape2D_8alto")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+visible = false
+
+[node name="HurtboxCollider" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape2D_hvayt")
+
+[node name="Hitbox" type="Area2D" parent="."]
+visible = false
+
+[node name="HitboxCollider" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CapsuleShape2D_2x2m5")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
