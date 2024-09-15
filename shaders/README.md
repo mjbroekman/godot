@@ -16,3 +16,9 @@ These shaders are built during the following Zenva courses:
         n_out2p0 = clamp(1.0 - smoothstep(__depth_world_pos.z + n_out3p0, __depth_world_pos.z, VERTEX.z), 0.0, 1.0);
     }
 ```
+
+= Resources
+* https://godotshaders.com/
+* https://en.wikipedia.org/wiki/Normal_(geometry)
+* https://docs.godotengine.org/en/stable/tutorials/shaders/shader_reference/spatial_shader.html
+
