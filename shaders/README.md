@@ -19,6 +19,10 @@ These shaders are built during the following Zenva courses:
 
 # Resources
 * https://godotshaders.com/
+* https://en.wikipedia.org/wiki/Shader
+* https://en.wikipedia.org/wiki/Graphics_pipeline
 * https://en.wikipedia.org/wiki/Normal_(geometry)
+* https://docs.godotengine.org/en/stable/tutorials/shaders/shader_reference/shading_language.html
+* https://docs.godotengine.org/en/stable/tutorials/shaders/visual_shaders.html
 * https://docs.godotengine.org/en/stable/tutorials/shaders/shader_reference/spatial_shader.html
 
