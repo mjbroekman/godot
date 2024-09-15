@@ -1,4 +1,4 @@
-= Shaders
+= Shaders =
 These shaders are built during the following Zenva courses:
 * Intro to Visual Shaders: https://academy.zenva.com/course/godot-visual-shaders-course/
 * Open GL ES Shaders: https://academy.zenva.com/course/godot-opengl-es-shaders-course/
@@ -6,7 +6,7 @@ These shaders are built during the following Zenva courses:
   * This is a very, very basic introduction to 3d spatial shaders
   * NOTE: ProximityFade only exists in visual shader, in shader code it's a complicated couple of statements
 
-= ProximityFade
+= ProximityFade =
 ```
 // ProximityFade:2
     {
@@ -17,7 +17,7 @@ These shaders are built during the following Zenva courses:
     }
 ```
 
-= Resources
+= Resources =
 * https://godotshaders.com/
 * https://en.wikipedia.org/wiki/Normal_(geometry)
 * https://docs.godotengine.org/en/stable/tutorials/shaders/shader_reference/spatial_shader.html
