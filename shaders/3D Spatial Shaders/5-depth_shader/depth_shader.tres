@@ -1,0 +1,64 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://ceq7w1yqm5sra"]
+
+[sub_resource type="VisualShaderNodeProximityFade" id="VisualShaderNodeProximityFade_32nly"]
+default_input_values = [0, 0.75]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_uiagf"]
+parameter_name = "FloatParameter"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_wwucr"]
+constant = Color(0.23, 1, 0.435333, 0.960784)
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_dmwvq"]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform float FloatParameter = 0;
+uniform sampler2D depth_tex_frg_2 : hint_depth_texture;
+
+
+
+void fragment() {
+// ColorConstant:4
+	vec4 n_out4p0 = vec4(0.230000, 1.000000, 0.435333, 0.960784);
+
+
+// FloatParameter:3
+	float n_out3p0 = FloatParameter;
+
+
+	float n_out2p0;
+// ProximityFade:2
+	{
+		float __depth_tex = texture(depth_tex_frg_2, SCREEN_UV).r;
+		vec4 __depth_world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, __depth_tex, 1.0);
+		__depth_world_pos.xyz /= __depth_world_pos.w;
+		n_out2p0 = clamp(1.0 - smoothstep(__depth_world_pos.z + n_out3p0, __depth_world_pos.z, VERTEX.z), 0.0, 1.0);
+	}
+
+
+// VectorOp:5
+	vec3 n_out5p0 = vec3(n_out4p0.xyz) + vec3(n_out2p0);
+
+
+// Output:0
+	ALBEDO = n_out5p0;
+	ALPHA = n_out2p0;
+
+
+}
+"
+graph_offset = Vector2(-314.705, -96.3166)
+nodes/fragment/0/position = Vector2(1180, 120)
+nodes/fragment/2/node = SubResource("VisualShaderNodeProximityFade_32nly")
+nodes/fragment/2/position = Vector2(220, 360)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFloatParameter_uiagf")
+nodes/fragment/3/position = Vector2(-320, 260)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorConstant_wwucr")
+nodes/fragment/4/position = Vector2(220, -120)
+nodes/fragment/5/node = SubResource("VisualShaderNodeVectorOp_dmwvq")
+nodes/fragment/5/position = Vector2(660, -180)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 1, 3, 0, 2, 0, 4, 0, 5, 0, 2, 0, 5, 1, 5, 0, 0, 0)

@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmxpdaqprdgp8"]
+
+[ext_resource type="Shader" path="res://3D Spatial Shaders/3-terrain_shader/3-terrain_shader.gdshader" id="1_0odgl"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cgxxc"]
+noise_type = 3
+frequency = 0.0068
+fractal_gain = 0.26
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kysyt"]
+noise = SubResource("FastNoiseLite_cgxxc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_58bit"]
+render_priority = 0
+shader = ExtResource("1_0odgl")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_kysyt")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hwk4r"]
+material = SubResource("ShaderMaterial_58bit")
+size = Vector2(10, 10)
+subdivide_width = 200
+subdivide_depth = 200
+
+[node name="TerrainShader" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_hwk4r")

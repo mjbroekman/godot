@@ -11,6 +11,7 @@ These are _my_ implementations of various coursework
   * loops - a simple Godot mini-project dealing with loops
     * This is part of Zenva's "Godot 4 Mini-Projects" course available in both learning paths below
   * vfx - Zenva's VFX w/ particles course
+  * shaders - Zenva's shader courses
 * Systems
   * ai-state-machine - Zenva's AI State machine course/project
   * audio-manager - Zenva's Audio manager course

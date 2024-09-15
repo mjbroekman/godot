@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsa3cm3pheibu"]
+
+[ext_resource type="Shader" path="res://3D Spatial Shaders/6-normal_shader/6-normal_scale.gdshader" id="1_4xn1f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_spk56"]
+render_priority = 0
+shader = ExtResource("1_4xn1f")
+shader_parameter/scale_distance = 0.154
+
+[sub_resource type="SphereMesh" id="SphereMesh_4hd24"]
+material = SubResource("ShaderMaterial_spk56")
+rings = 64
+
+[node name="NormalScale" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_4hd24")

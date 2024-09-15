@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwhuebm7ysux3"]
+
+[ext_resource type="Shader" uid="uid://ceq7w1yqm5sra" path="res://3D Spatial Shaders/5-depth_shader/depth_shader.tres" id="1_cb2rn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lkf80"]
+render_priority = 0
+shader = ExtResource("1_cb2rn")
+shader_parameter/FloatParameter = 1.29
+
+[sub_resource type="SphereMesh" id="SphereMesh_02yaw"]
+material = SubResource("ShaderMaterial_lkf80")
+
+[sub_resource type="BoxMesh" id="BoxMesh_omb7x"]
+
+[node name="DepthShader" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_02yaw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.446182, 0, -0.45897)
+mesh = SubResource("BoxMesh_omb7x")

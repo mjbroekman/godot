@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://io1fsp0qy1xl"]
+
+[ext_resource type="Shader" path="res://3D Spatial Shaders/2-basic_vertex/2-basic_vertex.gdshader" id="1_1ga8q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gh8gu"]
+render_priority = 0
+shader = ExtResource("1_1ga8q")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e84is"]
+material = SubResource("ShaderMaterial_gh8gu")
+subdivide_width = 251
+subdivide_depth = 251
+
+[node name="BasicVertex" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00188553, 0, 0.00552243)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_e84is")

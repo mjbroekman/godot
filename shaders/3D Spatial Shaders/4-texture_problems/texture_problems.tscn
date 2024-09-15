@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqsi32271ywgm"]
+
+[ext_resource type="Shader" path="res://3D Spatial Shaders/4-texture_problems/texture_problems.gdshader" id="1_05l52"]
+
+[sub_resource type="Gradient" id="Gradient_ksrw5"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bahmh"]
+gradient = SubResource("Gradient_ksrw5")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8g1l1"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8vrvd"]
+noise = SubResource("FastNoiseLite_8g1l1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7dea8"]
+render_priority = 0
+shader = ExtResource("1_05l52")
+shader_parameter/progress = 0.385
+shader_parameter/test_texture = SubResource("GradientTexture2D_bahmh")
+shader_parameter/test_texture2 = SubResource("NoiseTexture2D_8vrvd")
+
+[sub_resource type="SphereMesh" id="SphereMesh_r7pn7"]
+material = SubResource("ShaderMaterial_7dea8")
+
+[node name="TextureProblems" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.019446)
+mesh = SubResource("SphereMesh_r7pn7")
