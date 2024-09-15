@@ -107,4 +107,3 @@ func move_to_location(location):
 	# target = null
 	print(agent)
 	agent.target_position = location
-

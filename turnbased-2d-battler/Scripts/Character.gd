@@ -202,4 +202,3 @@ func cast_combat_action(action):
 		self.heal(action.heal_amt)
 	
 	get_node("/root/BattleScene").end_cur_turn()
-

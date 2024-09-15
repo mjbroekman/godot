@@ -24,4 +24,3 @@ func unequip():
 	current_equip.queue_free()
 	current_equip = null
 	current_equip_item = null
-

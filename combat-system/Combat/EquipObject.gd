@@ -16,4 +16,3 @@ func _input(event):
 			on_primary_use()
 		elif event.button_index == 2:
 			on_secondary_use()
-

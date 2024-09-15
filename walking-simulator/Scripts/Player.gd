@@ -78,5 +78,3 @@ func _physics_process(delta):
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		camera_look_input = event.relative
-
-

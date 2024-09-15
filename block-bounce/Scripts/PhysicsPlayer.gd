@@ -28,4 +28,3 @@ func _process(delta):
 	
 	if self.position[1] > game_manager.max_position[1]:
 		self.position[1] = game_manager.max_position[1]
-

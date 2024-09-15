@@ -43,8 +43,8 @@ shape = ExtResource("2_ldjm5")
 
 [node name="Skier" parent="." instance=ExtResource("3_kfxbx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 14.2482, 33.6789)
-max_contacts_reported = 3
 contact_monitor = true
+max_contacts_reported = 3
 
 [node name="Tree" parent="." instance=ExtResource("4_8odw3")]
 

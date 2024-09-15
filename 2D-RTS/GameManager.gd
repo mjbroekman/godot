@@ -68,4 +68,3 @@ func _try_command_unit():
 		selected_unit.set_target(target)
 	else:
 		selected_unit.move_to_location(get_global_mouse_position())
-

@@ -25,4 +25,3 @@ func _process(delta):
 				
 				if distance <= detect_range:
 					set_target(player)
-

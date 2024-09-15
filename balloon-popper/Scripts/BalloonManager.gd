@@ -85,5 +85,3 @@ func get_game_data():
 		"date": Time.get_datetime_string_from_system()
 	}
 	return save_dict
-
-

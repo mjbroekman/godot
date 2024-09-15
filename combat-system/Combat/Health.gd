@@ -51,6 +51,3 @@ func die ():
 	
 	elif post_death_action == PostDeath.RestartScene:
 		get_tree().reload_current_scene()
-
-
-

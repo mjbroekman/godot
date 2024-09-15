@@ -11,4 +11,3 @@ func _ready():
 
 func toggle_selection_visual(toggle):
 	selection_visual.visible = toggle
-
