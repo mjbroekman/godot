@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://b7ggdkk37cq86"]
 
-[ext_resource type="Script" path="res://HexTileMap.cs" id="1_r68v5"]
-[ext_resource type="Texture2D" uid="uid://4phrfhi3t0qj" path="res://Textures/hex_128.png" id="2_1bl3p"]
-[ext_resource type="Texture2D" uid="uid://b3wha0vuvqwhf" path="res://Textures/hex_overlays.png" id="3_uhgco"]
-[ext_resource type="Script" path="res://Camera.cs" id="4_k386t"]
+[ext_resource type="Script" path="res://Scripts/HexTileMap.cs" id="1_ktflq"]
+[ext_resource type="Texture2D" uid="uid://4phrfhi3t0qj" path="res://Textures/hex_128.png" id="2_7te53"]
+[ext_resource type="Texture2D" uid="uid://b3wha0vuvqwhf" path="res://Textures/hex_overlays.png" id="3_3rwi2"]
+[ext_resource type="Script" path="res://Scripts/Camera.cs" id="4_5ioc4"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_k71nq"]
 noise_type = 3
@@ -35,7 +35,7 @@ fractal_octaves = 4
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k7xbb"]
 resource_name = "Terrains"
-texture = ExtResource("2_1bl3p")
+texture = ExtResource("2_7te53")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 1:0/0 = 0
@@ -53,7 +53,7 @@ sources/0 = SubResource("TileSetAtlasSource_k7xbb")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vggj1"]
 resource_name = "Borders"
-texture = ExtResource("3_uhgco")
+texture = ExtResource("3_3rwi2")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 0:1/0 = 0
@@ -65,7 +65,7 @@ sources/0 = SubResource("TileSetAtlasSource_vggj1")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3l3a"]
 resource_name = "Selections"
-texture = ExtResource("3_uhgco")
+texture = ExtResource("3_3rwi2")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 0:1/0 = 0
@@ -77,8 +77,14 @@ sources/0 = SubResource("TileSetAtlasSource_b3l3a")
 
 [node name="Game" type="Node"]
 
-[node name="HexTileMap" type="Node2D" parent="."]
-script = ExtResource("1_r68v5")
+[node name="GameManagers" type="Node" parent="."]
+
+[node name="UI" type="Node" parent="."]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="HexTileMap" type="Node2D" parent="Environment"]
+script = ExtResource("1_ktflq")
 mountainPercent = 40.0
 minIceDepth = 1
 noiseBase = SubResource("FastNoiseLite_k71nq")
@@ -86,15 +92,15 @@ noiseForest = SubResource("FastNoiseLite_lhhg0")
 noiseDesert = SubResource("FastNoiseLite_jaur0")
 noiseMountain = SubResource("FastNoiseLite_gkcpx")
 
-[node name="BaseLayer" type="TileMapLayer" parent="HexTileMap"]
+[node name="BaseLayer" type="TileMapLayer" parent="Environment/HexTileMap"]
 tile_set = SubResource("TileSet_s5re6")
 
-[node name="HexBorderLayer" type="TileMapLayer" parent="HexTileMap"]
+[node name="HexBorderLayer" type="TileMapLayer" parent="Environment/HexTileMap"]
 tile_set = SubResource("TileSet_vg47d")
 
-[node name="SelectionOverlayLayer" type="TileMapLayer" parent="HexTileMap"]
+[node name="SelectionOverlayLayer" type="TileMapLayer" parent="Environment/HexTileMap"]
 tile_set = SubResource("TileSet_2vtvn")
 
-[node name="Camera" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="Environment"]
 position_smoothing_enabled = true
-script = ExtResource("4_k386t")
+script = ExtResource("4_5ioc4")
