@@ -16,6 +16,11 @@ public class Hex
 	{
 		this.coordinates = coords;
 	}
+
+	public override string ToString()
+	{
+		return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType})";
+	}
 }
 
 public partial class HexTileMap : Node2D
