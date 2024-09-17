@@ -113,6 +113,36 @@ public partial class HexTileMap : Node2D
 	{
 	}
 
+	// Handle input that is not handled by other UI elements
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event is InputEventMouseButton mouse) {
+			// Only trigger on mouse button _press_ and only for the left mouse button
+			// Without the IsPressed, this will trigger on press AND release of a mouse button
+			// Without the ButtonIndex check, this will trigger on any button OR mouse wheel scroll
+			if (mouse.IsPressed() && (int)mouse.ButtonIndex == 1) {
+				// GetGlobalMousePosition => Gets the mouse position in the _global canvas_ space
+				//   Example: Vector2 global_pos = GetGlobalMousePosition();
+				//            GD.Print($"Global Mouse Position = {global_pos.X}, {global_pos.Y}");
+				// 
+				// ToLocal => Converts coordinates to coordinates local to the node _we are calling it from_ (in this case, the HexTileMap node)
+				//            This is needed in case the tilemap is not positioned beginning at 0,0... aka, it's good practice
+				//   Example: Vector2 local_pos = ToLocal(global_pos);
+				//            GD.Print($"HexTileMap Local Position = {local_pos.X}, {local_pos.Y}");
+				//
+				// baseLayer.LocalToMap => Converts _NODE local_ coordinates to _MAP LAYER_ coordinates (based on the map layer used).
+				Vector2I mapCoords = baseLayer.LocalToMap(ToLocal(GetGlobalMousePosition()));
+				// Make sure we are within the map boundaries before referencing the mapData
+				if ((mapCoords.X >= 0) && (mapCoords.X < width)) {
+					if ((mapCoords.Y >= 0) &&( mapCoords.Y < height))
+					{
+						GD.Print(mapData[mapCoords]);
+					}
+				}
+			}
+		}
+	}
+
 	public void GenerateTerrain()
 	{
 		float[,] noiseMap = new float[width,height];
