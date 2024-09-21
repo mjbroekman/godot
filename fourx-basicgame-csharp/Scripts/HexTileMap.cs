@@ -10,16 +10,62 @@ public enum TerrainType { PLAINS, WATER, DESERT, MOUNTAIN, BEACH, SHALLOW_WATER,
 public class Hex
 {
 	public readonly Vector2I coordinates;
-	public TerrainType terrainType;
+	private TerrainType tType;
+	public Random rng;
+	public TerrainType terrainType {
+		get { return tType; }
+		set { tType = value; GenerateResources(); }
+	}
+
+	public float foodValue;
+	public float productionValue;
+
+	public bool selected = false;
 
 	public Hex(Vector2I coords)
 	{
 		this.coordinates = coords;
 	}
 
+	public void GenerateResources()
+	{
+		// Populate tiles with food and production
+		switch (this.terrainType)
+		{
+			case TerrainType.PLAINS:
+				this.foodValue = (float)rng.Next(2,6);
+				this.productionValue = (float)rng.Next(1,3);
+				break;
+			case TerrainType.WATER:
+				this.foodValue = (float)rng.Next(2,4);
+				this.productionValue = (float)rng.Next(0,2);
+				break;
+			case TerrainType.SHALLOW_WATER:
+				this.foodValue = (float)rng.Next(1,4);
+				this.productionValue = (float)rng.Next(0,2);
+				break;
+			case TerrainType.DESERT:
+				this.foodValue = (float)rng.Next(0,1);
+				this.productionValue = (float)rng.Next(0,3);
+				break;
+			case TerrainType.FOREST:
+				this.foodValue = (float)rng.Next(2,4);
+				this.productionValue = (float)rng.Next(3,6);
+				break;
+			case TerrainType.BEACH:
+				this.foodValue = (float)rng.Next(1,3);
+				this.productionValue = (float)rng.Next(0,1);
+				break;
+			default:
+				this.foodValue = (float)rng.Next(0,0);
+				this.productionValue = (float)rng.Next(0,0);
+				break;
+		}
+	}
+
 	public override string ToString()
 	{
-		return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType})";
+		return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | Food: {this.foodValue} | Production: {this.productionValue}";
 	}
 }
 
@@ -64,12 +110,15 @@ public partial class HexTileMap : Node2D
 
 	// Map data
 	TileMapLayer baseLayer, borderLayer, overlayLayer;
+	Hex selectedHex = null;
+	Random rng;
 
 	Dictionary<Vector2I, Hex> mapData = new Dictionary<Vector2I, Hex>();
 	Dictionary<TerrainType, Vector2I> terrainTextures = new Dictionary<TerrainType, Vector2I>();
 
 	public override void _Ready()
 	{
+		rng = new Random();
 		baseLayer = GetNode<TileMapLayer>("BaseLayer");
 		borderLayer = GetNode<TileMapLayer>("HexBorderLayer");
 		overlayLayer = GetNode<TileMapLayer>("SelectionOverlayLayer");
@@ -104,7 +153,6 @@ public partial class HexTileMap : Node2D
 			// Convert the ENUM value to the tile location since we have a simple 2 column tile set
 			Vector2I tileLocation = new Vector2I((int)terrain%2,(int)terrain/2);
 			terrainTextures.Add(terrain, tileLocation);
-			// GD.Print(terrain , (int)terrain%2,(int)terrain/2);
 		}
 		GenerateTerrain();	
 	}
@@ -117,29 +165,72 @@ public partial class HexTileMap : Node2D
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton mouse) {
+			// Swapping comparison order... first check map boundaries, then check button so we
+			//  aren't duplicating code for other button click actions...
+			// Original: check mouse button -> check coords
+			// New: check coords -> check mouse button
+			//
+			// GetGlobalMousePosition => Gets the mouse position in the _global canvas_ space
+			//   Example: Vector2 global_pos = GetGlobalMousePosition();
+			//            GD.Print($"Global Mouse Position = {global_pos.X}, {global_pos.Y}");
+			// 
+			// ToLocal => Converts coordinates to coordinates local to the node _we are calling it from_ (in this case, the HexTileMap node)
+			//            This is needed in case the tilemap is not positioned beginning at 0,0... aka, it's good practice
+			//   Example: Vector2 local_pos = ToLocal(global_pos);
+			//            GD.Print($"HexTileMap Local Position = {local_pos.X}, {local_pos.Y}");
+			//
+			// baseLayer.LocalToMap => Converts _NODE local_ coordinates to _MAP LAYER_ coordinates (based on the map layer used).
+			Vector2I mapCoords = baseLayer.LocalToMap(ToLocal(GetGlobalMousePosition()));
+			// Make sure we are within the map boundaries before referencing the mapData
+			// if ((mapCoords.X >= 0) && (mapCoords.X < width)) {
+			// 	if ((mapCoords.Y >= 0) &&( mapCoords.Y < height))
+			// 	{
+			// 		GD.Print(mapData[mapCoords]);
+			// 	}
+			// }
+			// Simply return if the click is outside the map boundaries.
+			// Do it this way to avoid excessive nesting.
+			if (mapCoords.X < 0 || mapCoords.X >= width || mapCoords.Y < 0 || mapCoords.Y >= height) {
+				if (mouse.ButtonMask == MouseButtonMask.Left) {
+					ToggleHexSelection(selectedHex);
+					selectedHex = null;
+				}
+				return;
+			}
+
 			// Only trigger on mouse button _press_ and only for the left mouse button
 			// Without the IsPressed, this will trigger on press AND release of a mouse button
 			// Without the ButtonIndex check, this will trigger on any button OR mouse wheel scroll
-			if (mouse.IsPressed() && (int)mouse.ButtonIndex == 1) {
-				// GetGlobalMousePosition => Gets the mouse position in the _global canvas_ space
-				//   Example: Vector2 global_pos = GetGlobalMousePosition();
-				//            GD.Print($"Global Mouse Position = {global_pos.X}, {global_pos.Y}");
-				// 
-				// ToLocal => Converts coordinates to coordinates local to the node _we are calling it from_ (in this case, the HexTileMap node)
-				//            This is needed in case the tilemap is not positioned beginning at 0,0... aka, it's good practice
-				//   Example: Vector2 local_pos = ToLocal(global_pos);
-				//            GD.Print($"HexTileMap Local Position = {local_pos.X}, {local_pos.Y}");
-				//
-				// baseLayer.LocalToMap => Converts _NODE local_ coordinates to _MAP LAYER_ coordinates (based on the map layer used).
-				Vector2I mapCoords = baseLayer.LocalToMap(ToLocal(GetGlobalMousePosition()));
-				// Make sure we are within the map boundaries before referencing the mapData
-				if ((mapCoords.X >= 0) && (mapCoords.X < width)) {
-					if ((mapCoords.Y >= 0) &&( mapCoords.Y < height))
-					{
-						GD.Print(mapData[mapCoords]);
-					}
+			// Original Method:  if (mouse.IsPressed() && (int)mouse.ButtonIndex == 1) {
+			// New method: use mouse.ButtonMask and MouseButtonMask.<mask>
+			if (mouse.ButtonMask == MouseButtonMask.Left) {
+				if (selectedHex == null) {
+					ToggleHexSelection(mapData[mapCoords]);
+				} else if ( selectedHex != mapData[mapCoords]) {
+					ToggleHexSelection(selectedHex);
+					ToggleHexSelection(mapData[mapCoords]);
+				} else {
+					ToggleHexSelection(selectedHex);
 				}
+				if (selectedHex != null) GD.Print(selectedHex);
 			}
+		}
+	}
+
+	public void ToggleHexSelection(Hex targetHex)
+	{
+		if (targetHex == null) return;
+
+		Vector2I coords = targetHex.coordinates;
+		if (targetHex.selected) {
+			// Set layer to -1 to remove the texture
+			overlayLayer.SetCell(coords, -1);
+			targetHex.selected = false;
+			selectedHex = null;
+		} else {
+			overlayLayer.SetCell(coords, 0, new Vector2I(0,1));
+			selectedHex = targetHex;
+			targetHex.selected = true;
 		}
 	}
 
@@ -211,6 +302,7 @@ public partial class HexTileMap : Node2D
 			for (int y = 0; y < height; y++)
 			{
 				Hex h = new Hex(new Vector2I(x,y));
+				h.rng = rng;
 				float noiseValue = noiseMap[x,y];
 				float forestValue = forestMap[x,y];
 				float desertValue = desertMap[x,y];

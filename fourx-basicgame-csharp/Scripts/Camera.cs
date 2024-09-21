@@ -10,10 +10,10 @@ public partial class Camera : Camera2D
 	public float zoom_speed = 0.05f;
 
 	[Export]
-	public float min_zoom = 0.3f;
+	public float min_zoom = 0.2f;
 
 	[Export]
-	public float max_zoom = 3f;
+	public float max_zoom = 4f;
 
 	bool mouseWheelScrollingUp = false;
 	bool mouseWheelScrollingDown = false;

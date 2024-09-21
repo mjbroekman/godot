@@ -96,6 +96,7 @@ noiseMountain = SubResource("FastNoiseLite_gkcpx")
 tile_set = SubResource("TileSet_s5re6")
 
 [node name="HexBorderLayer" type="TileMapLayer" parent="Environment/HexTileMap"]
+modulate = Color(1, 1, 1, 0.321569)
 tile_set = SubResource("TileSet_vg47d")
 
 [node name="SelectionOverlayLayer" type="TileMapLayer" parent="Environment/HexTileMap"]
