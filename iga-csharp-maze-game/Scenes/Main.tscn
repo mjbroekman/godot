@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://cjmwpei3ka8hb"]
+[gd_scene load_steps=2 format=3 uid="uid://cjmwpei3ka8hb"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerManager.cs" id="1_0dc11"]
 
 [node name="Main" type="Node"]
 
@@ -7,6 +9,9 @@
 [node name="LevelManager" type="Node" parent="GameManagers"]
 
 [node name="EnemyManager" type="Node" parent="GameManagers"]
+
+[node name="PlayerManager" type="Node" parent="GameManagers"]
+script = ExtResource("1_0dc11")
 
 [node name="Entities" type="Node" parent="."]
 
