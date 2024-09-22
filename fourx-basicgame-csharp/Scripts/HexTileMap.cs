@@ -14,7 +14,7 @@ public class Hex
 	public Random rng;
 	public TerrainType terrainType {
 		get { return tType; }
-		set { tType = value; GenerateResources(); }
+		set { tType = value; SetResources(); }
 	}
 
 	public float foodValue;
@@ -27,21 +27,22 @@ public class Hex
 		this.coordinates = coords;
 	}
 
-	public void GenerateResources()
+	// Set the resources for this tile when the terrain type is set
+	public void SetResources()
 	{
 		// Populate tiles with food and production
 		switch (this.terrainType)
 		{
 			case TerrainType.PLAINS:
-				this.foodValue = (float)rng.Next(2,6);
+				this.foodValue = (float)rng.Next(2,7);
 				this.productionValue = (float)rng.Next(1,3);
 				break;
 			case TerrainType.WATER:
-				this.foodValue = (float)rng.Next(2,4);
+				this.foodValue = (float)rng.Next(1,4);
 				this.productionValue = (float)rng.Next(0,2);
 				break;
 			case TerrainType.SHALLOW_WATER:
-				this.foodValue = (float)rng.Next(1,4);
+				this.foodValue = (float)rng.Next(2,4);
 				this.productionValue = (float)rng.Next(0,2);
 				break;
 			case TerrainType.DESERT:
@@ -49,12 +50,12 @@ public class Hex
 				this.productionValue = (float)rng.Next(0,3);
 				break;
 			case TerrainType.FOREST:
-				this.foodValue = (float)rng.Next(2,4);
+				this.foodValue = (float)rng.Next(2,5);
 				this.productionValue = (float)rng.Next(3,6);
 				break;
 			case TerrainType.BEACH:
 				this.foodValue = (float)rng.Next(1,3);
-				this.productionValue = (float)rng.Next(0,1);
+				this.productionValue = (float)rng.Next(0,2);
 				break;
 			default:
 				this.foodValue = (float)rng.Next(0,0);
