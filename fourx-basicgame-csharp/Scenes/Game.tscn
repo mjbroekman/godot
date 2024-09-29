@@ -82,6 +82,8 @@ script = ExtResource("1_7lhna")
 
 [node name="GameManagers" type="Node" parent="."]
 
+[node name="Effects" type="Node" parent="."]
+
 [node name="UI" type="Node" parent="."]
 
 [node name="UICanvas" type="CanvasLayer" parent="UI"]

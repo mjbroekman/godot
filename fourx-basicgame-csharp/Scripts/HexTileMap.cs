@@ -17,8 +17,12 @@ public class Hex
 		set { tType = value; SetResources(); }
 	}
 
-	public float foodValue;
-	public float productionValue;
+	public int foodValue;
+	public int productionValue;
+
+	public bool bonusResource = false;
+	public bool bonusFoodResource = false;
+	public bool bonusProdResource = false;
 
 	public bool selected = false;
 
@@ -34,50 +38,71 @@ public class Hex
 		switch (this.terrainType)
 		{
 			case TerrainType.PLAINS:
-				this.foodValue = (float)rng.Next(2,7);
-				this.productionValue = (float)rng.Next(1,3);
+				this.foodValue = rng.Next(2,7);
+				this.productionValue = rng.Next(1,3);
 				break;
 			case TerrainType.WATER:
-				this.foodValue = (float)rng.Next(1,4);
-				this.productionValue = (float)rng.Next(0,2);
+				this.foodValue = rng.Next(1,4);
+				this.productionValue = rng.Next(0,2);
 				break;
 			case TerrainType.SHALLOW_WATER:
-				this.foodValue = (float)rng.Next(2,4);
-				this.productionValue = (float)rng.Next(0,2);
+				this.foodValue = rng.Next(2,4);
+				this.productionValue = rng.Next(0,2);
 				break;
 			case TerrainType.DESERT:
-				this.foodValue = (float)rng.Next(0,1);
-				this.productionValue = (float)rng.Next(0,3);
+				this.foodValue = rng.Next(0,1);
+				this.productionValue = rng.Next(0,3);
 				break;
 			case TerrainType.FOREST:
-				this.foodValue = (float)rng.Next(2,5);
-				this.productionValue = (float)rng.Next(3,6);
+				this.foodValue = rng.Next(2,5);
+				this.productionValue = rng.Next(3,6);
 				break;
 			case TerrainType.BEACH:
-				this.foodValue = (float)rng.Next(1,3);
-				this.productionValue = (float)rng.Next(0,2);
+				this.foodValue = rng.Next(1,3);
+				this.productionValue = rng.Next(0,2);
 				break;
 			default:
-				this.foodValue = (float)rng.Next(0,0);
-				this.productionValue = (float)rng.Next(0,0);
+				this.foodValue = rng.Next(0,1);
+				this.productionValue = rng.Next(0,1);
 				break;
 		}
+		
+		// If we have a bonusResource, check if it is food or production
+		if (this.bonusResource)
+		{
+			if (rng.NextDouble() > 0.5) {
+				this.foodValue += 1;
+				bonusFoodResource = true;
+			}
+			if (rng.NextDouble() > 0.5) {
+				this.productionValue += 1;
+				bonusProdResource = true;
+			}
+		}
+
+		if (bonusFoodResource && this.foodValue < 1) this.foodValue = 1;
+		if (bonusProdResource && this.productionValue < 1) this.productionValue = 1;
 	}
 
 	public override string ToString()
 	{
-		return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | Food: {this.foodValue} | Production: {this.productionValue}";
+		string foodText = $"Food: {this.foodValue}";
+		string prodText = $"Production: {this.productionValue}";
+		if (this.bonusFoodResource) foodText = $"Food: {this.foodValue - 1} (+1)";
+		if (this.bonusProdResource) prodText = $"Production: {this.productionValue - 1} (+1)";
+		return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | {foodText} | {prodText}";
 	}
 }
 
 public partial class HexTileMap : Node2D
 {
 	[ExportCategory("Map Size")]
-	[Export]
+	[Export(PropertyHint.Range, "30,300,1,or_greater,or_less")]
 	public int width = 100;
-	[Export]
+	[Export(PropertyHint.Range, "30,300,1,or_greater,or_less")]
 	public int height = 60;
-	[Export]
+	[Export(PropertyHint.Range, "0,1,0.0001,or_greater,or_less")]
+	public float bonusChance = 0.01f;
 
 	[ExportCategory("Water Levels")]
 	public float deepWaterLevel = 25f;
@@ -93,6 +118,7 @@ public partial class HexTileMap : Node2D
 	public float desertPercent = 40f;
 	[Export]
 	public float mountainPercent = 10f;
+
 	[ExportCategory("Polar Cap Size")]
 	[Export]
 	public int minIceDepth = 2;
@@ -117,6 +143,10 @@ public partial class HexTileMap : Node2D
 	Hex selectedHex = null;
 	Dictionary<Vector2I, Hex> mapData = new Dictionary<Vector2I, Hex>();
 	Dictionary<TerrainType, Vector2I> terrainTextures = new Dictionary<TerrainType, Vector2I>();
+
+	// Effects
+	PackedScene bonusEffect;
+	Node effectsNode;
 
 	// Signal receivers
 	UIManager uiManager;
@@ -145,6 +175,10 @@ public partial class HexTileMap : Node2D
 
 		// Signal Managers
 		uiManager = GetNode<UIManager>("/root/Game/UI/UICanvas/UIManager");
+
+		// Effects animation
+		effectsNode = GetNode<Node>("/root/Game/Effects");
+		bonusEffect = ResourceLoader.Load<PackedScene>("res://Effects/special_resource_fx.tscn");
 
 		// Initialize map data
 		foreach (TerrainType terrain in Enum.GetValues<TerrainType>())
@@ -350,6 +384,11 @@ public partial class HexTileMap : Node2D
 				float desertValue = desertMap[x,y];
 				float mountainValue = mountainMap[x,y];
 
+				// Are we a specifal resource tile
+				if ( rng.NextDouble() <= bonusChance ) {
+					h.bonusResource = true;
+				}
+
 				h.terrainType = terrainGenValues.First(range => noiseValue >= range.Min && noiseValue < range.Max).Type;
 
 				if ( noiseValue > (terrainThreshold * (shallowWaterLevel + beachLevel) ) ) {
@@ -374,6 +413,14 @@ public partial class HexTileMap : Node2D
 
 				// borderLayer has its own map at index 0 with only 1 "border" tile at 0,0
 				borderLayer.SetCell(new Vector2I(x,y), 0, new Vector2I(0,0));
+
+				if ( h.bonusFoodResource || h.bonusProdResource ) {
+					GD.Print($"Bonus resource found at: {x}, {y}");
+					Vector2 bonusCoords = MapToGlobal(new Vector2I(x,y));
+					CpuParticles2D effect = bonusEffect.Instantiate() as CpuParticles2D;
+					effectsNode.AddChild(effect);
+					effect.Position = bonusCoords;
+				}
 			}
 		}
 
@@ -411,4 +458,10 @@ public partial class HexTileMap : Node2D
 	{
 		return baseLayer.MapToLocal(coords);
 	}
+
+	public Vector2 MapToGlobal(Vector2I coords)
+	{
+		return ToGlobal(MapToLocal(coords));
+	}
+
 }

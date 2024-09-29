@@ -6,7 +6,11 @@ _data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(1, 0.519681), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="SpecialResource_fx" type="CPUParticles2D"]
+top_level = true
+clip_children = 2
+z_index = 4
 position = Vector2(1054, 568)
+scale = Vector2(0.8, 0.8)
 amount = 200
 lifetime = 1.5
 lifetime_randomness = 1.0
@@ -17,3 +21,4 @@ emission_rect_extents = Vector2(50, 50)
 gravity = Vector2(0, -100)
 scale_amount_max = 3.0
 scale_amount_curve = SubResource("Curve_1k1md")
+color = Color(1, 0.152941, 1, 0.654902)

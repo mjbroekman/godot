@@ -52,6 +52,8 @@ public partial class TerrainTileUI : Panel
         // Set label text
         foodLabel.Text = $"Food: {hex.foodValue}";
         prodLabel.Text = $"Production: {hex.productionValue}";
+		if (hex.bonusFoodResource) foodLabel.Text = $"Food: {hex.foodValue - 1} (+1)";
+		if (hex.bonusProdResource) prodLabel.Text = $"Production: {hex.productionValue - 1} (+1)";
         terrainLabel.Text = $"Terrain: {terrainTypeStrings[hex.terrainType]} ({hex.coordinates.X}, {hex.coordinates.Y})";
         terrainImage.Texture = terrainTextures[hex.terrainType];
     }
