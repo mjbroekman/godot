@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://dsq2cgnlbfdci"]
+
+[ext_resource type="Texture2D" uid="uid://bmjvigjxfdkm2" path="res://Textures/Terrain/plains.jpg" id="1_dsjhh"]
+[ext_resource type="Script" path="res://Scripts/TerrainTileUI.cs" id="1_vva8s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5l7q7"]
+bg_color = Color(0.6, 0.396078, 0.0784314, 0.482353)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e46kd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cqidq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m5lst"]
+
+[node name="TerrainTileUI" type="Panel"]
+offset_right = 250.0
+offset_bottom = 260.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5l7q7")
+script = ExtResource("1_vva8s")
+
+[node name="TerrainUIBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(240, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -120.5
+offset_right = 45.0
+offset_bottom = 120.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TerrainImage" type="TextureRect" parent="TerrainUIBox"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+texture = ExtResource("1_dsjhh")
+expand_mode = 1
+
+[node name="TerrainLabel" type="Label" parent="TerrainUIBox"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Terrain:"
+label_settings = SubResource("LabelSettings_e46kd")
+
+[node name="FoodLabel" type="Label" parent="TerrainUIBox"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Food: "
+label_settings = SubResource("LabelSettings_cqidq")
+
+[node name="ProductionLabel" type="Label" parent="TerrainUIBox"]
+layout_mode = 2
+size_flags_vertical = 2
+text = "Production:"
+label_settings = SubResource("LabelSettings_m5lst")

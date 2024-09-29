@@ -1,6 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://b7ggdkk37cq86"]
+[gd_scene load_steps=17 format=3 uid="uid://b7ggdkk37cq86"]
 
+[ext_resource type="Script" path="res://Scripts/Game.cs" id="1_7lhna"]
 [ext_resource type="Script" path="res://Scripts/HexTileMap.cs" id="1_ktflq"]
+[ext_resource type="PackedScene" uid="uid://8u10oh6ldapt" path="res://Scenes/UIManager.tscn" id="1_pjcte"]
 [ext_resource type="Texture2D" uid="uid://4phrfhi3t0qj" path="res://Textures/hex_128.png" id="2_7te53"]
 [ext_resource type="Texture2D" uid="uid://b3wha0vuvqwhf" path="res://Textures/hex_overlays.png" id="3_3rwi2"]
 [ext_resource type="Script" path="res://Scripts/Camera.cs" id="4_5ioc4"]
@@ -76,10 +78,15 @@ tile_size = Vector2i(128, 128)
 sources/0 = SubResource("TileSetAtlasSource_b3l3a")
 
 [node name="Game" type="Node"]
+script = ExtResource("1_7lhna")
 
 [node name="GameManagers" type="Node" parent="."]
 
 [node name="UI" type="Node" parent="."]
+
+[node name="UICanvas" type="CanvasLayer" parent="UI"]
+
+[node name="UIManager" parent="UI/UICanvas" instance=ExtResource("1_pjcte")]
 
 [node name="Environment" type="Node" parent="."]
 
@@ -105,3 +112,6 @@ tile_set = SubResource("TileSet_2vtvn")
 [node name="Camera" type="Camera2D" parent="Environment"]
 position_smoothing_enabled = true
 script = ExtResource("4_5ioc4")
+
+[connection signal="ClickOffMap" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="HideAllPopups"]
+[connection signal="DeselectHex" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="ClearTerrainUI"]

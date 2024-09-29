@@ -109,21 +109,62 @@ public partial class HexTileMap : Node2D
 	[Export]
 	FastNoiseLite noiseMountain;
 
+    // The ever-useful random number generator
+	Random rng;
+
 	// Map data
 	TileMapLayer baseLayer, borderLayer, overlayLayer;
 	Hex selectedHex = null;
-	Random rng;
-
 	Dictionary<Vector2I, Hex> mapData = new Dictionary<Vector2I, Hex>();
 	Dictionary<TerrainType, Vector2I> terrainTextures = new Dictionary<TerrainType, Vector2I>();
 
+	// Signal receivers
+	UIManager uiManager;
+
+	// Signals
+	// // C# Events
+	public delegate void SendHexDataEventHandler(Hex h);
+	public event SendHexDataEventHandler SendHexData;
+
+	// // Godot Signals
+	[Signal]
+	public delegate void ClickOffMapEventHandler();
+	[Signal]
+	public delegate void DeselectHexEventHandler();
+
 	public override void _Ready()
 	{
+		// Initialize the RNG
 		rng = new Random();
+
+		// Find all of our nodes
+		// TileMapLayers
 		baseLayer = GetNode<TileMapLayer>("BaseLayer");
 		borderLayer = GetNode<TileMapLayer>("HexBorderLayer");
 		overlayLayer = GetNode<TileMapLayer>("SelectionOverlayLayer");
 
+		// Signal Managers
+		uiManager = GetNode<UIManager>("/root/Game/UI/UICanvas/UIManager");
+
+		// Initialize map data
+		foreach (TerrainType terrain in Enum.GetValues<TerrainType>())
+		{
+			// Convert the ENUM value to the tile location since we have a simple 2 column tile set
+			Vector2I tileLocation = new Vector2I((int)terrain%2,(int)terrain/2);
+			terrainTextures.Add(terrain, tileLocation);
+		}
+
+		GenerateTerrain();
+
+		// Connect UI Signals (C# Events)
+		//  Needed because 'Hex' is a raw C# class that doesn't extend from a Godot type
+		//  This means that the Godot signal system doesn't recognize the 'Hex' type as
+		//  a valid type.
+		this.SendHexData += uiManager.SetTerrainUI;
+	}
+
+	public void _SetupNoiseMaps()
+	{
 		noiseBase.NoiseType = FastNoiseLite.NoiseTypeEnum.Perlin;
 		noiseBase.Frequency = 0.008f;
 		noiseBase.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
@@ -147,15 +188,6 @@ public partial class HexTileMap : Node2D
 		noiseMountain.FractalType = FastNoiseLite.FractalTypeEnum.Ridged;
 		noiseMountain.FractalOctaves = 4;
 		noiseMountain.FractalLacunarity = 2f;
-
-		// Initialize map data
-		foreach (TerrainType terrain in Enum.GetValues<TerrainType>())
-		{
-			// Convert the ENUM value to the tile location since we have a simple 2 column tile set
-			Vector2I tileLocation = new Vector2I((int)terrain%2,(int)terrain/2);
-			terrainTextures.Add(terrain, tileLocation);
-		}
-		GenerateTerrain();	
 	}
 
 	public override void _Process(double delta)
@@ -195,6 +227,7 @@ public partial class HexTileMap : Node2D
 				if (mouse.ButtonMask == MouseButtonMask.Left) {
 					ToggleHexSelection(selectedHex);
 					selectedHex = null;
+					EmitSignal(SignalName.ClickOffMap);
 				}
 				return;
 			}
@@ -212,8 +245,13 @@ public partial class HexTileMap : Node2D
 					ToggleHexSelection(mapData[mapCoords]);
 				} else {
 					ToggleHexSelection(selectedHex);
+					EmitSignal(SignalName.DeselectHex);
 				}
-				if (selectedHex != null) GD.Print(selectedHex);
+				if (selectedHex != null)
+				{
+					GD.Print(selectedHex);
+					SendHexData?.Invoke(selectedHex);
+				}
 			}
 		}
 	}
@@ -237,6 +275,9 @@ public partial class HexTileMap : Node2D
 
 	public void GenerateTerrain()
 	{
+		// Set up the noise maps
+		_SetupNoiseMaps();
+
 		float[,] noiseMap = new float[width,height];
 		float[,] forestMap = new float[width,height];
 		float[,] desertMap = new float[width,height];
