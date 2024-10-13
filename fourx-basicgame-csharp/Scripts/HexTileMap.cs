@@ -17,9 +17,14 @@ public class Hex
 		set { tType = value; SetResources(); }
 	}
 
+	// Can the hex be owned and, if so, who owns this city
+	public bool canBelong;
+	public City ownerCity;
+	public bool isCityCenter;
+
+	// Resource values
 	public int foodValue;
 	public int productionValue;
-
 	public bool bonusResource = false;
 	public bool bonusFoodResource = false;
 	public bool bonusProdResource = false;
@@ -28,7 +33,14 @@ public class Hex
 
 	public Hex(Vector2I coords)
 	{
+		// Set our coordinates
 		this.coordinates = coords;
+		// Default to being an unowned hex
+		this.ownerCity = null;
+		// Default to not being able to belong to a city
+		this.canBelong = false;
+		// Is this a city center hex
+		this.isCityCenter = false;
 	}
 
 	// Set the resources for this tile when the terrain type is set
@@ -82,6 +94,9 @@ public class Hex
 
 		if (bonusFoodResource && this.foodValue < 1) this.foodValue = 1;
 		if (bonusProdResource && this.productionValue < 1) this.productionValue = 1;
+
+		// If the hex can be productive (in any way), a city can 'own' it as territory
+		if (this.foodValue > 0 || this.productionValue > 0) this.canBelong = true;
 	}
 
 	public override string ToString()
@@ -97,12 +112,25 @@ public class Hex
 public partial class HexTileMap : Node2D
 {
 	[ExportCategory("Map Size")]
+	// Map width
 	[Export(PropertyHint.Range, "30,300,1,or_greater,or_less")]
 	public int width = 100;
+	// Map height
 	[Export(PropertyHint.Range, "30,300,1,or_greater,or_less")]
 	public int height = 60;
+	// Chance of bonus resource
 	[Export(PropertyHint.Range, "0,1,0.0001,or_greater,or_less")]
 	public float bonusChance = 0.01f;
+	// Minimum distance between cities
+	[Export(PropertyHint.Range,"2,15,1,or_greater,or_less")]
+	public int minCityRange = 3;
+	// Minimum starting distance between cities
+	[Export(PropertyHint.Range,"5,20,1,or_greater,or_less")]
+	public int minCityStart = 5;
+	// Number of starting AI civilizations
+	[Export(PropertyHint.Range,"3,10,1,or_greater,or_less")]
+	public int startingCivs = 6;
+
 
 	[ExportCategory("Water Levels")]
 	public float deepWaterLevel = 25f;
@@ -139,7 +167,14 @@ public partial class HexTileMap : Node2D
 	Random rng;
 
 	// Map data
-	TileMapLayer baseLayer, borderLayer, overlayLayer;
+	TileMapLayer baseLayer, civColorLayer, borderLayer, overlayLayer;
+
+	// Base City Color Atlas Source
+	TileSetAtlasSource terrainAtlas;
+
+	// The tile coordinates of the civColorBase
+	public Vector2I civColorBase = new Vector2I(0,3);
+
 	Hex selectedHex = null;
 	Dictionary<Vector2I, Hex> mapData = new Dictionary<Vector2I, Hex>();
 	Dictionary<TerrainType, Vector2I> terrainTextures = new Dictionary<TerrainType, Vector2I>();
@@ -148,10 +183,14 @@ public partial class HexTileMap : Node2D
 	PackedScene bonusEffect;
 	Node effectsNode;
 
-	// Signal receivers
-	UIManager uiManager;
+	// Cities and Civilizations
+	PackedScene cityScene;
+	Node citiesNode;
 
 	// Signals
+	// // Signal receivers
+	UIManager uiManager;
+
 	// // C# Events
 	public delegate void SendHexDataEventHandler(Hex h);
 	public event SendHexDataEventHandler SendHexData;
@@ -162,6 +201,10 @@ public partial class HexTileMap : Node2D
 	[Signal]
 	public delegate void DeselectHexEventHandler();
 
+	// Gameplay data
+	public Dictionary<Vector2I, City> cities;
+	public List<Civilization> civs;
+
 	public override void _Ready()
 	{
 		// Initialize the RNG
@@ -171,7 +214,11 @@ public partial class HexTileMap : Node2D
 		// TileMapLayers
 		baseLayer = GetNode<TileMapLayer>("BaseLayer");
 		borderLayer = GetNode<TileMapLayer>("HexBorderLayer");
+		civColorLayer = GetNode<TileMapLayer>("CivColorLayer");
 		overlayLayer = GetNode<TileMapLayer>("SelectionOverlayLayer");
+
+		// Tile Set Atlas
+		this.terrainAtlas = civColorLayer.TileSet.GetSource(0) as TileSetAtlasSource;
 
 		// Signal Managers
 		uiManager = GetNode<UIManager>("/root/Game/UI/UICanvas/UIManager");
@@ -179,6 +226,10 @@ public partial class HexTileMap : Node2D
 		// Effects animation
 		effectsNode = GetNode<Node>("/root/Game/Effects");
 		bonusEffect = ResourceLoader.Load<PackedScene>("res://Effects/special_resource_fx.tscn");
+
+		// City scenes
+		citiesNode = GetNode<Node>("/root/Game/Cities");
+		cityScene = ResourceLoader.Load<PackedScene>("res://Scenes/City.tscn");
 
 		// Initialize map data
 		foreach (TerrainType terrain in Enum.GetValues<TerrainType>())
@@ -190,11 +241,47 @@ public partial class HexTileMap : Node2D
 
 		GenerateTerrain();
 
+		// Set up city and civ lists
+		civs = new List<Civilization>();
+		cities = new Dictionary<Vector2I, City>();
+
+		List<Vector2I> civStarts = GenerateCivStartingLocations(startingCivs + 1);
+
+		// Generate AI civilizations
+		GenerateAICivs(civStarts);
+
+		// Generate player civilization
+
 		// Connect UI Signals (C# Events)
 		//  Needed because 'Hex' is a raw C# class that doesn't extend from a Godot type
 		//  This means that the Godot signal system doesn't recognize the 'Hex' type as
 		//  a valid type.
 		this.SendHexData += uiManager.SetTerrainUI;
+	}
+
+	public void GenerateAICivs(List<Vector2I> civStarts)
+	{
+		for (int i = 0; i < civStarts.Count - 1; i++) {
+			Civilization currentCiv = new Civilization {
+				id = i + 1,
+				playerCiv = false,
+				name = "AI Civilization " + (i + 1)
+			};
+
+			// Assign random color
+			currentCiv.SetRandomColor();
+
+			// Create alternative tile for civ
+			int id = terrainAtlas.CreateAlternativeTile(civColorBase);
+			terrainAtlas.GetTileData(civColorBase, id).Modulate = currentCiv.territoryColor;
+
+			// Store the alt tile id in the civilization object
+			currentCiv.territoryColorAltTileId = id;
+
+			// Create starting city
+			CreateCity(currentCiv, civStarts[i], "City " + civStarts[i].X);
+			civs.Add(currentCiv);
+		}
 	}
 
 	public void _SetupNoiseMaps()
@@ -257,7 +344,7 @@ public partial class HexTileMap : Node2D
 			// }
 			// Simply return if the click is outside the map boundaries.
 			// Do it this way to avoid excessive nesting.
-			if (mapCoords.X < 0 || mapCoords.X >= width || mapCoords.Y < 0 || mapCoords.Y >= height) {
+			if (HexInBounds(mapCoords)) {
 				if (mouse.ButtonMask == MouseButtonMask.Left) {
 					ToggleHexSelection(selectedHex);
 					selectedHex = null;
@@ -304,6 +391,126 @@ public partial class HexTileMap : Node2D
 			overlayLayer.SetCell(coords, 0, new Vector2I(0,1));
 			selectedHex = targetHex;
 			targetHex.selected = true;
+		}
+	}
+
+	public List<Vector2I> GenerateCivStartingLocations(int numLocations)
+	{
+		List<Vector2I> locations = new List<Vector2I>();
+
+		List<Vector2I> startTiles = new List<Vector2I>();
+
+		for (int x = 0; x < width; x++)
+		{
+			for (int y = 0; y < height; y++)
+			{
+				if (
+					 mapData[new Vector2I(x, y)].terrainType == TerrainType.PLAINS ||
+					 mapData[new Vector2I(x, y)].terrainType == TerrainType.FOREST
+					) {
+					startTiles.Add(new Vector2I(x, y));
+				}
+			}
+		}
+
+		for (int x = 0; x < numLocations; x++) {
+			Vector2I coord = new Vector2I();
+			bool valid = false;
+			int loopCount = 0;
+
+			while( !valid && loopCount < 10000)
+			{
+				coord = startTiles[rng.Next(startTiles.Count)];
+				valid = IsValidLocation( coord, minCityStart, locations);
+				loopCount++;
+			}
+
+			// Remove the tile from the plains tile list
+			startTiles.Remove(coord);
+			// Remove surrounding tiles from the list to shrink the plains list faster
+			foreach (Hex h in GetSurroundingHexes(coord) ) {
+				foreach (Hex j in GetSurroundingHexes(h) ) {
+					foreach (Hex k in GetSurroundingHexes(j) ) {
+						startTiles.Remove(k.coordinates);
+					}
+					startTiles.Remove(j.coordinates);
+				}
+				startTiles.Remove(coord);
+			}
+
+			if (startTiles.Count < 1) {
+				GD.Print($"Ran out of potential starting locations");
+				break;
+			}
+
+			if ( valid ) {
+				GD.Print($"Found good location {coord.X},{coord.Y}");
+				locations.Add(coord);
+			}
+		}
+		return locations;
+	}
+
+	
+	private bool IsValidLocation(Vector2I coord, int minDistance, List<Vector2I> locations)
+	{
+		// Return false if we are too close to the edge of the map
+		if ( coord.X < 3 || coord.X > (width - 3) ) return false;
+		if ( coord.Y < 3 || coord.Y > (height - 3) ) return false;
+
+		// Check existing locations and return false if we are too close to another city
+		foreach (Vector2I loc in locations){
+			if (coord.DistanceTo(loc) < minDistance) return false;
+		}
+		return true;
+	}
+
+	// Function to create a single city
+	public void CreateCity(Civilization civ, Vector2I coords, string name)
+	{
+		GD.Print($"Spawning city {name} for {civ.name} at {coords.X} {coords.Y}");
+		City newCity = cityScene.Instantiate() as City;
+		// Pass a reference to the tilemap to the city
+		newCity.map = this;
+		// Add the city to the civilization and v.v.
+		civ.cities.Add(newCity);
+		newCity.civ = civ;
+		// Add city to the scene tree
+		citiesNode.AddChild(newCity);
+		// Set coordinates (map tile + world coordinates; city center)
+		newCity.cityCenterCoords = coords;
+		Vector2 mapCoords = MapToGlobal(coords); 
+		newCity.Position = mapCoords;
+		GD.Print($"{mapCoords} = {newCity.Position} = {newCity.GlobalPosition}");
+		GD.Print($"{newCity.sprite.Position}");
+
+		mapData[coords].isCityCenter = true;
+		// Set the city name (string + Label in scene)
+		newCity.SetCityName(name);
+		// Set color of the city to the civ color
+		newCity.SetIconColor(civ.territoryColor);
+		// Add starting territory to the city
+		// // Add the city center hex to the city territy
+		newCity.AddTerritory(mapData[coords]);
+		// // Add the surrounding territory
+		List<Hex> surrounding = GetSurroundingHexes(coords);
+		// // need to avoid territorial conflicts with neighboring cities
+		foreach (Hex sH in surrounding) {
+			if (sH.ownerCity == null) newCity.AddTerritory(sH);
+		}
+		// Add city to map city list
+		cities[coords] = newCity;
+		// Paint the map
+		UpdateCivTerritoryMap(civ);
+	}
+
+	// Update territory information for a civilization
+	public void UpdateCivTerritoryMap(Civilization civ)
+	{
+		foreach (City c in civ.cities) {
+			foreach (Hex h in c.territory) {
+				civColorLayer.SetCell(h.coordinates, 0, civColorBase, civ.territoryColorAltTileId);
+			}
 		}
 	}
 
@@ -414,8 +621,8 @@ public partial class HexTileMap : Node2D
 				// borderLayer has its own map at index 0 with only 1 "border" tile at 0,0
 				borderLayer.SetCell(new Vector2I(x,y), 0, new Vector2I(0,0));
 
+				// Generate bonus resources
 				if ( h.bonusFoodResource || h.bonusProdResource ) {
-					GD.Print($"Bonus resource found at: {x}, {y}");
 					Vector2 bonusCoords = MapToGlobal(new Vector2I(x,y));
 					CpuParticles2D effect = bonusEffect.Instantiate() as CpuParticles2D;
 					effectsNode.AddChild(effect);
@@ -454,6 +661,11 @@ public partial class HexTileMap : Node2D
 	}
 
 	// Utility Functions
+	public Hex GetHex(Vector2I coords)
+	{
+		return mapData[coords];
+	}
+
 	public Vector2 MapToLocal(Vector2I coords)
 	{
 		return baseLayer.MapToLocal(coords);
@@ -464,4 +676,24 @@ public partial class HexTileMap : Node2D
 		return ToGlobal(MapToLocal(coords));
 	}
 
+	public List<Hex> GetSurroundingHexes(Vector2I coords)
+	{
+		List<Hex> hexes = new List<Hex>();
+		foreach (Vector2I coord in baseLayer.GetSurroundingCells(coords)) {
+			if (HexInBounds(coord)) hexes.Add(mapData[coord]);
+		}
+		return hexes;
+	}
+
+	public List<Hex> GetSurroundingHexes(Hex center)
+	{
+		return GetSurroundingHexes(center.coordinates);
+	}
+
+	public bool HexInBounds(Vector2I coords)
+	{
+		if (coords.X < 0 || coords.X >= width ||
+			coords.Y < 0 || coords.Y >= height) return false;
+		return true;
+	}
 }
