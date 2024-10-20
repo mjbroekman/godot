@@ -130,7 +130,9 @@ public partial class HexTileMap : Node2D
 	// Number of starting AI civilizations
 	[Export(PropertyHint.Range,"3,10,1,or_greater,or_less")]
 	public int startingCivs = 6;
-
+	// Player civilization color (set in inspector for now; can be through menu)
+	[Export]
+	public Color PLAYER_COLOR = new Color(0,0,0);
 
 	[ExportCategory("Water Levels")]
 	public float deepWaterLevel = 25f;
@@ -247,6 +249,10 @@ public partial class HexTileMap : Node2D
 
 		List<Vector2I> civStarts = GenerateCivStartingLocations(startingCivs + 1);
 
+		// Generate player civilization
+		Civilization playerCiv = CreatePlayerCiv(civStarts[0]);
+		civStarts.RemoveAt(0);
+
 		// Generate AI civilizations
 		GenerateAICivs(civStarts);
 
@@ -259,9 +265,26 @@ public partial class HexTileMap : Node2D
 		this.SendHexData += uiManager.SetTerrainUI;
 	}
 
+	public Civilization CreatePlayerCiv(Vector2I start)
+	{
+		Civilization playerCiv = new Civilization();
+		playerCiv.id = 0; // Player civ is 0; all others are greater than 0
+		playerCiv.playerCiv = true;
+		playerCiv.territoryColor = new Color(PLAYER_COLOR);
+
+		int id = terrainAtlas.CreateAlternativeTile(civColorBase);
+		terrainAtlas.GetTileData(civColorBase, id).Modulate = playerCiv.territoryColor;
+		playerCiv.territoryColorAltTileId = id;
+		civs.Add(playerCiv);
+
+		CreateCity(playerCiv,start,"Player City");
+
+		return playerCiv;
+	}
+
 	public void GenerateAICivs(List<Vector2I> civStarts)
 	{
-		for (int i = 0; i < civStarts.Count - 1; i++) {
+		for (int i = 0; i < civStarts.Count; i++) {
 			Civilization currentCiv = new Civilization {
 				id = i + 1,
 				playerCiv = false,

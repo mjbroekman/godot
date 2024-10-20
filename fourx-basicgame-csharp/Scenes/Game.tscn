@@ -113,6 +113,7 @@ script = ExtResource("1_7lhna")
 
 [node name="HexTileMap" type="Node2D" parent="Environment"]
 script = ExtResource("1_ktflq")
+PLAYER_COLOR = Color(0, 0, 0.968627, 1)
 mountainPercent = 40.0
 minIceDepth = 1
 noiseBase = SubResource("FastNoiseLite_k71nq")
