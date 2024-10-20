@@ -37,6 +37,10 @@ public partial class City : Node2D
         label = GetNode<Label>("CityName");
         territory = new List<Hex>();
         borderTilePool = new List<Hex>();
+        // Make sure the city is visible above tilemaps (ZIndex: 0)
+        ZIndex = 3;
+        // Make sure ZIndex is relative to parent objects
+        ZAsRelative = true;
     }
 
     public override void _Process(double delta)

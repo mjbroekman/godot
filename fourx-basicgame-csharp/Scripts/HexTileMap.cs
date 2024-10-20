@@ -482,7 +482,7 @@ public partial class HexTileMap : Node2D
 		Vector2 mapCoords = MapToGlobal(coords); 
 		newCity.Position = mapCoords;
 		GD.Print($"{mapCoords} = {newCity.Position} = {newCity.GlobalPosition}");
-		GD.Print($"{newCity.sprite.Position}");
+		GD.Print($"{newCity.sprite.Position} : {newCity.ZIndex} : {newCity.ZAsRelative}");
 
 		mapData[coords].isCityCenter = true;
 		// Set the city name (string + Label in scene)
