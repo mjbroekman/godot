@@ -31,7 +31,9 @@ These are _my_ implementations of various coursework
   * basic-horror - Zenva's Horror game course
   * tower-defense - Zenva's Tower Defense course
   * fourx-basicgame-csharp - Zenva's 4X Game using C#
-    * Part 1: https://academy.zenva.com/course/godot-csharp-4x-hex-map/
+    * Part 1: https://academy.zenva.com/product/godot-csharp-4x-hex-map/
+    * Part 2: https://academy.zenva.com/product/godot-csharp-4x-city-course/
+    * Part 3: https://academy.zenva.com/product/godot-csharp-4x-unit-course/
 * My Creations
   * orbit-cam - A simple orbit-camera implementation and demo
   * galaxy - The start of something more...
