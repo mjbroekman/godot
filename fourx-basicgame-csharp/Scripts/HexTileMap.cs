@@ -202,6 +202,8 @@ public partial class HexTileMap : Node2D
 	public delegate void ClickOffMapEventHandler();
 	[Signal]
 	public delegate void DeselectHexEventHandler();
+	[Signal]
+	public delegate void SendCityUIInfoEventHandler(City c);
 
 	// Gameplay data
 	public Dictionary<Vector2I, City> cities;
@@ -367,7 +369,8 @@ public partial class HexTileMap : Node2D
 			// }
 			// Simply return if the click is outside the map boundaries.
 			// Do it this way to avoid excessive nesting.
-			if (HexInBounds(mapCoords)) {
+			if (!HexInBounds(mapCoords)) {
+				GD.Print("Mouse click out of bounds");
 				if (mouse.ButtonMask == MouseButtonMask.Left) {
 					ToggleHexSelection(selectedHex);
 					selectedHex = null;
@@ -394,7 +397,11 @@ public partial class HexTileMap : Node2D
 				if (selectedHex != null)
 				{
 					GD.Print(selectedHex);
-					SendHexData?.Invoke(selectedHex);
+					if (!selectedHex.isCityCenter) {
+						SendHexData?.Invoke(selectedHex);
+					} else {
+						EmitSignal(SignalName.SendCityUIInfo, cities[mapCoords]);
+					}
 				}
 			}
 		}
@@ -474,7 +481,6 @@ public partial class HexTileMap : Node2D
 		return locations;
 	}
 
-	
 	private bool IsValidLocation(Vector2I coord, int minDistance, List<Vector2I> locations)
 	{
 		// Return false if we are too close to the edge of the map
@@ -491,7 +497,7 @@ public partial class HexTileMap : Node2D
 	// Function to create a single city
 	public void CreateCity(Civilization civ, Vector2I coords, string name)
 	{
-		GD.Print($"Spawning city {name} for {civ.name} at {coords.X} {coords.Y}");
+		// GD.Print($"Spawning city {name} for {civ.name} at {coords.X} {coords.Y}");
 		City newCity = cityScene.Instantiate() as City;
 		// Pass a reference to the tilemap to the city
 		newCity.map = this;
@@ -504,8 +510,8 @@ public partial class HexTileMap : Node2D
 		newCity.cityCenterCoords = coords;
 		Vector2 mapCoords = MapToGlobal(coords); 
 		newCity.Position = mapCoords;
-		GD.Print($"{mapCoords} = {newCity.Position} = {newCity.GlobalPosition}");
-		GD.Print($"{newCity.sprite.Position} : {newCity.ZIndex} : {newCity.ZAsRelative}");
+		// GD.Print($"{mapCoords} = {newCity.Position} = {newCity.GlobalPosition}");
+		// GD.Print($"{newCity.sprite.Position} : {newCity.ZIndex} : {newCity.ZAsRelative}");
 
 		mapData[coords].isCityCenter = true;
 		// Set the city name (string + Label in scene)

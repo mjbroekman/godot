@@ -8,7 +8,7 @@ point_count = 2
 [node name="SpecialResource_fx" type="CPUParticles2D"]
 top_level = true
 clip_children = 2
-z_index = 9
+z_index = 6
 position = Vector2(1054, 568)
 scale = Vector2(0.8, 0.8)
 amount = 200

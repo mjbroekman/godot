@@ -25,7 +25,24 @@ public partial class City : Node2D
     public Civilization civ;
 
     // City name
-    public string name;
+    public string cityName;
+
+    // City UI Values
+    public int population = 1;
+    // Value of _all_ tiles
+    public int totalFood;
+    public int totalProduction;
+    // Values of _worked_ tiles
+    public int workedFood;
+    public int workedProduction;
+
+    // City Production Priorities
+    // // Prioritize Food value for growth
+    public bool prioritizeFood = true;
+    // // Prioritize Production value for industry
+    public bool prioritizeProduction = false;
+    // // Prioritize total resources in tile
+    public bool prioritizeTotal = false;
 
     // Scene nodes
     Label label;
@@ -47,7 +64,34 @@ public partial class City : Node2D
     {
     }
 
-    public void AddTerritory(Hex newTerritoryHex){
+    public void calculateTerritoryResourceTotals()
+    {
+        workedFood = 0;
+        workedProduction = 0;
+        totalFood = 0;
+        totalProduction = 0;
+        int count = 0;
+        foreach (Hex h in sortTerritory()) {
+            totalFood += h.foodValue;
+            totalProduction += h.productionValue;
+            if (count < population) {
+                workedFood += h.foodValue;
+                workedProduction += h.productionValue;
+            }
+            count++;
+        }
+    }
+
+    public List<Hex> sortTerritory()
+    {
+        if (prioritizeFood) return territory.OrderByDescending(x => x.foodValue).ThenByDescending(x => x.productionValue).ToList();
+        if (prioritizeProduction) return territory.OrderByDescending(x => x.productionValue).ThenByDescending(x => x.foodValue).ToList();
+        if (prioritizeTotal) return territory.OrderByDescending(x => (x.foodValue + x.productionValue)).ToList();
+        return territory;
+    }
+
+    public void AddTerritory(Hex newTerritoryHex)
+    {
         if (map == null) {
             GD.Print("Attempt to AddTerritory from null map");
             return;
@@ -79,6 +123,8 @@ public partial class City : Node2D
         borderTilePool = borderTilePool.Distinct().ToList();
         // Remove territory from border
         borderTilePool = borderTilePool.Except(territory).ToList();
+        // Calculate the resource totals for the city
+        calculateTerritoryResourceTotals();
     }
 
     // Override to add a hex by coordinates
@@ -105,7 +151,7 @@ public partial class City : Node2D
 
     public void SetCityName(string newName)
     {
-        name = newName;
+        cityName = newName;
         label.Text = newName;
     }
 

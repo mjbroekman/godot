@@ -108,6 +108,7 @@ script = ExtResource("1_7lhna")
 [node name="UICanvas" type="CanvasLayer" parent="UI"]
 
 [node name="UIManager" parent="UI/UICanvas" instance=ExtResource("1_pjcte")]
+z_index = 9
 
 [node name="Environment" type="Node" parent="."]
 
@@ -141,3 +142,4 @@ script = ExtResource("4_5ioc4")
 
 [connection signal="ClickOffMap" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="HideAllPopups"]
 [connection signal="DeselectHex" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="ClearTerrainUI"]
+[connection signal="SendCityUIInfo" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="SetCityUI"]
