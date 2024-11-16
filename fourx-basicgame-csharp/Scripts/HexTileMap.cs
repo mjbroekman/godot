@@ -265,6 +265,7 @@ public partial class HexTileMap : Node2D
 		//  This means that the Godot signal system doesn't recognize the 'Hex' type as
 		//  a valid type.
 		this.SendHexData += uiManager.SetTerrainUI;
+		uiManager.EndTurn += ProcessTurn;
 	}
 
 	public Civilization CreatePlayerCiv(Vector2I start)
@@ -690,6 +691,11 @@ public partial class HexTileMap : Node2D
 	}
 
 	// Utility Functions
+	public void ProcessTurn()
+	{
+		GD.Print("Turn Ended");
+	}
+
 	public Hex GetHex(Vector2I coords)
 	{
 		return mapData[coords];

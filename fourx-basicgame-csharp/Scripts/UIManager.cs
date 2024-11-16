@@ -8,11 +8,30 @@ public partial class UIManager : Node2D
 
     TerrainTileUI terrainUI = null;
     CityUI cityUI = null;
+    GeneralUI generalUI;
+
+    [Signal]
+    public delegate void EndTurnEventHandler();
+
+
 
     public override void _Ready()
     {
         terrainUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/TerrainTileUI.tscn");
         cityUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/cityUI.tscn");
+
+        generalUI = GetNode<Panel>("GeneralUI") as GeneralUI;
+
+        // End turn button
+        Button endTurnButton = generalUI.GetNode<Button>("EndTurnButton");
+        endTurnButton.Pressed += SignalEndTurn;
+    }
+
+    // Connector between button and signal
+    public void SignalEndTurn()
+    {
+        EmitSignal(SignalName.EndTurn);
+        generalUI.IncrementTurnCounter();
     }
 
     public void SetTerrainUI(Hex hexObj)
