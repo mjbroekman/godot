@@ -63,6 +63,10 @@ public partial class City : Node2D
     public int storedFood;
     public int storedProduction;
 
+    // Valued of accrued food/production available for growth
+    public int requiredFood;
+    public int requiredProduction;
+
     // City Production Priorities
     // // Prioritize Food value for growth
     public bool prioritizeFood = true;
