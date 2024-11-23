@@ -21,10 +21,12 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mixtj"]
+line_spacing = 1.0
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_d8twf"]
+line_spacing = 1.0
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
@@ -78,10 +80,17 @@ label_settings = SubResource("LabelSettings_p44ho")
 
 [node name="Food" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
 layout_mode = 2
-text = "Food:"
+text = "Food
+    Worked:
+    Stored:
+    In Territory:"
 label_settings = SubResource("LabelSettings_mixtj")
 
 [node name="Production" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
 layout_mode = 2
-text = "Production:"
+text = "Production
+    Worked:
+    Stored:
+    In Territory:"
 label_settings = SubResource("LabelSettings_d8twf")
+tab_stops = PackedFloat32Array(5)

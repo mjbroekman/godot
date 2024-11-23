@@ -22,8 +22,19 @@ public partial class CityUI : Panel
 
         cityName.Text = this.city.cityName;
         popLabel.Text = "Population: " + this.city.population;
-        foodLabel.Text = "Food: " + this.city.workedFood + " (Total: " + this.city.totalFood + " )";
-        prodLabel.Text = "Production: " + this.city.workedProduction + " (Total: " + this.city.totalProduction + " )";
+        foodLabel.Text = "Food\n" +
+                            "    Worked: " + this.city.workedFood + "\n" +
+                            "    Stored: " + this.city.storedFood + "\n" +
+                            "    In Territory: " + this.city.totalFood + "\n";
+        prodLabel.Text = "Production\n" +
+                            "    Worked: " + this.city.workedProduction + "\n" +
+                            "    Stored: " + this.city.storedProduction + "\n" +
+                            "    In Territory: " + this.city.totalProduction + "\n";
+    }
+
+    public City GetCity()
+    {
+        return city;
     }
 
     public override void _Process(double delta)

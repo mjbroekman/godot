@@ -63,8 +63,7 @@ public partial class City : Node2D
     public int storedFood;
     public int storedProduction;
 
-    // Valued of accrued food/production available for growth
-    public int requiredFood;
+    // Valued of food/production required for growth
     public int requiredProduction;
 
     // City Production Priorities
@@ -96,7 +95,8 @@ public partial class City : Node2D
     {
         storedFood += workedFood;
         storedProduction += workedProduction;
-        requiredFood = requiredFoodForGrowth();
+        int requiredFood = requiredFoodForGrowth();
+        GD.Print($"{cityName} needs {requiredFood} food to grow.  We have {storedFood} available.");
         if (storedFood >= requiredFood)
         {
             population++;

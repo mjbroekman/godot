@@ -337,9 +337,9 @@ public partial class HexTileMap : Node2D
 		noiseMountain.FractalLacunarity = 2f;
 	}
 
-	public override void _Process(double delta)
-	{
-	}
+	// public override void _Process(double delta)
+	// {
+	// }
 
 	// Handle input that is not handled by other UI elements
 	public override void _UnhandledInput(InputEvent @event)
@@ -693,7 +693,19 @@ public partial class HexTileMap : Node2D
 	// Utility Functions
 	public void ProcessTurn()
 	{
-		GD.Print("Turn Ended");
+		GD.Print("Turn Ended. Processing cities.");
+		foreach (Civilization c in civs) {
+			foreach (City ct in c.cities) {
+				ct.ProcessTurn();
+			}
+		}
+
+		// Check if the city UI is open and if it is, update it
+		City uiCity = uiManager.GetOpenCityUI();
+		if ( uiCity != null ) {
+			uiManager.SetCityUI(uiCity);
+		}
+		// Update other UIs?
 	}
 
 	public Hex GetHex(Vector2I coords)
