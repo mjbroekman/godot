@@ -81,6 +81,7 @@ public partial class UIManager : Node2D
 
     public City GetOpenCityUI()
     {
-        return cityUI.GetCity();
+        if (cityUI is not null) return cityUI.GetCity();
+        return null;
     }
 }

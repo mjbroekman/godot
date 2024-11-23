@@ -46,6 +46,7 @@ public class Hex
 	// Set the resources for this tile when the terrain type is set
 	public void SetResources()
 	{
+		this.canBelong = false;
 		// Populate tiles with food and production
 		switch (this.terrainType)
 		{
@@ -105,7 +106,7 @@ public class Hex
 		string prodText = $"Production: {this.productionValue}";
 		if (this.bonusFoodResource) foodText = $"Food: {this.foodValue - 1} (+1)";
 		if (this.bonusProdResource) prodText = $"Production: {this.productionValue - 1} (+1)";
-		return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | {foodText} | {prodText}";
+		return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | {foodText} | {prodText} | {canBelong}";
 	}
 }
 
@@ -513,7 +514,6 @@ public partial class HexTileMap : Node2D
 		newCity.Position = mapCoords;
 		// GD.Print($"{mapCoords} = {newCity.Position} = {newCity.GlobalPosition}");
 		// GD.Print($"{newCity.sprite.Position} : {newCity.ZIndex} : {newCity.ZAsRelative}");
-
 		mapData[coords].isCityCenter = true;
 		// Set the city name (string + Label in scene)
 		newCity.SetCityName(name);
@@ -698,6 +698,7 @@ public partial class HexTileMap : Node2D
 			foreach (City ct in c.cities) {
 				ct.ProcessTurn();
 			}
+			UpdateCivTerritoryMap(c);
 		}
 
 		// Check if the city UI is open and if it is, update it

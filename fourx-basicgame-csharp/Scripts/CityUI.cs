@@ -6,7 +6,7 @@ public partial class CityUI : Panel
     Label cityName, popLabel, foodLabel, prodLabel;
     
     // City data
-    City city;
+    City city = null;
 
     public override void _Ready()
     {

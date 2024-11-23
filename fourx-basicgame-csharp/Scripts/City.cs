@@ -41,6 +41,7 @@ public partial class City : Node2D
 
     // Track the tiles we can expand into
     public List<Hex> borderTilePool;
+    public Dictionary<int,List<Hex>> borderTileRangePool;
 
     // Owner civilization
     public Civilization civ;
@@ -97,12 +98,30 @@ public partial class City : Node2D
         storedProduction += workedProduction;
         int requiredFood = requiredFoodForGrowth();
         GD.Print($"{cityName} needs {requiredFood} food to grow.  We have {storedFood} available.");
+        GD.Print($"Border tile pool = {borderTilePool.Count}");
+
         if (storedFood >= requiredFood)
         {
             population++;
             storedFood -= requiredFood;
 
+            calculateTerritoryResourceTotals();
+
             // Grow territory
+            AddRandomNewTile();
+        }
+    }
+
+    public void AddRandomNewTile()
+    {
+        if (borderTilePool.Count > 0) {
+            Random r = new Random();
+            List<int> borderDistance = new List<int>(borderTileRangePool.Keys);
+            borderDistance.Sort();
+            List<Hex> closeNeighbors = borderTileRangePool[borderDistance[0]];
+            int index = r.Next(closeNeighbors.Count);
+            Hex newTerritory = closeNeighbors[index];
+            this.AddTerritory(newTerritory);
         }
     }
 
@@ -167,12 +186,9 @@ public partial class City : Node2D
 
         territory.Add(newTerritoryHex);
         newTerritoryHex.ownerCity = this;
-        // Add surrounding tiles to the border tile pool
-        borderTilePool.AddRange(map.GetSurroundingHexes(newTerritoryHex));
-        // Remove duplicate hexes from border
-        borderTilePool = borderTilePool.Distinct().ToList();
-        // Remove territory from border
-        borderTilePool = borderTilePool.Except(territory).ToList();
+
+        AddValidTilesToBorderPool(newTerritoryHex);
+
         // Calculate the resource totals for the city
         calculateTerritoryResourceTotals();
     }
@@ -197,6 +213,48 @@ public partial class City : Node2D
         foreach (Hex newHex in newTerritory) {
             AddTerritory(newHex);
         }
+    }
+
+    public void AddValidTilesToBorderPool(Hex h)
+    {
+        List<Hex> neighbors = map.GetSurroundingHexes(h);
+        // neighbors = neighbors.Except(territory).ToList();
+
+        foreach (Hex n in neighbors) {
+            if (IsValidTerritoryTile(n)) borderTilePool.Add(n);
+            invalidTiles[n] = this;
+        }
+
+        // Remove duplicate hexes from border
+        borderTilePool = borderTilePool.Distinct().ToList();
+        // Remove territory from border
+        borderTilePool = borderTilePool.Except(territory).ToList();
+
+        borderTileRangePool = new Dictionary<int,List<Hex>>();
+        foreach (Hex b in borderTilePool) {
+            Vector2I borderCoords = b.coordinates;
+            int tileDistance = (int)borderCoords.DistanceTo(cityCenterCoords);
+            GD.Print($"{b.coordinates} is {tileDistance} tiles from the city center at {cityCenterCoords}");
+            if (! borderTileRangePool.ContainsKey(tileDistance)) {
+                borderTileRangePool[tileDistance] = new List<Hex>();
+            }
+            borderTileRangePool[tileDistance].Add(b);
+        }
+    }
+
+    public bool IsValidTerritoryTile(Hex h)
+    {
+        // See if the tile can even belong to a city
+        if (! h.canBelong) return false;
+
+        // See if the tile already belongs to another city/civ
+        if (h.ownerCity != null && h.ownerCity.civ != null) return false;
+
+        // See if the tile is part of the invalidTiles collection
+        // if (invalidTiles.ContainsKey(h) && invalidTiles[h] != this) return false;
+        if (invalidTiles.ContainsKey(h)) return false;
+
+        return true;
     }
 
     public void SetCityName(string newName)
