@@ -98,7 +98,12 @@ public partial class City : Node2D
         storedProduction += workedProduction;
         int requiredFood = requiredFoodForGrowth();
         GD.Print($"{cityName} needs {requiredFood} food to grow.  We have {storedFood} available.");
-        GD.Print($"Border tile pool = {borderTilePool.Count}");
+        List<int> distances = borderTileRangePool.Keys.ToList();
+        distances.Sort();
+        GD.Print($"{cityName} border pool:");
+        foreach (int dist in distances) {
+            GD.Print($" @ {dist} : " + string.Join(", ", borderTileRangePool[dist]));
+        }
 
         if (storedFood >= requiredFood)
         {
@@ -234,7 +239,6 @@ public partial class City : Node2D
         foreach (Hex b in borderTilePool) {
             Vector2I borderCoords = b.coordinates;
             int tileDistance = (int)borderCoords.DistanceTo(cityCenterCoords);
-            GD.Print($"{b.coordinates} is {tileDistance} tiles from the city center at {cityCenterCoords}");
             if (! borderTileRangePool.ContainsKey(tileDistance)) {
                 borderTileRangePool[tileDistance] = new List<Hex>();
             }

@@ -20,6 +20,11 @@ public partial class CityUI : Panel
     {
         this.city = city;
 
+        RefreshUI();
+    }
+
+    public void RefreshUI()
+    {
         cityName.Text = this.city.cityName;
         popLabel.Text = "Population: " + this.city.population;
         foodLabel.Text = "Food\n" +

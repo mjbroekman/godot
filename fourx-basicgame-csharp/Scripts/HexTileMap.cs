@@ -106,7 +106,8 @@ public class Hex
 		string prodText = $"Production: {this.productionValue}";
 		if (this.bonusFoodResource) foodText = $"Food: {this.foodValue - 1} (+1)";
 		if (this.bonusProdResource) prodText = $"Production: {this.productionValue - 1} (+1)";
-		return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | {foodText} | {prodText} | {canBelong}";
+		return $"({this.coordinates.X}:{this.coordinates.Y})";
+		// return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | {foodText} | {prodText} | {canBelong}";
 	}
 }
 
@@ -695,17 +696,13 @@ public partial class HexTileMap : Node2D
 	{
 		GD.Print("Turn Ended. Processing cities.");
 		foreach (Civilization c in civs) {
-			foreach (City ct in c.cities) {
-				ct.ProcessTurn();
-			}
+			c.ProcessTurn();
 			UpdateCivTerritoryMap(c);
 		}
 
-		// Check if the city UI is open and if it is, update it
-		City uiCity = uiManager.GetOpenCityUI();
-		if ( uiCity != null ) {
-			uiManager.SetCityUI(uiCity);
-		}
+		// Refresh the UI if it is open
+		uiManager.RefreshUI();
+
 		// Update other UIs?
 	}
 
