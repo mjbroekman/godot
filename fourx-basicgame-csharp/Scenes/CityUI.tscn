@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=3 uid="uid://ckb1tcdcfcf0c"]
+
+[ext_resource type="Script" path="res://Scripts/CityUI.cs" id="1_k3s6s"]
+[ext_resource type="Texture2D" uid="uid://year1rvu0hme" path="res://Textures/Terrain/city_painting.jpg" id="1_t4ksg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yumur"]
+bg_color = Color(0.654902, 0.47451, 0.423529, 0.682353)
+
+[sub_resource type="LabelSettings" id="LabelSettings_26irh"]
+font_size = 24
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_51m75"]
+font_size = 12
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_p44ho"]
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mixtj"]
+line_spacing = 1.0
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_d8twf"]
+line_spacing = 1.0
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="CityUI" type="Panel"]
+offset_right = 250.0
+offset_bottom = 1152.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_yumur")
+script = ExtResource("1_k3s6s")
+
+[node name="CityUIVBox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CityImage" type="TextureRect" parent="CityUIVBox"]
+custom_minimum_size = Vector2(250, 160)
+layout_mode = 2
+texture = ExtResource("1_t4ksg")
+expand_mode = 1
+
+[node name="CityName" type="Label" parent="CityUIVBox"]
+layout_mode = 2
+text = "City Name"
+label_settings = SubResource("LabelSettings_26irh")
+horizontal_alignment = 1
+
+[node name="DataMarginContainer" type="MarginContainer" parent="CityUIVBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="DataVBox" type="VBoxContainer" parent="CityUIVBox/DataMarginContainer"]
+layout_mode = 2
+
+[node name="DataPanelLabel" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+layout_mode = 2
+text = "City Data"
+label_settings = SubResource("LabelSettings_51m75")
+horizontal_alignment = 1
+
+[node name="Population" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+layout_mode = 2
+text = "Population:"
+label_settings = SubResource("LabelSettings_p44ho")
+
+[node name="Food" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+layout_mode = 2
+text = "Food
+    Worked:
+    Stored:
+    In Territory:"
+label_settings = SubResource("LabelSettings_mixtj")
+
+[node name="Production" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+layout_mode = 2
+text = "Production
+    Worked:
+    Stored:
+    In Territory:"
+label_settings = SubResource("LabelSettings_d8twf")
+tab_stops = PackedFloat32Array(5)
