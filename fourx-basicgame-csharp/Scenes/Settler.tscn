@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba0lqkttrxy4o"]
+
+[ext_resource type="PackedScene" uid="uid://dn46ma2wl77p8" path="res://Scenes/Unit.tscn" id="1_2jjel"]
+[ext_resource type="Script" path="res://Scripts/Settler.cs" id="2_gr2ff"]
+
+[node name="Unit" instance=ExtResource("1_2jjel")]
+script = ExtResource("2_gr2ff")
+
+[node name="CollisionShape2D" parent="UnitSprite/Area2D" index="0"]
+position = Vector2(1, -2)
