@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcrbier524f8g"]
+
+[ext_resource type="Script" path="res://Scripts/UnitBuildButton.cs" id="1_0o5f2"]
+
+[node name="UnitBuildButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Default"
+script = ExtResource("1_0o5f2")
