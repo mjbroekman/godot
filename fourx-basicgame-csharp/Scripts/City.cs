@@ -79,6 +79,11 @@ public partial class City : Node2D
     Label label;
     public Sprite2D sprite;
 
+    // Units
+    public List<Unit> unitBuildQueue;
+    public Unit currentUnitBuild;
+    public int unitBuildTracker = 0;
+
     public override void _Ready()
     {
         // Make sure the city is visible above tilemaps (ZIndex: 0)
@@ -90,6 +95,7 @@ public partial class City : Node2D
         label = GetNode<Label>("CityName");
         territory = new List<Hex>();
         borderTilePool = new List<Hex>();
+        unitBuildQueue = new List<Unit>();
     }
 
     public void ProcessTurn()
@@ -146,6 +152,11 @@ public partial class City : Node2D
             }
             count++;
         }
+    }
+
+    public void AddUnitToBuildQueue(Unit u)
+    {
+        unitBuildQueue.Add(u);
     }
 
     public List<Hex> sortTerritory()

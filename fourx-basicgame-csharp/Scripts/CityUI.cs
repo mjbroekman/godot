@@ -23,6 +23,27 @@ public partial class CityUI : Panel
         RefreshUI();
     }
 
+    public void PopulateUnitQueueUI(City city)
+    {
+        VBoxContainer queue = GetNode<VBoxContainer>("CityUIVBox/DataMarginContainer/DataVBox/QueueScrollContainer/QueueButtons");
+
+        foreach (Node n in queue.GetChildren()) {
+            queue.RemoveChild(n);
+            n.QueueFree();
+        }
+
+        for (int i = 0; i < city.unitBuildQueue.Count; i++) {
+            Unit u = city.unitBuildQueue[i];
+
+            if ( i == 0 ) {
+                // unit is being built
+                queue.AddChild(new Label() {
+
+                })
+            }
+        }
+    }
+
     public void RefreshUI()
     {
         cityName.Text = this.city.cityName;
