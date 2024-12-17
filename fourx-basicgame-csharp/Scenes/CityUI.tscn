@@ -117,11 +117,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="UnitBuildButton" parent="CityUIVBox/DataMarginContainer/DataVBox/BuildScrollContainer/BuildButtons" instance=ExtResource("3_j8gj6")]
+[node name="SettlerBuildButton" parent="CityUIVBox/DataMarginContainer/DataVBox/BuildScrollContainer/BuildButtons" instance=ExtResource("3_j8gj6")]
 layout_mode = 2
 text = "Settler"
 
-[node name="UnitBuildButton2" parent="CityUIVBox/DataMarginContainer/DataVBox/BuildScrollContainer/BuildButtons" instance=ExtResource("3_j8gj6")]
+[node name="WarriorBuildButton" parent="CityUIVBox/DataMarginContainer/DataVBox/BuildScrollContainer/BuildButtons" instance=ExtResource("3_j8gj6")]
 layout_mode = 2
 text = "Warrior"
 
