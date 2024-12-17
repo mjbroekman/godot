@@ -21,6 +21,30 @@ public partial class CityUI : Panel
         this.city = city;
 
         RefreshUI();
+
+        ConnectUnitBuildSignals(this.city);
+    }
+
+    public void ConnectUnitBuildSignals(City city)
+    {
+        VBoxContainer buttonBox  = GetNode<VBoxContainer>("CityUIVBox/DataMarginContainer/DataVBox/BuildScrollContainer/BuildButtons");
+
+        // Use a loop to iterate over the available units
+        UnitBuildButton settlerButton = buttonBox.GetNode<UnitBuildButton>("SettlerBuildButton");
+        settlerButton.unit_ref = new Settler();
+
+        UnitBuildButton warriorButton = buttonBox.GetNode<UnitBuildButton>("WarriorBuildButton");
+        warriorButton.unit_ref = new Warrior();
+
+        // buttons are always "pressed"... no "released" signal
+        settlerButton.OnPressed += city.AddUnitToBuildQueue;
+        // we need an overload version of RefreshUI that takes a unit to handle this
+        settlerButton.OnPressed += this.RefreshUI;
+
+        // buttons are always "pressed"... no "released" signal
+        warriorButton.OnPressed += city.AddUnitToBuildQueue;
+        // we need an overload version of RefreshUI that takes a unit to handle this
+        warriorButton.OnPressed += this.RefreshUI;
     }
 
     public void PopulateUnitQueueUI(City city)
@@ -34,12 +58,18 @@ public partial class CityUI : Panel
 
         for (int i = 0; i < city.unitBuildQueue.Count; i++) {
             Unit u = city.unitBuildQueue[i];
-
+            // Skip a unit if (for whatever reason), the required production is less than zero
+            // Maybe the dev forgot to set the productionRequired for the unit
+            if ( u.productionRequired < 1 ) continue;
             if ( i == 0 ) {
                 // unit is being built
                 queue.AddChild(new Label() {
-
-                })
+                    Text = $"{u.unitName} {city.unitBuildTracker}/{u.productionRequired} prod",
+                });
+            } else {
+                queue.AddChild(new Label() {
+                    Text = $"{u.unitName} {u.productionRequired} prod",
+                });
             }
         }
     }
@@ -56,6 +86,14 @@ public partial class CityUI : Panel
                             "    Worked: " + this.city.workedProduction + "\n" +
                             "    Stored: " + this.city.storedProduction + "\n" +
                             "    In Territory: " + this.city.totalProduction + "\n";
+
+        PopulateUnitQueueUI(this.city);
+    }
+
+    // overload to accept a Unit node and still perform the RefreshUI() functions
+    public void RefreshUI(Unit u)
+    {
+        RefreshUI();
     }
 
     public City GetCity()
