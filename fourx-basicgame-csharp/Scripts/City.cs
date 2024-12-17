@@ -101,7 +101,7 @@ public partial class City : Node2D
     public void ProcessTurn()
     {
         storedFood += workedFood;
-        storedProduction += workedProduction;
+        // storedProduction += workedProduction;
         int requiredFood = requiredFoodForGrowth();
         GD.Print($"{cityName} needs {requiredFood} food to grow.  We have {storedFood} available.");
         List<int> distances = borderTileRangePool.Keys.ToList();
@@ -109,6 +109,10 @@ public partial class City : Node2D
         GD.Print($"{cityName} border pool:");
         foreach (int dist in distances) {
             GD.Print($" @ {dist} : " + string.Join(", ", borderTileRangePool[dist]));
+        }
+
+        if (unitBuildQueue.Count > 0) {
+            unitBuildTracker += workedProduction;
         }
 
         if (storedFood >= requiredFood)
