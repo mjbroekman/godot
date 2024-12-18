@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://de7r0jhofymr"]
 
-[ext_resource type="PackedScene" uid="uid://dn46ma2wl77p8" path="res://Scenes/Unit.tscn" id="1_gyyfc"]
+[ext_resource type="PackedScene" uid="uid://dn46ma2wl77p8" path="res://Scenes/Units/Unit.tscn" id="1_gyyfc"]
 [ext_resource type="Script" path="res://Scripts/Warrior.cs" id="2_gehwk"]
 [ext_resource type="Texture2D" uid="uid://bnktfx3malfsx" path="res://Textures/Units/warrior.png" id="2_i6c36"]
 
