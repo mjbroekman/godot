@@ -84,7 +84,7 @@ public partial class CityUI : Panel
                             "    In Territory: " + this.city.totalFood + "\n";
         prodLabel.Text = "Production\n" +
                             "    Worked: " + this.city.workedProduction + "\n" +
-                            "    Stored: " + this.city.storedProduction + "\n" +
+                            "    In Progress: " + this.city.unitBuildTracker + "\n" +
                             "    In Territory: " + this.city.totalProduction + "\n";
 
         PopulateUnitQueueUI(this.city);

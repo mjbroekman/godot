@@ -163,6 +163,13 @@ public partial class City : Node2D
         unitBuildQueue.Add(u);
     }
 
+    public void SpawnUnit(Unit u)
+    {
+        Unit unitToSpawn = (Unit) Unit.unitSceneResources[u.GetType()].Instantiate();
+        unitToSpawn.Position = map.MapToLocal(this.centerCoords);
+        unitToSpawn.SetCiv(this.civ);
+    }
+
     public List<Hex> sortTerritory()
     {
         if (prioritizeFood) return territory.OrderByDescending(x => x.foodValue).ThenByDescending(x => x.productionValue).ToList();

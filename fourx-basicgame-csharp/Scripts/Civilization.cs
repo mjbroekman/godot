@@ -13,6 +13,9 @@ public class Civilization
     // List of controlled cities
     public List<City> cities;
 
+    // List of units
+    public List<Unit> units;
+
     // Color of civilization on  the map
     public Color territoryColor;
 
@@ -25,6 +28,7 @@ public class Civilization
     public Civilization()
     {
         cities = new List<City>();
+        units = new List<Unit>();
     }
 
     public override string ToString()
