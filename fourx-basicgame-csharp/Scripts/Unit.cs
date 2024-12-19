@@ -13,6 +13,8 @@ public partial class Unit : Node2D
     
     public static Dictionary<Type, PackedScene> unitSceneResources;
 
+    public Vector2I unitCoords = new Vector2I();
+
     public static void LoadUnitScenes()
     {
         unitSceneResources = new Dictionary<Type, PackedScene> {
@@ -27,4 +29,10 @@ public partial class Unit : Node2D
         GetNode<Sprite2D>("UnitSprite").Modulate = civ.territoryColor;
         this.ownerCiv.units.Add(this);
     }
+
+    public override string ToString()
+    {
+        return $"{unitName}";
+    }
+
 }

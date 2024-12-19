@@ -103,17 +103,13 @@ public partial class City : Node2D
         storedFood += workedFood;
         // storedProduction += workedProduction;
         int requiredFood = requiredFoodForGrowth();
-        GD.Print($"{cityName} needs {requiredFood} food to grow.  We have {storedFood} available.");
+        // GD.Print($"{cityName} needs {requiredFood} food to grow.  We have {storedFood} available.");
         List<int> distances = borderTileRangePool.Keys.ToList();
         distances.Sort();
-        GD.Print($"{cityName} border pool:");
-        foreach (int dist in distances) {
-            GD.Print($" @ {dist} : " + string.Join(", ", borderTileRangePool[dist]));
-        }
-
-        if (unitBuildQueue.Count > 0) {
-            unitBuildTracker += workedProduction;
-        }
+        // GD.Print($"{cityName} border pool:");
+        // foreach (int dist in distances) {
+        //     GD.Print($" @ {dist} : " + string.Join(", ", borderTileRangePool[dist]));
+        // }
 
         if (storedFood >= requiredFood)
         {
@@ -125,6 +121,8 @@ public partial class City : Node2D
             // Grow territory
             AddRandomNewTile();
         }
+
+        ProcessUnitBuildQueue();
     }
 
     public void AddRandomNewTile()
@@ -168,6 +166,45 @@ public partial class City : Node2D
         Unit unitToSpawn = (Unit) Unit.unitSceneResources[u.GetType()].Instantiate();
         unitToSpawn.Position = map.MapToLocal(this.centerCoords);
         unitToSpawn.SetCiv(this.civ);
+        unitToSpawn.unitCoords = this.centerCoords;
+        unitToSpawn.ZAsRelative = true;
+        unitToSpawn.ZIndex = 5;
+        map.AddChild(unitToSpawn);
+    }
+
+    public void ProcessUnitBuildQueue()
+    {
+        if (unitBuildQueue.Count > 0) {
+            if ( currentUnitBuild == null ) {
+                currentUnitBuild = unitBuildQueue[0];
+            }
+
+            // Add worked production to the unit build
+            unitBuildTracker += workedProduction;
+
+            if ( unitBuildTracker >= currentUnitBuild.productionRequired ) {
+                // If we are building a settler, but our city only has 1 population, don't complete the build
+                if ( currentUnitBuild.GetType() == typeof(Settler) && population < 2 ) return;
+
+                // If we have more than one item in the queue, move worked production to the next item
+                if ( unitBuildQueue.Count > 1 ) {
+                    unitBuildTracker -= currentUnitBuild.productionRequired;
+                } else {
+                    // if there is nothing else in the queue, we just wasted leftover production
+                    unitBuildTracker = 0;
+                }
+
+                // If we successfully built a Settler, reduce population by 1
+                if ( currentUnitBuild.GetType() == typeof(Settler) ) population--;
+
+                // Spawn the newly completed unit
+                SpawnUnit(currentUnitBuild);
+
+                // Remove the thing we just spawned.
+                unitBuildQueue.RemoveAt(0);
+            }
+        }
+
     }
 
     public List<Hex> sortTerritory()
