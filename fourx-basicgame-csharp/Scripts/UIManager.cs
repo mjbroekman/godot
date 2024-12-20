@@ -17,8 +17,8 @@ public partial class UIManager : Node2D
 
     public override void _Ready()
     {
-        terrainUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/TerrainTileUI.tscn");
-        cityUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/cityUI.tscn");
+        terrainUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/TerrainTileUI.tscn");
+        cityUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/cityUI.tscn");
 
         generalUI = GetNode<Panel>("GeneralUI") as GeneralUI;
 
@@ -32,6 +32,15 @@ public partial class UIManager : Node2D
     {
         EmitSignal(SignalName.EndTurn);
         generalUI.IncrementTurnCounter();
+    }
+
+    public void SetUI(Hex hexObj) {
+        HideUIPopups();
+        if ( hexObj.isCityCenter ) {
+            SetCityUI( hexObj.ownerCity);
+        } else {
+            SetTerrainUI(hexObj);
+        }
     }
 
     public void SetTerrainUI(Hex hexObj)
