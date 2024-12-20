@@ -141,5 +141,5 @@ position_smoothing_enabled = true
 script = ExtResource("4_5ioc4")
 
 [connection signal="ClickOffMap" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="HideAllPopups"]
-[connection signal="DeselectHex" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="ClearTerrainUI"]
+[connection signal="DeselectHex" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="HideUIPopups"]
 [connection signal="SendCityUIInfo" from="Environment/HexTileMap" to="UI/UICanvas/UIManager" method="SetCityUI"]
