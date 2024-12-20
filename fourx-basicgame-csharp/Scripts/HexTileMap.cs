@@ -202,8 +202,10 @@ public partial class HexTileMap : Node2D
 	// // Godot Signals
 	[Signal]
 	public delegate void ClickOffMapEventHandler();
+
 	[Signal]
 	public delegate void DeselectHexEventHandler();
+
 	[Signal]
 	public delegate void SendCityUIInfoEventHandler(City c);
 
@@ -266,7 +268,7 @@ public partial class HexTileMap : Node2D
 		//  Needed because 'Hex' is a raw C# class that doesn't extend from a Godot type
 		//  This means that the Godot signal system doesn't recognize the 'Hex' type as
 		//  a valid type.
-		this.SendHexData += uiManager.SetTerrainUI;
+		this.SendHexData += uiManager.SetUI;
 		uiManager.EndTurn += ProcessTurn;
 	}
 
@@ -373,7 +375,6 @@ public partial class HexTileMap : Node2D
 			// Simply return if the click is outside the map boundaries.
 			// Do it this way to avoid excessive nesting.
 			if (!HexInBounds(mapCoords)) {
-				GD.Print("Mouse click out of bounds");
 				if (mouse.ButtonMask == MouseButtonMask.Left) {
 					ToggleHexSelection(selectedHex);
 					selectedHex = null;
@@ -397,14 +398,10 @@ public partial class HexTileMap : Node2D
 					ToggleHexSelection(selectedHex);
 					EmitSignal(SignalName.DeselectHex);
 				}
+
 				if (selectedHex != null)
 				{
-					GD.Print(selectedHex);
-					if (!selectedHex.isCityCenter) {
-						SendHexData?.Invoke(selectedHex);
-					} else {
-						EmitSignal(SignalName.SendCityUIInfo, cities[mapCoords]);
-					}
+					SendHexData?.Invoke(selectedHex);
 				}
 			}
 		}
