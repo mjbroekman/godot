@@ -8,7 +8,7 @@ public partial class UnitUI : Panel
     Unit myUnit;
     VBoxContainer actionBox;
 
-    public ovveride void _Ready()
+    public override void _Ready()
     {
         unitImage = GetNode<TextTextureRect>("VBoxContainer/TextureRect");
         unitType = GetNode<Label>("VBoxContainer/UnitTypeLabel");
