@@ -26,6 +26,9 @@ public partial class UnitUI : Panel
 
     public void Refresh()
     {
-
+        unitImage.Texture = Unit.unitSceneResources[myUnit.GetType()];
+        unitType.Text = $"Unit: {myUnit.unitName}";
+        moves.Text = $"{myUnit.curMoves} / {myUnit.maxMoves}";
+        health.Text = $"{myUnit.curHealth} / {myUnit.maxHealth}";
     }
 }
