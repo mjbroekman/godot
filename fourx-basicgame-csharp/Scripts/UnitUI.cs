@@ -10,7 +10,7 @@ public partial class UnitUI : Panel
 
     public override void _Ready()
     {
-        unitImage = GetNode<TextTextureRect>("VBoxContainer/TextureRect");
+        unitImage = GetNode<TextureRect>("VBoxContainer/TextureRect");
         unitType = GetNode<Label>("VBoxContainer/UnitTypeLabel");
         health = GetNode<Label>("VBoxContainer/HealthLabel");
         moves = GetNode<Label>("VBoxContainer/MovesLabel");
