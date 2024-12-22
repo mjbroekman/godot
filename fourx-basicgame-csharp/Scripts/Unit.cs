@@ -4,24 +4,28 @@ using System.Collections.Generic;
 
 public partial class Unit : Node2D
 {
-    // Unit name
+    // Static lookup dictionaries
+    public static Dictionary<Type, PackedScene> unitSceneResources;
+    public static Dictionary<Type, Texture2D> unitImages;
+
+    // Basic properties: name, cost, owner, position
     public string unitName = "DEFAULT";
 
     public int productionRequired = -5;
 
     public Civilization ownerCiv = null;
     
-    public static Dictionary<Type, PackedScene> unitSceneResources;
-    public static Dictionary<Type, Texture2D> unitImages;
-
     public Vector2I unitCoords = new Vector2I();
 
+    // Combat properties
     public int maxHealth = -5;
     public int curHealth = -5;
 
+    // Movement properties
     public int maxMoves = -5;
     public int curMoves = -5;
 
+    // Static functions for initializing lookups
     public static void LoadUnitScenes()
     {
         unitSceneResources = new Dictionary<Type, PackedScene> {
@@ -38,11 +42,14 @@ public partial class Unit : Node2D
         };
     }
 
+    // Single-call loader
     public static void LoadResources()
     {
         LoadUnitScenes();
         LoadUnitImages();
     }
+    //
+    // End of static functions
 
     public void SetCiv(Civilization civ)
     {
