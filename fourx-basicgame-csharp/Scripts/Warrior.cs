@@ -14,4 +14,9 @@ public partial class Warrior : Unit
 
         productionRequired = 50;
     }
+
+    public override void _Ready()
+    {
+        base._Ready();
+    }
 }

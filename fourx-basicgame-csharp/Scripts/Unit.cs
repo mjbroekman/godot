@@ -68,8 +68,10 @@ public partial class Unit : Node2D
         isSelected = true;
         Sprite2D sprite = GetNode<Sprite2D>("UnitSprite");
         Color c = new Color(sprite.Modulate);
-        c.V = c.V - 0.25f; // Reduce 'Value' by 0.25.
-        sprite.Modulate = c;
+        if (sprite.Modulate == ownerCiv.territoryColor) {
+            c.V = c.V - 0.25f; // Reduce 'Value' by 0.25.
+            sprite.Modulate = c;
+        }
     }
 
     public void SetDeselected()

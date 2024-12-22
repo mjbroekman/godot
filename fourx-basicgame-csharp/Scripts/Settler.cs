@@ -15,4 +15,9 @@ public partial class Settler : Unit
 
         productionRequired = 100;
     }
+
+    public override void _Ready()
+    {
+        base._Ready();
+    }
 }
