@@ -5,9 +5,11 @@ public partial class UIManager : Node2D
 {
     PackedScene terrainUIScene;
     PackedScene cityUIScene;
+    PackedScene unitUIScene;
 
     TerrainTileUI terrainUI = null;
     CityUI cityUI = null;
+    UnitUI unitUI = null;
     GeneralUI generalUI;
 
     [Signal]
@@ -19,6 +21,7 @@ public partial class UIManager : Node2D
     {
         terrainUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/TerrainTileUI.tscn");
         cityUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/cityUI.tscn");
+        unitUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/unitUI.tscn");
 
         generalUI = GetNode<Panel>("GeneralUI") as GeneralUI;
 
@@ -61,6 +64,14 @@ public partial class UIManager : Node2D
         cityUI.SetCityUI(c);
     }
 
+    public void SetUnitUI(Unit u)
+    {
+        HideUIPopups();
+        unitUI = unitUIScene.Instantiate() as UnitUI;
+        AddChild(unitUI);
+        unitUI.SetUnitUI(u);
+    }
+
     public void HideAllPopups()
     {
         HideUIPopups();
@@ -70,6 +81,7 @@ public partial class UIManager : Node2D
     {
         ClearTerrainUI();
         ClearCityUI();
+        ClearUnitUI();
     }
 
     public void ClearTerrainUI()
@@ -85,6 +97,14 @@ public partial class UIManager : Node2D
         if (cityUI is not null) {
             cityUI.QueueFree();
             cityUI = null;
+        }
+    }
+
+    public void ClearUnitUI()
+    {
+        if (unitUI is not null) {
+            unitUI.QueueFree();
+            unitUI = null;
         }
     }
 

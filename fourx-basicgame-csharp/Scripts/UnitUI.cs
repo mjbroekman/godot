@@ -17,7 +17,7 @@ public partial class UnitUI : Panel
         actionBox = GetNode<VBoxContainer>("VBoxContainer/ActionsBox");
     }
 
-    public void SetUnit(Unit u)
+    public void SetUnitUI(Unit u)
     {
         myUnit = u;
 
