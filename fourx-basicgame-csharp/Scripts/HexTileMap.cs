@@ -9,9 +9,10 @@ public enum TerrainType { PLAINS, WATER, DESERT, MOUNTAIN, BEACH, SHALLOW_WATER,
 
 public class Hex
 {
+	public Random rng;
 	public readonly Vector2I coordinates;
 	private TerrainType tType;
-	public Random rng;
+	public bool selected = false;
 	public TerrainType terrainType {
 		get { return tType; }
 		set { tType = value; SetResources(); }
@@ -29,7 +30,8 @@ public class Hex
 	public bool bonusFoodResource = false;
 	public bool bonusProdResource = false;
 
-	public bool selected = false;
+	// Movement values
+	public int moveCost;
 
 	public Hex(Vector2I coords)
 	{
@@ -47,36 +49,53 @@ public class Hex
 	public void SetResources()
 	{
 		this.canBelong = false;
-		// Populate tiles with food and production
+		// Populate tiles with food and production and movement costs
 		switch (this.terrainType)
 		{
 			case TerrainType.PLAINS:
 				this.foodValue = rng.Next(2,7);
 				this.productionValue = rng.Next(1,3);
+				this.moveCost = 1;
 				break;
 			case TerrainType.WATER:
 				this.foodValue = rng.Next(1,4);
 				this.productionValue = rng.Next(0,2);
+				this.moveCost = 1;
 				break;
 			case TerrainType.SHALLOW_WATER:
 				this.foodValue = rng.Next(2,4);
 				this.productionValue = rng.Next(0,2);
+				this.moveCost = 1;
 				break;
 			case TerrainType.DESERT:
 				this.foodValue = rng.Next(0,1);
 				this.productionValue = rng.Next(0,3);
+				this.moveCost = 2;
 				break;
 			case TerrainType.FOREST:
 				this.foodValue = rng.Next(2,5);
 				this.productionValue = rng.Next(3,6);
+				this.moveCost = 2;
 				break;
 			case TerrainType.BEACH:
 				this.foodValue = rng.Next(1,3);
 				this.productionValue = rng.Next(0,2);
+				this.moveCost = 2;
+				break;
+			case TerrainType.ICE:
+				this.foodValue = rng.Next(0,1);
+				this.productionValue = rng.Next(0,1);
+				this.moveCost = 2;
+				break;
+			case TerrainType.MOUNTAIN:
+				this.foodValue = rng.Next(0,1);
+				this.productionValue = rng.Next(0,1);
+				this.moveCost = 3;
 				break;
 			default:
 				this.foodValue = rng.Next(0,1);
 				this.productionValue = rng.Next(0,1);
+				this.moveCost = 99;
 				break;
 		}
 		
