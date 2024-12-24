@@ -424,6 +424,14 @@ public partial class HexTileMap : Node2D
 		}
 	}
 
+	// Specific call signature to all the Unit class to call it while sending a unit over
+	public void DeselectCurrentHex(Unit u = null)
+	{
+		if ( selectedHex == null ) return;
+		overlayLayer.SetCell(selectedHex.coordinates, -1);
+		selectedHex = null;
+	}
+
 	public List<Vector2I> GenerateCivStartingLocations(int numLocations)
 	{
 		List<Vector2I> locations = new List<Vector2I>();

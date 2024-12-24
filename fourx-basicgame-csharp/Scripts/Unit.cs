@@ -19,6 +19,10 @@ public partial class Unit : Node2D
 
     public bool isSelected = false;
 
+    // Signals
+    [Signal]
+    public delegate void UnitClickedEventHandler(Unit u);
+
     // Combat properties
     public int maxHealth = -5;
     public int curHealth = -5;
@@ -29,6 +33,8 @@ public partial class Unit : Node2D
 
     // Scene / node references
     public Area2D unitCollider;
+    public UIManager uiManager;
+    public HexTileMap map;
 
     // Static functions for initializing lookups
     public static void LoadUnitScenes()
@@ -85,6 +91,10 @@ public partial class Unit : Node2D
     public override void _Ready()
     {
         unitCollider = GetNode<Area2D>("UnitSprite/Area2D");
+        uiManager = GetNode<UIManager>("/root/Game/UI/UICanvas/UIManager");
+        this.UnitClicked += uiManager.SetUnitUI;
+        map = GetNode<HexTileMap>("/root/Game/Environment/HexTileMap");
+        this.UnitClicked += map.DeselectCurrentHex;
     }
 
     public override string ToString()
@@ -104,6 +114,7 @@ public partial class Unit : Node2D
             if (result.Count > 0 && (Area2D) result[0]["collider"] == unitCollider) {
                 // we are intersecting _some_ collider
                 SetSelected();
+                EmitSignal(SignalName.UnitClicked, this);
                 GetViewport().SetInputAsHandled();
             } else {
                 SetDeselected();

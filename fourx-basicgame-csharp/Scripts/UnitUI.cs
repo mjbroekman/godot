@@ -28,7 +28,7 @@ public partial class UnitUI : Panel
     {
         unitImage.Texture = Unit.unitImages[myUnit.GetType()];
         unitType.Text = $"Unit: {myUnit.unitName}";
-        moves.Text = $"{myUnit.curMoves} / {myUnit.maxMoves}";
-        health.Text = $"{myUnit.curHealth} / {myUnit.maxHealth}";
+        moves.Text = $"Moves Remaining: {myUnit.curMoves} / {myUnit.maxMoves}";
+        health.Text = $"Hit Points: {myUnit.curHealth} / {myUnit.maxHealth}";
     }
 }
