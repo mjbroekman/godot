@@ -1,10 +1,11 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 public partial class Unit : Node2D
 {
-    // Static lookup dictionaries
+    // Static lookup variables
     public static Dictionary<Type, PackedScene> unitSceneResources;
     public static Dictionary<Type, Texture2D> unitImages;
 
@@ -19,6 +20,15 @@ public partial class Unit : Node2D
 
     public bool isSelected = false;
 
+    // Impassable Terrains - Default land unit set
+    public HashSet<TerrainType> impassable = new HashSet<TerrainType>
+    {
+        TerrainType.WATER,
+        TerrainType.SHALLOW_WATER,
+        TerrainType.ICE,
+        TerrainType.MOUNTAIN,
+    };
+
     // Signals
     [Signal]
     public delegate void UnitClickedEventHandler(Unit u);
@@ -30,6 +40,7 @@ public partial class Unit : Node2D
     // Movement properties
     public int maxMoves = -5;
     public int curMoves = -5;
+    public List<Hex> validMovementHexes;
 
     // Scene / node references
     public Area2D unitCollider;
@@ -78,6 +89,7 @@ public partial class Unit : Node2D
             c.V = c.V - 0.25f; // Reduce 'Value' by 0.25.
             sprite.Modulate = c;
         }
+        validMovementHexes = CalculateValidAdjacentMovementHexes();
     }
 
     public void SetDeselected()
@@ -85,6 +97,17 @@ public partial class Unit : Node2D
         isSelected = false;
         // Simply reset the color to the civilization color
         GetNode<Sprite2D>("UnitSprite").Modulate = ownerCiv.territoryColor;
+        validMovementHexes.Clear();
+    }
+
+    public List<Hex> CalculateValidAdjacentMovementHexes()
+    {
+        List<Hex> hexes = new List<Hex>();
+
+        hexes.AddRange(map.GetSurroundingHexes(this.unitCoords));
+        hexes.Where( h => !impassable.Contains(h.terrainType)).ToList();
+        hexes.Where( h => h.moveCost <= curMoves ).ToList();
+        return hexes;
     }
 
     // Override functions
@@ -95,6 +118,7 @@ public partial class Unit : Node2D
         this.UnitClicked += uiManager.SetUnitUI;
         map = GetNode<HexTileMap>("/root/Game/Environment/HexTileMap");
         this.UnitClicked += map.DeselectCurrentHex;
+        validMovementHexes = CalculateValidAdjacentMovementHexes();
     }
 
     public override string ToString()
