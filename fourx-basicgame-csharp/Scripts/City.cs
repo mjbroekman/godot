@@ -164,12 +164,11 @@ public partial class City : Node2D
     public void SpawnUnit(Unit u)
     {
         Unit unitToSpawn = (Unit) Unit.unitSceneResources[u.GetType()].Instantiate();
-        unitToSpawn.Position = map.MapToLocal(this.centerCoords);
+        map.AddChild(unitToSpawn);
         unitToSpawn.SetCiv(this.civ);
         unitToSpawn.unitCoords = this.centerCoords;
         unitToSpawn.ZAsRelative = true;
         unitToSpawn.ZIndex = 5;
-        map.AddChild(unitToSpawn);
     }
 
     public void ProcessUnitBuildQueue()

@@ -8,6 +8,7 @@ public partial class Unit : Node2D
     // Static lookup variables
     public static Dictionary<Type, PackedScene> unitSceneResources;
     public static Dictionary<Type, Texture2D> unitImages;
+    public static Dictionary<Hex, List<Unit>> unitLocations;
 
     // Basic properties: name, cost, owner, position
     public string unitName = "DEFAULT";
@@ -16,7 +17,11 @@ public partial class Unit : Node2D
 
     public Civilization ownerCiv = null;
     
-    public Vector2I unitCoords = new Vector2I();
+    private Vector2I uCoords = new Vector2I();
+    public Vector2I unitCoords {
+        get { return uCoords; }
+		set { uCoords = value; SetPosition(value); }
+    }
 
     public bool isSelected = false;
 
@@ -48,6 +53,9 @@ public partial class Unit : Node2D
     public HexTileMap map;
 
     // Static functions for initializing lookups
+    //
+
+    // Load the unit scenes from the filesystem
     public static void LoadUnitScenes()
     {
         unitSceneResources = new Dictionary<Type, PackedScene> {
@@ -56,6 +64,7 @@ public partial class Unit : Node2D
         };
     }
 
+    // Load the images from the filesystem
     public static void LoadUnitImages()
     {
         unitImages = new Dictionary<Type, Texture2D> {
@@ -64,14 +73,28 @@ public partial class Unit : Node2D
         };
     }
 
+    // Initialize the Unit Locations dictionary
+    public static void InitUnitLocations()
+    {
+        unitLocations = new Dictionary<Hex, List<Unit>>();
+    }
+
     // Single-call loader
     public static void LoadResources()
     {
         LoadUnitScenes();
         LoadUnitImages();
+        InitUnitLocations();
     }
     //
     // End of static functions
+
+    // Setter for unitCoords... set the Position properties as well as add unit to unitLocation dictionary
+    public void SetPosition(Vector2I newCoords)
+    {
+        this.Position = map.MapToLocal(newCoords);
+        AddUnitToLocation(newCoords);
+    }
 
     public void SetCiv(Civilization civ)
     {
@@ -108,6 +131,38 @@ public partial class Unit : Node2D
         hexes.Where( h => !impassable.Contains(h.terrainType)).ToList();
         hexes.Where( h => h.moveCost <= curMoves ).ToList();
         return hexes;
+    }
+
+    public void AddUnitToLocation(Vector2I location)
+    {
+        if ( unitLocations.ContainsKey(map.GetHex(location))) {
+            unitLocations[map.GetHex(location)].Add(this);
+        } else {
+            unitLocations[map.GetHex(location)] = new List<Unit>{this};
+        }
+    }
+
+    public bool CanMoveToHex(Hex h)
+    {
+        if ( ! unitLocations.ContainsKey(h)) return true;
+        if ( (unitLocations.ContainsKey(h) && unitLocations[h].Count == 0) ) return true;
+        if ( validMovementHexes.Contains(h) ) return true;
+        return false;
+    }
+
+    public void MoveToHex(Hex h)
+    {
+        if (CanMoveToHex(h)) {
+            unitLocations[map.GetHex(this.unitCoords)].Remove(this);
+            this.unitCoords = h.coordinates; // Leverage the setter function
+        }
+    }
+
+    public void Move(Hex h)
+    {
+        if (isSelected && curMoves >= h.moveCost && CanMoveToHex(h)) {
+            EmitSignal(SignalName.UnitClicked, this);
+        }
     }
 
     // Override functions
