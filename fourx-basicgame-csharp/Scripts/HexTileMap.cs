@@ -218,6 +218,9 @@ public partial class HexTileMap : Node2D
 	public delegate void SendHexDataEventHandler(Hex h);
 	public event SendHexDataEventHandler SendHexData;
 
+	public delegate void RightClickOnMapEventHandler(Hex h);
+	public event RightClickOnMapEventHandler RightClickOnMap;
+
 	// // Godot Signals
 	[Signal]
 	public delegate void ClickOffMapEventHandler();
@@ -227,7 +230,7 @@ public partial class HexTileMap : Node2D
 
 	[Signal]
 	public delegate void SendCityUIInfoEventHandler(City c);
-
+	
 	// Gameplay data
 	public Dictionary<Vector2I, City> cities;
 	public List<Civilization> civs;
@@ -401,7 +404,6 @@ public partial class HexTileMap : Node2D
 				}
 				return;
 			}
-
 			// Only trigger on mouse button _press_ and only for the left mouse button
 			// Without the IsPressed, this will trigger on press AND release of a mouse button
 			// Without the ButtonIndex check, this will trigger on any button OR mouse wheel scroll
@@ -422,6 +424,8 @@ public partial class HexTileMap : Node2D
 				{
 					SendHexData?.Invoke(selectedHex);
 				}
+			} else if (mouse.ButtonMask == MouseButtonMask.Right) {
+				RightClickOnMap?.Invoke(mapData[mapCoords]);
 			}
 		}
 	}
