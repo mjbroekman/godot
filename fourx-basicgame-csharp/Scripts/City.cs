@@ -201,9 +201,13 @@ public partial class City : Node2D
 
                 // Remove the thing we just spawned.
                 unitBuildQueue.RemoveAt(0);
+                if ( unitBuildQueue.Count > 0 ) {
+                    currentUnitBuild = unitBuildQueue[0];
+                } else {
+                    currentUnitBuild = null;
+                }
             }
         }
-
     }
 
     public List<Hex> sortTerritory()
