@@ -512,7 +512,7 @@ public partial class HexTileMap : Node2D
 		return locations;
 	}
 
-	private bool IsValidLocation(Vector2I coord, int minDistance, List<Vector2I> locations)
+	public bool IsValidLocation(Vector2I coord, int minDistance, List<Vector2I> locations)
 	{
 		// Return false if we are too close to the edge of the map
 		if ( coord.X < 3 || coord.X > (width - 3) ) return false;

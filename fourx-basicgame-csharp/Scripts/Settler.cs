@@ -29,4 +29,37 @@ public partial class Settler : Unit
     {
         base._Ready();
     }
+
+    public bool IsValidCityHex(Hex h)
+    {
+        if ( ! City.invalidTiles.ContainsKey(h) && h.ownerCity.civ is null ) {
+            return true;
+        }
+        return false;
+    }
+
+    public void FoundCity()
+    {
+        if ( map.IsValidLocation(this.unitCoords, map.minCityRange, new List<Vector2I>(map.cities.Keys)) ) {
+            if ( IsValidCityHex(map.GetHex(this.unitCoords)) ) {
+                bool valid = true;
+
+                // Count the number of valid hexes surrounding the theoretical new city center
+                int validCount = 0;
+                foreach (Hex h in map.GetSurroundingHexes(this.unitCoords)) {
+                    if ( IsValidCityHex(h) ) {
+                        validCount += 1;
+                    }
+                }
+
+                // If less than half of the surrounding hexes are valid, don't allow a city to be founded
+                if ( validCount < 3 ) valid = false;
+
+                if ( valid ) {
+                    map.CreateCity(this.ownerCiv, this.unitCoords, $"Settled City {this.ownerCiv.cities.Count}" );
+                    this.DestroyUnit();
+                }
+            }
+        }
+    }
 }

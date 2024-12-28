@@ -40,6 +40,9 @@ public partial class Unit : Node2D
     [Signal]
     public delegate void UnitClickedEventHandler(Unit u);
 
+    public delegate void SelectedUnitDestroyedEventHandler();
+    public event SelectedUnitDestroyedEventHandler SelectedUnitDestroyed;
+
     // Combat properties
     public int maxHealth = -5;
     public int curHealth = -5;
@@ -124,6 +127,23 @@ public partial class Unit : Node2D
         // Simply reset the color to the civilization color
         GetNode<Sprite2D>("UnitSprite").Modulate = ownerCiv.territoryColor;
         validMovementHexes.Clear();
+        // Clear the UI
+        uiManager.HideUIPopups();
+    }
+
+    public void DestroyUnit()
+    {
+        // Disconnect movement signal
+        map.RightClickOnMap -= Move;
+        // Clean up stuff and remove the Unit UI
+        if ( isSelected ) {
+            SelectedUnitDestroyed?.Invoke();
+        }
+        // Remove unit from civ unit list and unit location dictionary
+        this.ownerCiv.units.Remove(this);
+        unitLocations[map.GetHex(this.unitCoords)].Remove(this);
+        // Nuke the unit
+        this.QueueFree();
     }
 
     public List<Hex> CalculateValidAdjacentMovementHexes()
@@ -239,6 +259,8 @@ public partial class Unit : Node2D
         // Set up the Unit UI when the unit is clicked
         uiManager = GetNode<UIManager>("/root/Game/UI/UICanvas/UIManager");
         this.UnitClicked += uiManager.SetUnitUI;
+        this.SelectedUnitDestroyed += uiManager.HideUIPopups;
+
         // Connect the UI Endturn signal to our Process Turn
         uiManager.EndTurn += this.ProcessTurn;
         //// End of UImanager signals
