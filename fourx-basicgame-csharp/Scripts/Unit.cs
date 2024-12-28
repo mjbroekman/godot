@@ -161,10 +161,13 @@ public partial class Unit : Node2D
 
     public bool CanMoveToHex(Hex h)
     {
-        if ( ! unitLocations.ContainsKey(h)) return true;
-        if ( unitLocations.ContainsKey(h) && unitLocations[h].Count < this.maxStackSize ) return true;
-        if ( validMovementHexes.Contains(h) ) return true;
-
+        if (
+             ( ! unitLocations.ContainsKey(h) ) || ( unitLocations.ContainsKey(h) && unitLocations[h].Count < this.maxStackSize )
+            ) {
+                if ( validMovementHexes.Contains(h) ) {
+                    return true;
+                }
+            }
         return false;
     }
 
