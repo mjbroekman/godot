@@ -33,7 +33,7 @@ public class Civilization
 
     public override string ToString()
     {
-        return $"{name} - {id} - {playerCiv.ToString()} - {territoryColor.ToString()}";
+        return $"{name} - {id}";
     }
 
     public void SetRandomColor()
