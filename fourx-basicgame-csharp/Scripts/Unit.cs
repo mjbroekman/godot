@@ -17,6 +17,8 @@ public partial class Unit : Node2D
 
     public Civilization ownerCiv = null;
     
+    public int maxStackSize = 1;
+
     private Vector2I uCoords = new Vector2I();
     public Vector2I unitCoords {
         get { return uCoords; }
@@ -106,6 +108,7 @@ public partial class Unit : Node2D
     public void SetSelected()
     {
         isSelected = true;
+        uiManager.SetUnitUI(this);
         Sprite2D sprite = GetNode<Sprite2D>("UnitSprite");
         Color c = new Color(sprite.Modulate);
         if (sprite.Modulate == ownerCiv.territoryColor) {
@@ -126,17 +129,31 @@ public partial class Unit : Node2D
     public List<Hex> CalculateValidAdjacentMovementHexes()
     {
         List<Hex> hexes = new List<Hex>();
+        List<Hex> hexes2 = new List<Hex>();
 
-        hexes.AddRange(map.GetSurroundingHexes(this.unitCoords));
-        hexes.Where( h => !impassable.Contains(h.terrainType)).ToList();
-        hexes.Where( h => h.moveCost <= curMoves ).ToList();
+        hexes2.AddRange(map.GetSurroundingHexes(this.unitCoords));
+
+        // Using Linq functions
+        hexes2 = hexes2.Where( h => !impassable.Contains(h.terrainType)).ToList();
+        hexes2 = hexes2.Where( h => h.moveCost <= curMoves ).ToList();
+
+        // Loop over the remaining hexes and remove the ones that have a unit from my civ
+        foreach (Hex h in hexes2) {
+            if (unitLocations.ContainsKey(h) && unitLocations[h].Count > 0) {
+                if (unitLocations[h][0].ownerCiv == this.ownerCiv) continue;
+            }
+            hexes.Add(h);
+        }
+
         return hexes;
     }
 
     public void AddUnitToLocation(Vector2I location)
     {
         if ( unitLocations.ContainsKey(map.GetHex(location))) {
-            unitLocations[map.GetHex(location)].Add(this);
+            if ( ! unitLocations[map.GetHex(location)].Contains(this) ) {
+                unitLocations[map.GetHex(location)].Add(this);
+            }
         } else {
             unitLocations[map.GetHex(location)] = new List<Unit>{this};
         }
@@ -145,8 +162,17 @@ public partial class Unit : Node2D
     public bool CanMoveToHex(Hex h)
     {
         if ( ! unitLocations.ContainsKey(h)) return true;
-        if ( (unitLocations.ContainsKey(h) && unitLocations[h].Count == 0) ) return true;
+        if ( unitLocations.ContainsKey(h) && unitLocations[h].Count < this.maxStackSize ) return true;
         if ( validMovementHexes.Contains(h) ) return true;
+
+        return false;
+    }
+
+    public bool CanMoveToCombat(Hex h)
+    {
+        if ( unitLocations.ContainsKey(h) && unitLocations[h].Count > 0 ) {
+            if ( unitLocations[h][0].ownerCiv != this.ownerCiv ) return true;
+        }
         return false;
     }
 
@@ -155,30 +181,77 @@ public partial class Unit : Node2D
         if (CanMoveToHex(h)) {
             unitLocations[map.GetHex(this.unitCoords)].Remove(this);
             this.unitCoords = h.coordinates; // Leverage the setter function
+            this.curMoves -= h.moveCost; // Update remaining moves
+            AddUnitToLocation(this.unitCoords);
+            validMovementHexes = CalculateValidAdjacentMovementHexes();
+        } else if ( CanMoveToCombat(h) ) {
+            // combat!
+        } else {
+            // Nothing to do here? Target hex is occupied by a friendly or not a valid hex
         }
     }
 
     public void Move(Hex h)
     {
-        if (isSelected && curMoves >= h.moveCost && CanMoveToHex(h)) {
+        if (isSelected && curMoves >= h.moveCost) {
+            MoveToHex(h);
             EmitSignal(SignalName.UnitClicked, this);
         }
+    }
+
+    public void ProcessTurn()
+    {
+        if ( curMoves == maxMoves && curHealth != maxHealth ) {
+            // We didn't move and we are injured, so we should heal
+            curHealth += 1;
+        }
+
+        curMoves = maxMoves;
+        if (this.isSelected) uiManager.SetUnitUI(this);
+    }
+
+    // Debug functions
+    public void ShowHexes(List<Hex> hexes)
+    {
+        GD.Print("Hexes: " + hexes.Count);
+        string hexList = "";
+        foreach (Hex h in hexes) {
+            hexList += h.ToString() + " ";
+            if (unitLocations.ContainsKey(h) && unitLocations[h].Count > 0) {
+                foreach (Unit u in unitLocations[h]) {
+                    // hexList += u.ToString() + " ";
+                    GD.Print(u.ToString() + " : " + h.ToString() + unitLocations[h].Count.ToString() );
+                }
+            }
+        }
+        GD.Print("Hex List: " + hexList);
     }
 
     // Override functions
     public override void _Ready()
     {
         unitCollider = GetNode<Area2D>("UnitSprite/Area2D");
+
+        //// UImanager Signals
+        // Set up the Unit UI when the unit is clicked
         uiManager = GetNode<UIManager>("/root/Game/UI/UICanvas/UIManager");
         this.UnitClicked += uiManager.SetUnitUI;
+        // Connect the UI Endturn signal to our Process Turn
+        uiManager.EndTurn += this.ProcessTurn;
+        //// End of UImanager signals
+
+        // Map signals
         map = GetNode<HexTileMap>("/root/Game/Environment/HexTileMap");
         this.UnitClicked += map.DeselectCurrentHex;
+        map.RightClickOnMap += Move;
+
+        // Calculate the valid hexes
         validMovementHexes = CalculateValidAdjacentMovementHexes();
     }
 
     public override string ToString()
     {
-        return $"{unitName}";
+        return $"{unitName} ({ownerCiv})";
     }
 
     public override void _UnhandledInput(InputEvent @event)
