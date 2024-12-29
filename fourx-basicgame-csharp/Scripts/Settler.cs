@@ -32,7 +32,8 @@ public partial class Settler : Unit
 
     public bool IsValidCityHex(Hex h)
     {
-        if ( ! City.invalidTiles.ContainsKey(h) && h.ownerCity.civ is null ) {
+        if ( ! City.invalidTiles.ContainsKey(h) && h.ownerCity is null ||
+             ( ! ( h.ownerCity is null ) && h.ownerCity.civ is null ) ) {
             return true;
         }
         return false;
@@ -41,7 +42,8 @@ public partial class Settler : Unit
     public void FoundCity()
     {
         if ( map.IsValidLocation(this.unitCoords, map.minCityRange, new List<Vector2I>(map.cities.Keys)) ) {
-            if ( IsValidCityHex(map.GetHex(this.unitCoords)) ) {
+            Hex thisHex = map.GetHex(this.unitCoords) as Hex;
+            if ( IsValidCityHex(thisHex ) ) {
                 bool valid = true;
 
                 // Count the number of valid hexes surrounding the theoretical new city center
