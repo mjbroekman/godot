@@ -19,9 +19,20 @@ public partial class UnitUI : Panel
 
     public void SetUnitUI(Unit u)
     {
-        myUnit = u;
+        this.myUnit = u;
+
+        if ( this.myUnit.GetType() == typeof(Settler) ) {
+            Button foundCityButton = new Button();
+            foundCityButton.Text = "Found City";
+            actionBox.AddChild(foundCityButton);
+
+            Settler settler = this.myUnit as Settler;
+            foundCityButton.Pressed += settler.FoundCity;
+        }
 
         Refresh();
+
+        //
     }
 
     public void Refresh()
