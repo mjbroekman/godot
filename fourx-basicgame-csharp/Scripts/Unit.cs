@@ -17,6 +17,8 @@ public partial class Unit : Node2D
 
     public Civilization ownerCiv = null;
     
+    public Random unitRNG = new Random();
+
     public int maxStackSize = 1;
 
     private Vector2I uCoords = new Vector2I();
@@ -51,6 +53,7 @@ public partial class Unit : Node2D
     public int maxMoves = -5;
     public int curMoves = -5;
     public List<Hex> validMovementHexes;
+    public List<Hex> visitedHexes;
 
     // Scene / node references
     public Area2D unitCollider;
@@ -272,6 +275,7 @@ public partial class Unit : Node2D
 
         // Calculate the valid hexes
         validMovementHexes = CalculateValidAdjacentMovementHexes();
+        visitedHexes = new List<Hex>();
     }
 
     public override string ToString()
@@ -296,6 +300,19 @@ public partial class Unit : Node2D
             } else {
                 SetDeselected();
             }
+        }
+    }
+
+    public void RandomMove()
+    {
+        validMovementHexes = CalculateValidAdjacentMovementHexes();
+
+        foreach (Hex v in visitedHexes) validMovementHexes.Remove(v);
+
+        if (validMovementHexes.Count > 0) {
+            Hex h = validMovementHexes.ElementAt(unitRNG.Next(validMovementHexes.Count));
+            MoveToHex(h);
+            if (this is Settler) visitedHexes.Add(h);
         }
     }
 }
