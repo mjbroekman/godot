@@ -158,7 +158,8 @@ public partial class City : Node2D
 
     public void AddUnitToBuildQueue(Unit u)
     {
-        unitBuildQueue.Add(u);
+        if ( this.civ.units.Count < this.civ.maxUnits )
+            unitBuildQueue.Add(u);
     }
 
     public void SpawnUnit(Unit u)
