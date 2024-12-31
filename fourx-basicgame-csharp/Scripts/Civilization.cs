@@ -25,10 +25,32 @@ public class Civilization
     // Is this the player civilization?
     public bool playerCiv;
 
+    // Private random number generator
+    private Random civRNG = new Random();
+
+    // Max Units
+    public int maxUnitsPerCity = 3;
+    public int maxUnits;
+
     public Civilization()
     {
         cities = new List<City>();
         units = new List<Unit>();
+    }
+
+    public double GetNextCivDouble()
+    {
+        return civRNG.NextDouble();
+    }
+
+    public double GetNextCivInt32()
+    {
+        return civRNG.Next();
+    }
+
+    public double GetNextCivInt64()
+    {
+        return civRNG.NextInt64();
     }
 
     public override string ToString()
@@ -47,5 +69,37 @@ public class Civilization
         foreach (City c in cities) {
             c.ProcessTurn();
         }
+
+        if ( ! playerCiv ) {
+            foreach (City c in cities) {
+                int chance = civRNG.Next(30);
+
+                if ( chance > 27 ) {
+                    c.AddUnitToBuildQueue(new Warrior());
+                }
+                if ( chance > 28 ) {
+                    c.AddUnitToBuildQueue(new Settler());
+                }
+            }
+
+            // Move units randomly
+            List<Settler> citiesToFound = new List<Settler>();
+            foreach (Unit u in units) {
+                if ( u.curHealth == u.maxHealth) {
+                    u.RandomMove();
+                } else {
+                    if ( civRNG.Next(5) > u.maxHealth ) u.RandomMove();
+                }
+                if (u is Settler && civRNG.Next(10) > 8) {
+                    Settler s = u as Settler;
+                    citiesToFound.Add(s);
+                }
+            }
+            for (int i = 0; i < citiesToFound.Count; i++) {
+                citiesToFound[i].FoundCity();
+            }
+        }
+
+        maxUnits = this.cities.Count * this.maxUnitsPerCity;
     }
 }
