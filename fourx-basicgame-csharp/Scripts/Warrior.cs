@@ -33,8 +33,9 @@ public partial class Warrior : Unit
     public override void _LevelUp()
     {
         GD.Print("Warrior Levelup initiated!");
-        attackValue += 2;
-        defenseValue += 1;
-        xpValue = curLevel * 2;
+        this.attackValue += 2;
+        this.defenseValue += 1;
+        this.maxMoves = ( ( this.curLevel / 5 ) > this.maxMoves ) ? ( this.curLevel / 5 ) : this.maxMoves;
+        this.xpValue = this.curLevel * 2;
     }
 }
