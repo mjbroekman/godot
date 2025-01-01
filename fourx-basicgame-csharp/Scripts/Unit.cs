@@ -218,15 +218,15 @@ public partial class Unit : Node2D
 
     public void MoveToHex(Hex h)
     {
-        if (CanMoveToHex(h)) {
+        if ( CanMoveToHex(h) ) {
             Unit.unitLocations[map.GetHex(this.unitCoords)].Remove(this);
             this.unitCoords = h.coordinates; // Leverage the setter function
             this.curMoves -= h.moveCost; // Update remaining moves
             AddUnitToLocation(this.unitCoords);
             validMovementHexes = CalculateValidAdjacentMovementHexes();
         } else if ( CanMoveToCombat(h) ) {
-            GD.Print("Combat!");
             Unit opponent = Unit.unitLocations[h][0];
+            GD.Print($"{this} has entered combat against {opponent}!");
             CalculateCombat(this,opponent);
         } else {
             // Nothing to do here? Target hex is occupied by a friendly or not a valid hex
@@ -249,7 +249,7 @@ public partial class Unit : Node2D
         }
 
         curMoves = maxMoves;
-        if (this.isSelected) uiManager.SetUnitUI(this);
+        if (this.isSelected) SetDeselected();
     }
 
     // Debug functions
