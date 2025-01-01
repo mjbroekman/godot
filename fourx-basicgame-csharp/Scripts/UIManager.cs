@@ -69,7 +69,8 @@ public partial class UIManager : Node2D
         HideUIPopups();
         unitUI = unitUIScene.Instantiate() as UnitUI;
         AddChild(unitUI);
-        unitUI.SetUnitUI(u);
+        if ( u != null ) unitUI.SetUnitUI(u);
+        if ( u is null ) HideAllPopups();
     }
 
     public void HideAllPopups()
@@ -111,5 +112,6 @@ public partial class UIManager : Node2D
     public void RefreshUI()
     {
         if (cityUI is not null) cityUI.RefreshUI();
+        if (unitUI is not null) unitUI.RefreshUnitUI();
     }
 }
