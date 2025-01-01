@@ -30,6 +30,10 @@ expand_mode = 1
 layout_mode = 2
 text = "Unit Type:"
 
+[node name="ExpLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Exp:"
+
 [node name="HealthLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "HP:"
