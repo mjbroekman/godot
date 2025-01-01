@@ -36,6 +36,7 @@ public class Civilization
     {
         cities = new List<City>();
         units = new List<Unit>();
+        maxUnits = 3;
     }
 
     public double GetNextCivDouble()
