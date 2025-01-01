@@ -123,9 +123,11 @@ public class Hex
 	{
 		string foodText = $"Food: {this.foodValue}";
 		string prodText = $"Production: {this.productionValue}";
+		string cityText = "";
 		if (this.bonusFoodResource) foodText = $"Food: {this.foodValue - 1} (+1)";
 		if (this.bonusProdResource) prodText = $"Production: {this.productionValue - 1} (+1)";
-		return $"({this.coordinates.X}:{this.coordinates.Y})";
+		if (this.ownerCity != null) cityText = $"Owner: {this.ownerCity.cityName} ({this.ownerCity.civ})";
+		return $"({this.coordinates.X}:{this.coordinates.Y}) {cityText}";
 		// return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | {foodText} | {prodText} | {canBelong}";
 	}
 }
@@ -299,6 +301,7 @@ public partial class HexTileMap : Node2D
 		Civilization playerCiv = new Civilization();
 		playerCiv.id = 0; // Player civ is 0; all others are greater than 0
 		playerCiv.playerCiv = true;
+		playerCiv.name = "Player";
 		playerCiv.territoryColor = new Color(PLAYER_COLOR);
 
 		int id = terrainAtlas.CreateAlternativeTile(civColorBase);
