@@ -3,7 +3,7 @@ using System;
 
 public partial class CityUI : Panel
 {
-    Label cityName, popLabel, foodLabel, prodLabel;
+    Label cityName, popLabel, foodLabel, prodLabel, statsLabel;
     
     // City data
     City city = null;
@@ -11,6 +11,7 @@ public partial class CityUI : Panel
     public override void _Ready()
     {
         cityName = GetNode<Label>("CityUIVBox/CityName");
+        statsLabel = GetNode<Label>("CityUIVBox/DataMarginContainer/DataVBox/Stats");
         popLabel = GetNode<Label>("CityUIVBox/DataMarginContainer/DataVBox/Population");
         foodLabel = GetNode<Label>("CityUIVBox/DataMarginContainer/DataVBox/Food");
         prodLabel = GetNode<Label>("CityUIVBox/DataMarginContainer/DataVBox/Production");
@@ -77,7 +78,8 @@ public partial class CityUI : Panel
     public void RefreshUI()
     {
         cityName.Text = this.city.cityName;
-        popLabel.Text = "Population: " + this.city.population;
+        popLabel.Text = $"Population: {this.city.cityPop}";
+        statsLabel.Text = $"Defense: {this.city.cityDefense}   Attack: {this.city.cityAttack}";
         foodLabel.Text = "Food\n" +
                             "    Worked: " + this.city.workedFood + "\n" +
                             "    Stored: " + this.city.storedFood + "\n" +

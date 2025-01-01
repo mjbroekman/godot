@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ckb1tcdcfcf0c"]
+[gd_scene load_steps=13 format=3 uid="uid://ckb1tcdcfcf0c"]
 
 [ext_resource type="Script" path="res://Scripts/CityUI.cs" id="1_k3s6s"]
 [ext_resource type="Texture2D" uid="uid://year1rvu0hme" path="res://Textures/Terrain/city_painting.jpg" id="1_t4ksg"]
@@ -18,6 +18,10 @@ outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_p44ho"]
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_46get"]
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
@@ -86,6 +90,11 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Population:"
 label_settings = SubResource("LabelSettings_p44ho")
+
+[node name="Stats" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+layout_mode = 2
+text = "Defense: 0   Attack: 0"
+label_settings = SubResource("LabelSettings_46get")
 
 [node name="Food" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
 layout_mode = 2
