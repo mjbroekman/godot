@@ -4,7 +4,7 @@ using System;
 public partial class UnitUI : Panel
 {
     TextureRect unitImage;
-    Label unitType, moves, health;
+    Label unitType, moves, health, exp;
     Unit myUnit;
     VBoxContainer actionBox;
 
@@ -12,6 +12,7 @@ public partial class UnitUI : Panel
     {
         unitImage = GetNode<TextureRect>("VBoxContainer/TextureRect");
         unitType = GetNode<Label>("VBoxContainer/UnitTypeLabel");
+        exp = GetNode<Label>("VBoxContainer/ExpLabel");
         health = GetNode<Label>("VBoxContainer/HealthLabel");
         moves = GetNode<Label>("VBoxContainer/MovesLabel");
         actionBox = GetNode<VBoxContainer>("VBoxContainer/ActionsBox");
@@ -30,16 +31,15 @@ public partial class UnitUI : Panel
             foundCityButton.Pressed += settler.FoundCity;
         }
 
-        Refresh();
-
-        //
+        RefreshUnitUI();
     }
 
-    public void Refresh()
+    public void RefreshUnitUI()
     {
         unitImage.Texture = Unit.unitImages[myUnit.GetType()];
         unitType.Text = $"Unit: {myUnit.unitName}";
         moves.Text = $"Moves Remaining: {myUnit.curMoves} / {myUnit.maxMoves}";
         health.Text = $"Hit Points: {myUnit.curHealth} / {myUnit.maxHealth}";
+        exp.Text = $"Exp: {myUnit.totalXP} / {((myUnit.curLevel + 1) * 5)}";
     }
 }
