@@ -49,6 +49,7 @@ public partial class Unit : Node2D
     public int maxHealth = -5;
     public int curHealth = -5;
     public int attackValue = -5;
+    public int defenseValue = -5;
     public int curLevel = -5;
     public int xpValue = -5;
 
@@ -324,8 +325,19 @@ public partial class Unit : Node2D
     // Movement, Combat, and Advancement
     public void CalculateCombat(Unit attacker, Unit defender)
     {
-        defender.curHealth -= attacker.attackValue;
-        attacker.curHealth -= defender.attackValue / 2;
+        // Defensive values reduce incoming damage before modifiers for attacker or defender
+        int defDamage = attacker.attackValue - defender.defenseValue;
+        int attDamage = defender.attackValue - attacker.defenseValue;
+
+        // Make sure damage is non-negative so we don't inadvertently heal unit by attacking them
+        if ( defDamage < 0 ) defDamage = 0;
+        if ( attDamage < 0 ) attDamage = 0;
+
+        // Deal damage
+        defender.curHealth -= defDamage;
+        // Defensive fighting is less effective, so halve the damage
+        attacker.curHealth -= attDamage / 2;
+        // The attack used its move to attack
         attacker.curMoves -= 1;
 
         // XP gain needs to happen before we destroy anything

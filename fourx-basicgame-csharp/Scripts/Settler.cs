@@ -19,6 +19,7 @@ public partial class Settler : Unit
         maxHealth = 3;
         curHealth = 3;
         attackValue = 1;
+        defenseValue = 0;
 
         curLevel = 1;
         xpValue = curLevel;
@@ -77,5 +78,6 @@ public partial class Settler : Unit
         GD.Print("Settler Levelup initiated!");
         maxMoves += 1;
         xpValue = curLevel;
+        defenseValue += 1;
     }
 }

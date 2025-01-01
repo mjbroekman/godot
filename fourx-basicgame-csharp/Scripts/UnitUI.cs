@@ -4,7 +4,7 @@ using System;
 public partial class UnitUI : Panel
 {
     TextureRect unitImage;
-    Label unitType, moves, health, exp;
+    Label unitType, moves, health, exp, stats;
     Unit myUnit;
     VBoxContainer actionBox;
 
@@ -15,6 +15,7 @@ public partial class UnitUI : Panel
         exp = GetNode<Label>("VBoxContainer/ExpLabel");
         health = GetNode<Label>("VBoxContainer/HealthLabel");
         moves = GetNode<Label>("VBoxContainer/MovesLabel");
+        stats = GetNode<Label>("VBoxContainer/StatsLabel");
         actionBox = GetNode<VBoxContainer>("VBoxContainer/ActionsBox");
     }
 
@@ -40,6 +41,9 @@ public partial class UnitUI : Panel
         unitType.Text = $"Unit: {myUnit.unitName}";
         moves.Text = $"Moves Remaining: {myUnit.curMoves} / {myUnit.maxMoves}";
         health.Text = $"Hit Points: {myUnit.curHealth} / {myUnit.maxHealth}";
+
         exp.Text = $"Exp: {myUnit.totalXP} / {((myUnit.curLevel + 1) * 5)}";
+
+        stats.Text = $"Attack: {myUnit.attackValue}    Defense: {myUnit.defenseValue}";
     }
 }

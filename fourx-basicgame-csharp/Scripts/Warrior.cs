@@ -12,6 +12,7 @@ public partial class Warrior : Unit
         maxHealth = 5;
         curHealth = 5;
         attackValue = 2;
+        defenseValue = 0;
 
         curLevel = 1;
         xpValue = curLevel * 2;
@@ -33,6 +34,7 @@ public partial class Warrior : Unit
     {
         GD.Print("Warrior Levelup initiated!");
         attackValue += 2;
+        defenseValue += 1;
         xpValue = curLevel * 2;
     }
 }
