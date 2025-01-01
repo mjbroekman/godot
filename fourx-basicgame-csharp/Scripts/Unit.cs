@@ -48,6 +48,16 @@ public partial class Unit : Node2D
     // Combat properties
     public int maxHealth = -5;
     public int curHealth = -5;
+    public int attackValue = -5;
+    public int curLevel = -5;
+    public int xpValue = -5;
+
+    private int expTotal = 0;
+    public int totalXP {
+        get { return expTotal; }
+		set { expTotal = value; if ( totalXP > (curLevel * 5) ) LevelUp(); }
+    }
+    public int killCount = -5;
 
     // Movement properties
     public int maxMoves = -5;
@@ -138,9 +148,12 @@ public partial class Unit : Node2D
     {
         // Disconnect movement signal
         map.RightClickOnMap -= Move;
+        uiManager.EndTurn -= this.ProcessTurn;
+
         // Clean up stuff and remove the Unit UI
         if ( isSelected ) {
             SelectedUnitDestroyed?.Invoke();
+            isSelected = false;
         }
         // Remove unit from civ unit list and unit location dictionary
         this.ownerCiv.units.Remove(this);
@@ -205,13 +218,15 @@ public partial class Unit : Node2D
     public void MoveToHex(Hex h)
     {
         if (CanMoveToHex(h)) {
-            unitLocations[map.GetHex(this.unitCoords)].Remove(this);
+            Unit.unitLocations[map.GetHex(this.unitCoords)].Remove(this);
             this.unitCoords = h.coordinates; // Leverage the setter function
             this.curMoves -= h.moveCost; // Update remaining moves
             AddUnitToLocation(this.unitCoords);
             validMovementHexes = CalculateValidAdjacentMovementHexes();
         } else if ( CanMoveToCombat(h) ) {
-            // combat!
+            GD.Print("Combat!");
+            Unit opponent = Unit.unitLocations[h][0];
+            CalculateCombat(this,opponent);
         } else {
             // Nothing to do here? Target hex is occupied by a friendly or not a valid hex
         }
@@ -276,6 +291,9 @@ public partial class Unit : Node2D
         // Calculate the valid hexes
         validMovementHexes = CalculateValidAdjacentMovementHexes();
         visitedHexes = new List<Hex>();
+
+        curLevel = 1;
+        totalXP = 0;
     }
 
     public override string ToString()
@@ -303,6 +321,22 @@ public partial class Unit : Node2D
         }
     }
 
+    // Movement, Combat, and Advancement
+    public void CalculateCombat(Unit attacker, Unit defender)
+    {
+        defender.curHealth -= attacker.attackValue;
+        attacker.curHealth -= defender.attackValue / 2;
+        attacker.curMoves -= 1;
+
+        // XP gain needs to happen before we destroy anything
+        // this COULD 'save' a unit from dying if they level up
+        if (defender.curHealth <= 0) attacker.totalXP += defender.xpValue;
+        if (attacker.curHealth <= 0) defender.totalXP += attacker.xpValue;
+
+        if (defender.curHealth <= 0) defender.DestroyUnit();
+        if (attacker.curHealth <= 0) attacker.DestroyUnit();
+    }
+
     public void RandomMove()
     {
         validMovementHexes = CalculateValidAdjacentMovementHexes();
@@ -322,4 +356,15 @@ public partial class Unit : Node2D
             visitedHexes.RemoveAt(last);
         }
     }
+
+    public void LevelUp()
+    {
+        GD.Print($"{this.unitName} leveled up!");
+        curLevel += 1;
+        curHealth += maxHealth;
+        maxHealth += maxHealth;
+        this._LevelUp();
+    }
+
+    public virtual void _LevelUp() {}
 }

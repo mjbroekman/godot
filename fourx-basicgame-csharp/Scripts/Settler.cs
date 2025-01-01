@@ -16,8 +16,14 @@ public partial class Settler : Unit
     {
         unitName = "Settler";
 
-        maxHealth = 1;
-        curHealth = 1;
+        maxHealth = 3;
+        curHealth = 3;
+        attackValue = 1;
+
+        curLevel = 1;
+        xpValue = curLevel;
+        totalXP = 0;
+        killCount = 0;
 
         maxMoves = 2;
         curMoves = 2;
@@ -59,9 +65,17 @@ public partial class Settler : Unit
 
                 if ( valid ) {
                     map.CreateCity(this.ownerCiv, this.unitCoords, $"Settled City {this.ownerCiv.cities.Count}" );
+
                     this.DestroyUnit();
                 }
             }
         }
+    }
+
+    public override void _LevelUp()
+    {
+        GD.Print("Settler Levelup initiated!");
+        maxMoves += 1;
+        xpValue = curLevel;
     }
 }
