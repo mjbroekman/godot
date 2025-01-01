@@ -56,7 +56,7 @@ public partial class Unit : Node2D
     private int expTotal = 0;
     public int totalXP {
         get { return expTotal; }
-		set { expTotal = value; if ( totalXP > (curLevel * 5) ) LevelUp(); }
+		set { this.expTotal = value; if ( this.expTotal > (curLevel * 5) ) this.LevelUp(); }
     }
     public int killCount = -5;
 
@@ -124,6 +124,7 @@ public partial class Unit : Node2D
 
     public void SetSelected()
     {
+        foreach (Unit u in this.ownerCiv.units) u.SetDeselected();
         isSelected = true;
         uiManager.SetUnitUI(this);
         Sprite2D sprite = GetNode<Sprite2D>("UnitSprite");
@@ -172,13 +173,14 @@ public partial class Unit : Node2D
 
         // Using Linq functions
         hexes2 = hexes2.Where( h => !impassable.Contains(h.terrainType)).ToList();
-        hexes2 = hexes2.Where( h => h.moveCost <= curMoves ).ToList();
+        hexes2 = hexes2.Where( h => ( h.moveCost <= curMoves || curMoves == maxMoves ) ).ToList();
 
         // Loop over the remaining hexes and remove the ones that have a unit from my civ
         foreach (Hex h in hexes2) {
             if (unitLocations.ContainsKey(h) && unitLocations[h].Count > 0) {
                 if (unitLocations[h][0].ownerCiv == this.ownerCiv) continue;
             }
+            if ( h.isCityCenter && (h.ownerCity.civ != this.ownerCiv) ) continue;
             hexes.Add(h);
         }
 
@@ -199,16 +201,15 @@ public partial class Unit : Node2D
     public bool CanMoveToHex(Hex h)
     {
         if (
-             ( ! unitLocations.ContainsKey(h) ) || ( unitLocations.ContainsKey(h) && unitLocations[h].Count < this.maxStackSize )
+             ( ! unitLocations.ContainsKey(h) ) ||
+             ( unitLocations.ContainsKey(h) && unitLocations[h].Count < this.maxStackSize )
             ) {
-                if ( validMovementHexes.Contains(h) ) {
-                    return true;
-                }
+                if ( validMovementHexes.Contains(h) ) return true;
             }
         return false;
     }
 
-    public bool CanMoveToCombat(Hex h)
+    public bool CanMoveToUnitCombat(Hex h)
     {
         if ( unitLocations.ContainsKey(h) && unitLocations[h].Count > 0 ) {
             if ( unitLocations[h][0].ownerCiv != this.ownerCiv ) return true;
@@ -216,20 +217,48 @@ public partial class Unit : Node2D
         return false;
     }
 
+    public bool CanMoveToCityCombat(Hex h)
+    {
+        if (
+             ( h.isCityCenter && h.ownerCity.civ != this.ownerCiv ) &&
+             ( this is Warrior )
+            ) {
+            return true;
+        }
+        return false;
+    }
+
     public void MoveToHex(Hex h)
     {
+        bool canCompleteMove = false;
         if ( CanMoveToHex(h) ) {
             Unit.unitLocations[map.GetHex(this.unitCoords)].Remove(this);
             this.unitCoords = h.coordinates; // Leverage the setter function
             this.curMoves -= h.moveCost; // Update remaining moves
-            AddUnitToLocation(this.unitCoords);
-            validMovementHexes = CalculateValidAdjacentMovementHexes();
-        } else if ( CanMoveToCombat(h) ) {
+            // GD.Print($"Moving into {h}");
+            canCompleteMove = true;
+        } else if ( CanMoveToUnitCombat(h) ) {
             Unit opponent = Unit.unitLocations[h][0];
             GD.Print($"{this} has entered combat against {opponent}!");
-            CalculateCombat(this,opponent);
+            CalculateUnitCombat(this,opponent);
+            if ( opponent is null ) {
+                GD.Print($"{this} won the battle!");
+                canCompleteMove = true;
+            }
+        } else if ( CanMoveToCityCombat(h) ) {
+            City opponent = map.cities[h.coordinates];
+            GD.Print($"{this} has entered combat against {opponent}!");
+            CalculateCityCombat(this,opponent);
+            if ( opponent is null || ( opponent is not null && opponent.civ == this.ownerCiv ) ) {
+                GD.Print($"City captured or destroyed. Moving into hex {h}");
+                canCompleteMove = true;
+            }
         } else {
             // Nothing to do here? Target hex is occupied by a friendly or not a valid hex
+        }
+        if ( canCompleteMove ) {
+            AddUnitToLocation(this.unitCoords);
+            validMovementHexes = CalculateValidAdjacentMovementHexes();
         }
     }
 
@@ -323,7 +352,7 @@ public partial class Unit : Node2D
     }
 
     // Movement, Combat, and Advancement
-    public void CalculateCombat(Unit attacker, Unit defender)
+    public void CalculateUnitCombat(Unit attacker, Unit defender)
     {
         // Defensive values reduce incoming damage before modifiers for attacker or defender
         int defDamage = attacker.attackValue - defender.defenseValue;
@@ -337,15 +366,44 @@ public partial class Unit : Node2D
         defender.curHealth -= defDamage;
         // Defensive fighting is less effective, so halve the damage
         attacker.curHealth -= attDamage / 2;
-        // The attack used its move to attack
+        // The attacker used its move to attack
         attacker.curMoves -= 1;
 
         // XP gain needs to happen before we destroy anything
         // this COULD 'save' a unit from dying if they level up
         if (defender.curHealth <= 0) attacker.totalXP += defender.xpValue;
+        else attacker.totalXP += 1;
+
         if (attacker.curHealth <= 0) defender.totalXP += attacker.xpValue;
+        else defender.totalXP += 1;
 
         if (defender.curHealth <= 0) defender.DestroyUnit();
+        if (attacker.curHealth <= 0) attacker.DestroyUnit();
+    }
+
+    public void CalculateCityCombat(Unit attacker, City defender)
+    {
+        // Defensive values reduce incoming damage before modifiers for attacker or defender
+        int defDamage = attacker.attackValue - defender.cityDefense;
+        int attDamage = defender.cityAttack - attacker.defenseValue;
+
+        // Make sure damage is non-negative so we don't inadvertently heal unit by attacking them
+        if ( defDamage < 0 ) defDamage = 0;
+        if ( attDamage < 0 ) attDamage = 0;
+
+        // Deal damage (reduce population of attacked cities)
+        defender.cityPop -= 1;
+        // City defenses are effective, so don't halve damage
+        attacker.curHealth -= attDamage;
+        // The attacker used its move to attack
+        attacker.curMoves -= 1;
+
+        // XP gain needs to happen before we destroy anything
+        // this COULD 'save' a unit from dying if they level up
+        if (defender.cityPop <= attacker.attackValue) attacker.totalXP += defender.cityPop;
+        else attacker.totalXP += 1;
+
+        if (defender.cityPop <= attacker.attackValue) defender.ChangeOwnership(this.ownerCiv);
         if (attacker.curHealth <= 0) attacker.DestroyUnit();
     }
 
@@ -372,9 +430,9 @@ public partial class Unit : Node2D
     public void LevelUp()
     {
         GD.Print($"{this.unitName} leveled up!");
-        curLevel += 1;
-        curHealth += maxHealth;
-        maxHealth += maxHealth;
+        this.curLevel += 1;
+        this.curHealth += this.maxHealth;
+        this.maxHealth += this.maxHealth;
         this._LevelUp();
     }
 
