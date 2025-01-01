@@ -211,6 +211,19 @@ public partial class City : Node2D
         }
     }
 
+    public void ChangeOwnership(Civilization newOwner)
+    {
+        Civilization oldOwner = this.civ;
+
+        this.civ.cities.Remove(this);
+        newOwner.cities.Add(this);
+
+        this.civ = newOwner;
+        SetIconColor(newOwner.territoryColor);
+        map.UpdateCivTerritoryMap(oldOwner);
+        map.UpdateCivTerritoryMap(newOwner);
+    }
+
     public List<Hex> sortTerritory()
     {
         if (prioritizeFood) return territory.OrderByDescending(x => x.foodValue).ThenByDescending(x => x.productionValue).ToList();
