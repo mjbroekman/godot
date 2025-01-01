@@ -314,5 +314,12 @@ public partial class Unit : Node2D
             MoveToHex(h);
             if (this is Settler) visitedHexes.Add(h);
         }
+        if (visitedHexes.Count > 4 && validMovementHexes.Count > 0) {
+            int last = visitedHexes.Count - 1;
+            visitedHexes.RemoveAt(last);
+        } else if (validMovementHexes.Count == 0 && visitedHexes.Count > 0) {
+            int last = visitedHexes.Count - 1;
+            visitedHexes.RemoveAt(last);
+        }
     }
 }
