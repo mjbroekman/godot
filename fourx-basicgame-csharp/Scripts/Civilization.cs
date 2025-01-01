@@ -67,12 +67,14 @@ public class Civilization
 
     public void ProcessTurn()
     {
-        foreach (City c in cities) {
+        List<City> tempCities = cities;
+        foreach (City c in tempCities) {
             c.ProcessTurn();
         }
 
         if ( ! playerCiv ) {
-            foreach (City c in cities) {
+            List<City> tempBotCities = cities;
+            foreach (City c in tempBotCities) {
                 int chance = civRNG.Next(30);
 
                 if ( chance > 27 ) {
@@ -85,7 +87,8 @@ public class Civilization
 
             // Move units randomly
             List<Settler> citiesToFound = new List<Settler>();
-            foreach (Unit u in units) {
+            List<Unit> tempBotUnits = units;
+            foreach (Unit u in tempBotUnits) {
                 if ( u.curHealth == u.maxHealth) {
                     u.RandomMove();
                 } else {
