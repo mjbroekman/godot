@@ -424,7 +424,8 @@ public partial class HexTileMap : Node2D
 				{
 					SendHexData?.Invoke(selectedHex);
 				}
-			} else if (mouse.ButtonMask == MouseButtonMask.Right) {
+			}
+			if (mouse.ButtonMask == MouseButtonMask.Right) {
 				RightClickOnMap?.Invoke(mapData[mapCoords]);
 			}
 		}
