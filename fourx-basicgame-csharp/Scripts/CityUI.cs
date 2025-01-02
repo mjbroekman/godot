@@ -102,9 +102,4 @@ public partial class CityUI : Panel
     {
         return city;
     }
-
-    public override void _Process(double delta)
-    {
-
-    }
 }
