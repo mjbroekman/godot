@@ -193,6 +193,7 @@ public partial class HexTileMap : Node2D
 
 	// Map data
 	TileMapLayer baseLayer, civColorLayer, borderLayer, overlayLayer;
+	HighlightLayer highlightLayer;
 
 	// Base City Color Atlas Source
 	TileSetAtlasSource terrainAtlas;
@@ -248,6 +249,7 @@ public partial class HexTileMap : Node2D
 		borderLayer = GetNode<TileMapLayer>("HexBorderLayer");
 		civColorLayer = GetNode<TileMapLayer>("CivColorLayer");
 		overlayLayer = GetNode<TileMapLayer>("SelectionOverlayLayer");
+		highlightLayer = GetNode<TileMapLayer>("HighlightLayer") as HighlightLayer;
 
 		// Tile Set Atlas
 		this.terrainAtlas = civColorLayer.TileSet.GetSource(0) as TileSetAtlasSource;
@@ -294,6 +296,8 @@ public partial class HexTileMap : Node2D
 		//  a valid type.
 		this.SendHexData += uiManager.SetUI;
 		uiManager.EndTurn += ProcessTurn;
+
+		highlightLayer.SetupHighlightLayer(width, height);
 	}
 
 	public Civilization CreatePlayerCiv(Vector2I start)
@@ -366,11 +370,6 @@ public partial class HexTileMap : Node2D
 		noiseMountain.FractalLacunarity = 2f;
 	}
 
-	// public override void _Process(double delta)
-	// {
-	// }
-
-	// Handle input that is not handled by other UI elements
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton mouse) {
@@ -736,6 +735,7 @@ public partial class HexTileMap : Node2D
 		uiManager.RefreshUI();
 
 		// Update other UIs?
+		highlightLayer.RefreshHighlight();
 	}
 
 	public Hex GetHex(Vector2I coords)

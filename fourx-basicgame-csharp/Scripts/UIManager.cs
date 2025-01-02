@@ -7,6 +7,8 @@ public partial class UIManager : Node2D
     PackedScene cityUIScene;
     PackedScene unitUIScene;
 
+    HighlightLayer highlightLayer;
+
     TerrainTileUI terrainUI = null;
     CityUI cityUI = null;
     UnitUI unitUI = null;
@@ -15,8 +17,6 @@ public partial class UIManager : Node2D
     [Signal]
     public delegate void EndTurnEventHandler();
 
-
-
     public override void _Ready()
     {
         terrainUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/TerrainTileUI.tscn");
@@ -24,6 +24,7 @@ public partial class UIManager : Node2D
         unitUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/unitUI.tscn");
 
         generalUI = GetNode<Panel>("GeneralUI") as GeneralUI;
+		highlightLayer = GetNode<TileMapLayer>("/root/Game/Environment/HexTileMap/HighlightLayer") as HighlightLayer;
 
         // End turn button
         Button endTurnButton = generalUI.GetNode<Button>("EndTurnButton");
@@ -62,6 +63,7 @@ public partial class UIManager : Node2D
         cityUI = cityUIScene.Instantiate() as CityUI;
         AddChild(cityUI);
         cityUI.SetCityUI(c);
+        highlightLayer.SetHighlightLayerForCity( c );
     }
 
     public void SetUnitUI(Unit u)
@@ -83,6 +85,7 @@ public partial class UIManager : Node2D
         ClearTerrainUI();
         ClearCityUI();
         ClearUnitUI();
+        highlightLayer.ResetHighlightLayer();
     }
 
     public void ClearTerrainUI()
