@@ -34,6 +34,11 @@ These are _my_ implementations of various coursework
     * Part 1: https://academy.zenva.com/product/godot-csharp-4x-hex-map/
     * Part 2: https://academy.zenva.com/product/godot-csharp-4x-city-course/
     * Part 3: https://academy.zenva.com/product/godot-csharp-4x-unit-course/
+    * I made some substantial departures from the course in a number of places, including:
+      * HexTileMap / UIManager: The UIManager handles the highlight layer and terrain vs city UI determination
+      * Cities have attack and defense
+      * Unit (and City) attack and defense changes as they gain xp (grow)
+      * Implemented 'bonus' resources
 * My Creations
   * orbit-cam - A simple orbit-camera implementation and demo
   * galaxy - The start of something more...

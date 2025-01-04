@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=3 uid="uid://ct7kju34n0da8"]
+
+[ext_resource type="Script" path="res://Scripts/UnitUI.cs" id="1_fvfyv"]
+[ext_resource type="Texture2D" uid="uid://b6r7joilkjdva" path="res://Textures/Units/settler_image.png" id="1_wt8ye"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cua33"]
+font_size = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_48acv"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_vk0n4"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_4r0ji"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_tfrg0"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_sj700"]
+font_size = 28
+
+[node name="UnitUI" type="Panel"]
+offset_right = 250.0
+offset_bottom = 600.0
+script = ExtResource("1_fvfyv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(250, 160)
+layout_mode = 2
+texture = ExtResource("1_wt8ye")
+expand_mode = 1
+
+[node name="UnitTypeLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Unit:"
+label_settings = SubResource("LabelSettings_cua33")
+
+[node name="StatsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Attack: 0   Defense: 0
+"
+label_settings = SubResource("LabelSettings_48acv")
+
+[node name="HealthLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "HP:"
+label_settings = SubResource("LabelSettings_vk0n4")
+
+[node name="ExpLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Exp:"
+label_settings = SubResource("LabelSettings_4r0ji")
+
+[node name="MovesLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Moves:
+"
+label_settings = SubResource("LabelSettings_tfrg0")
+
+[node name="ActionsTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Actions"
+label_settings = SubResource("LabelSettings_sj700")
+
+[node name="ActionsBox" type="VBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2

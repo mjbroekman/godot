@@ -5,22 +5,26 @@ public partial class UIManager : Node2D
 {
     PackedScene terrainUIScene;
     PackedScene cityUIScene;
+    PackedScene unitUIScene;
+
+    HighlightLayer highlightLayer;
 
     TerrainTileUI terrainUI = null;
     CityUI cityUI = null;
+    UnitUI unitUI = null;
     GeneralUI generalUI;
 
     [Signal]
     public delegate void EndTurnEventHandler();
 
-
-
     public override void _Ready()
     {
-        terrainUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/TerrainTileUI.tscn");
-        cityUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/cityUI.tscn");
+        terrainUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/TerrainTileUI.tscn");
+        cityUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/cityUI.tscn");
+        unitUIScene = ResourceLoader.Load<PackedScene>("res://Scenes/UserInterfaces/unitUI.tscn");
 
         generalUI = GetNode<Panel>("GeneralUI") as GeneralUI;
+		highlightLayer = GetNode<TileMapLayer>("/root/Game/Environment/HexTileMap/HighlightLayer") as HighlightLayer;
 
         // End turn button
         Button endTurnButton = generalUI.GetNode<Button>("EndTurnButton");
@@ -32,6 +36,15 @@ public partial class UIManager : Node2D
     {
         EmitSignal(SignalName.EndTurn);
         generalUI.IncrementTurnCounter();
+    }
+
+    public void SetUI(Hex hexObj) {
+        HideUIPopups();
+        if ( hexObj.isCityCenter ) {
+            SetCityUI( hexObj.ownerCity);
+        } else {
+            SetTerrainUI(hexObj);
+        }
     }
 
     public void SetTerrainUI(Hex hexObj)
@@ -50,6 +63,16 @@ public partial class UIManager : Node2D
         cityUI = cityUIScene.Instantiate() as CityUI;
         AddChild(cityUI);
         cityUI.SetCityUI(c);
+        highlightLayer.SetHighlightLayerForCity( c );
+    }
+
+    public void SetUnitUI(Unit u)
+    {
+        HideUIPopups();
+        unitUI = unitUIScene.Instantiate() as UnitUI;
+        AddChild(unitUI);
+        if ( u != null ) unitUI.SetUnitUI(u);
+        if ( u is null ) HideAllPopups();
     }
 
     public void HideAllPopups()
@@ -61,6 +84,8 @@ public partial class UIManager : Node2D
     {
         ClearTerrainUI();
         ClearCityUI();
+        ClearUnitUI();
+        highlightLayer.ResetHighlightLayer();
     }
 
     public void ClearTerrainUI()
@@ -79,8 +104,17 @@ public partial class UIManager : Node2D
         }
     }
 
+    public void ClearUnitUI()
+    {
+        if (unitUI is not null) {
+            unitUI.QueueFree();
+            unitUI = null;
+        }
+    }
+
     public void RefreshUI()
     {
         if (cityUI is not null) cityUI.RefreshUI();
+        if (unitUI is not null) unitUI.RefreshUnitUI();
     }
 }

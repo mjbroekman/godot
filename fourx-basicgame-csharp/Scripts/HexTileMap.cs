@@ -9,9 +9,10 @@ public enum TerrainType { PLAINS, WATER, DESERT, MOUNTAIN, BEACH, SHALLOW_WATER,
 
 public class Hex
 {
+	public Random rng;
 	public readonly Vector2I coordinates;
 	private TerrainType tType;
-	public Random rng;
+	public bool selected = false;
 	public TerrainType terrainType {
 		get { return tType; }
 		set { tType = value; SetResources(); }
@@ -29,7 +30,8 @@ public class Hex
 	public bool bonusFoodResource = false;
 	public bool bonusProdResource = false;
 
-	public bool selected = false;
+	// Movement values
+	public int moveCost;
 
 	public Hex(Vector2I coords)
 	{
@@ -47,36 +49,53 @@ public class Hex
 	public void SetResources()
 	{
 		this.canBelong = false;
-		// Populate tiles with food and production
+		// Populate tiles with food and production and movement costs
 		switch (this.terrainType)
 		{
 			case TerrainType.PLAINS:
 				this.foodValue = rng.Next(2,7);
 				this.productionValue = rng.Next(1,3);
+				this.moveCost = 1;
 				break;
 			case TerrainType.WATER:
 				this.foodValue = rng.Next(1,4);
 				this.productionValue = rng.Next(0,2);
+				this.moveCost = 1;
 				break;
 			case TerrainType.SHALLOW_WATER:
 				this.foodValue = rng.Next(2,4);
 				this.productionValue = rng.Next(0,2);
+				this.moveCost = 1;
 				break;
 			case TerrainType.DESERT:
 				this.foodValue = rng.Next(0,1);
 				this.productionValue = rng.Next(0,3);
+				this.moveCost = 2;
 				break;
 			case TerrainType.FOREST:
 				this.foodValue = rng.Next(2,5);
 				this.productionValue = rng.Next(3,6);
+				this.moveCost = 2;
 				break;
 			case TerrainType.BEACH:
 				this.foodValue = rng.Next(1,3);
 				this.productionValue = rng.Next(0,2);
+				this.moveCost = 2;
+				break;
+			case TerrainType.ICE:
+				this.foodValue = rng.Next(0,1);
+				this.productionValue = rng.Next(0,1);
+				this.moveCost = 2;
+				break;
+			case TerrainType.MOUNTAIN:
+				this.foodValue = rng.Next(0,1);
+				this.productionValue = rng.Next(0,1);
+				this.moveCost = 3;
 				break;
 			default:
 				this.foodValue = rng.Next(0,1);
 				this.productionValue = rng.Next(0,1);
+				this.moveCost = 99;
 				break;
 		}
 		
@@ -104,9 +123,11 @@ public class Hex
 	{
 		string foodText = $"Food: {this.foodValue}";
 		string prodText = $"Production: {this.productionValue}";
+		string cityText = "";
 		if (this.bonusFoodResource) foodText = $"Food: {this.foodValue - 1} (+1)";
 		if (this.bonusProdResource) prodText = $"Production: {this.productionValue - 1} (+1)";
-		return $"({this.coordinates.X}:{this.coordinates.Y})";
+		if (this.ownerCity != null) cityText = $"Owner: {this.ownerCity.cityName} ({this.ownerCity.civ})";
+		return $"({this.coordinates.X}:{this.coordinates.Y}) {cityText}";
 		// return $"Coordinates ({this.coordinates.X}, {this.coordinates.Y}): TerrainType ({this.terrainType}) | {foodText} | {prodText} | {canBelong}";
 	}
 }
@@ -172,6 +193,7 @@ public partial class HexTileMap : Node2D
 
 	// Map data
 	TileMapLayer baseLayer, civColorLayer, borderLayer, overlayLayer;
+	HighlightLayer highlightLayer;
 
 	// Base City Color Atlas Source
 	TileSetAtlasSource terrainAtlas;
@@ -199,14 +221,19 @@ public partial class HexTileMap : Node2D
 	public delegate void SendHexDataEventHandler(Hex h);
 	public event SendHexDataEventHandler SendHexData;
 
+	public delegate void RightClickOnMapEventHandler(Hex h);
+	public event RightClickOnMapEventHandler RightClickOnMap;
+
 	// // Godot Signals
 	[Signal]
 	public delegate void ClickOffMapEventHandler();
+
 	[Signal]
 	public delegate void DeselectHexEventHandler();
+
 	[Signal]
 	public delegate void SendCityUIInfoEventHandler(City c);
-
+	
 	// Gameplay data
 	public Dictionary<Vector2I, City> cities;
 	public List<Civilization> civs;
@@ -222,6 +249,7 @@ public partial class HexTileMap : Node2D
 		borderLayer = GetNode<TileMapLayer>("HexBorderLayer");
 		civColorLayer = GetNode<TileMapLayer>("CivColorLayer");
 		overlayLayer = GetNode<TileMapLayer>("SelectionOverlayLayer");
+		highlightLayer = GetNode<TileMapLayer>("HighlightLayer") as HighlightLayer;
 
 		// Tile Set Atlas
 		this.terrainAtlas = civColorLayer.TileSet.GetSource(0) as TileSetAtlasSource;
@@ -266,8 +294,10 @@ public partial class HexTileMap : Node2D
 		//  Needed because 'Hex' is a raw C# class that doesn't extend from a Godot type
 		//  This means that the Godot signal system doesn't recognize the 'Hex' type as
 		//  a valid type.
-		this.SendHexData += uiManager.SetTerrainUI;
+		this.SendHexData += uiManager.SetUI;
 		uiManager.EndTurn += ProcessTurn;
+
+		highlightLayer.SetupHighlightLayer(width, height);
 	}
 
 	public Civilization CreatePlayerCiv(Vector2I start)
@@ -275,6 +305,7 @@ public partial class HexTileMap : Node2D
 		Civilization playerCiv = new Civilization();
 		playerCiv.id = 0; // Player civ is 0; all others are greater than 0
 		playerCiv.playerCiv = true;
+		playerCiv.name = "Player";
 		playerCiv.territoryColor = new Color(PLAYER_COLOR);
 
 		int id = terrainAtlas.CreateAlternativeTile(civColorBase);
@@ -339,11 +370,6 @@ public partial class HexTileMap : Node2D
 		noiseMountain.FractalLacunarity = 2f;
 	}
 
-	// public override void _Process(double delta)
-	// {
-	// }
-
-	// Handle input that is not handled by other UI elements
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton mouse) {
@@ -373,7 +399,6 @@ public partial class HexTileMap : Node2D
 			// Simply return if the click is outside the map boundaries.
 			// Do it this way to avoid excessive nesting.
 			if (!HexInBounds(mapCoords)) {
-				GD.Print("Mouse click out of bounds");
 				if (mouse.ButtonMask == MouseButtonMask.Left) {
 					ToggleHexSelection(selectedHex);
 					selectedHex = null;
@@ -381,7 +406,6 @@ public partial class HexTileMap : Node2D
 				}
 				return;
 			}
-
 			// Only trigger on mouse button _press_ and only for the left mouse button
 			// Without the IsPressed, this will trigger on press AND release of a mouse button
 			// Without the ButtonIndex check, this will trigger on any button OR mouse wheel scroll
@@ -397,15 +421,14 @@ public partial class HexTileMap : Node2D
 					ToggleHexSelection(selectedHex);
 					EmitSignal(SignalName.DeselectHex);
 				}
+
 				if (selectedHex != null)
 				{
-					GD.Print(selectedHex);
-					if (!selectedHex.isCityCenter) {
-						SendHexData?.Invoke(selectedHex);
-					} else {
-						EmitSignal(SignalName.SendCityUIInfo, cities[mapCoords]);
-					}
+					SendHexData?.Invoke(selectedHex);
 				}
+			}
+			if (mouse.ButtonMask == MouseButtonMask.Right) {
+				RightClickOnMap?.Invoke(mapData[mapCoords]);
 			}
 		}
 	}
@@ -425,6 +448,14 @@ public partial class HexTileMap : Node2D
 			selectedHex = targetHex;
 			targetHex.selected = true;
 		}
+	}
+
+	// Specific call signature to all the Unit class to call it while sending a unit over
+	public void DeselectCurrentHex(Unit u = null)
+	{
+		if ( selectedHex == null ) return;
+		overlayLayer.SetCell(selectedHex.coordinates, -1);
+		selectedHex = null;
 	}
 
 	public List<Vector2I> GenerateCivStartingLocations(int numLocations)
@@ -484,7 +515,7 @@ public partial class HexTileMap : Node2D
 		return locations;
 	}
 
-	private bool IsValidLocation(Vector2I coord, int minDistance, List<Vector2I> locations)
+	public bool IsValidLocation(Vector2I coord, int minDistance, List<Vector2I> locations)
 	{
 		// Return false if we are too close to the edge of the map
 		if ( coord.X < 3 || coord.X > (width - 3) ) return false;
@@ -704,6 +735,7 @@ public partial class HexTileMap : Node2D
 		uiManager.RefreshUI();
 
 		// Update other UIs?
+		highlightLayer.RefreshHighlight();
 	}
 
 	public Hex GetHex(Vector2I coords)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckb1tcdcfcf0c"]
+[gd_scene load_steps=13 format=3 uid="uid://ckb1tcdcfcf0c"]
 
 [ext_resource type="Script" path="res://Scripts/CityUI.cs" id="1_k3s6s"]
 [ext_resource type="Texture2D" uid="uid://year1rvu0hme" path="res://Textures/Terrain/city_painting.jpg" id="1_t4ksg"]
+[ext_resource type="PackedScene" uid="uid://dcrbier524f8g" path="res://Scenes/UnitBuildButton.tscn" id="3_j8gj6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yumur"]
 bg_color = Color(0.654902, 0.47451, 0.423529, 0.682353)
@@ -20,6 +21,10 @@ outline_color = Color(0, 0, 0, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_46get"]
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_mixtj"]
 line_spacing = 1.0
 outline_size = 4
@@ -28,6 +33,14 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_d8twf"]
 line_spacing = 1.0
 outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2owb"]
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3tvgk"]
+outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 
 [node name="CityUI" type="Panel"]
@@ -78,6 +91,11 @@ layout_mode = 2
 text = "Population:"
 label_settings = SubResource("LabelSettings_p44ho")
 
+[node name="Stats" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+layout_mode = 2
+text = "Defense: 0   Attack: 0"
+label_settings = SubResource("LabelSettings_46get")
+
 [node name="Food" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
 layout_mode = 2
 text = "Food
@@ -94,3 +112,36 @@ text = "Production
     In Territory:"
 label_settings = SubResource("LabelSettings_d8twf")
 tab_stops = PackedFloat32Array(5)
+
+[node name="BuildLabel" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+layout_mode = 2
+text = "Build Units"
+label_settings = SubResource("LabelSettings_v2owb")
+
+[node name="BuildScrollContainer" type="ScrollContainer" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="BuildButtons" type="VBoxContainer" parent="CityUIVBox/DataMarginContainer/DataVBox/BuildScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SettlerBuildButton" parent="CityUIVBox/DataMarginContainer/DataVBox/BuildScrollContainer/BuildButtons" instance=ExtResource("3_j8gj6")]
+layout_mode = 2
+text = "Settler"
+
+[node name="WarriorBuildButton" parent="CityUIVBox/DataMarginContainer/DataVBox/BuildScrollContainer/BuildButtons" instance=ExtResource("3_j8gj6")]
+layout_mode = 2
+text = "Warrior"
+
+[node name="QueueLabel" type="Label" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+layout_mode = 2
+text = "Build Queue"
+label_settings = SubResource("LabelSettings_3tvgk")
+
+[node name="QueueScrollContainer" type="ScrollContainer" parent="CityUIVBox/DataMarginContainer/DataVBox"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="QueueButtons" type="VBoxContainer" parent="CityUIVBox/DataMarginContainer/DataVBox/QueueScrollContainer"]
+layout_mode = 2

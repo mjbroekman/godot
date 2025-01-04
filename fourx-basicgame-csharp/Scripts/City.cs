@@ -50,7 +50,31 @@ public partial class City : Node2D
     public string cityName;
 
     // City UI Values
-    public int population = 1;
+    private int population = 1;
+    public int cityPop {
+        get { return population; }
+        set {
+                bool grow = false;
+                bool shrink = false;
+                if ( value > population && value > 1 ) {
+                    grow = true;
+                }
+                if ( value < population && value > 0 ) {
+                    shrink = true;
+                }
+                population = value;
+                if ( grow ) GrowCity();
+                if ( shrink ) ShrinkCity();
+            }
+    }
+
+    // City combat stats
+    public int cityDefense = 2;
+    public int cityAttack = 1;
+    public int cityBaseDefense = 2;
+    public int cityBaseAttack = 1;
+    public int cityDefenseRatio = 7;
+    public int cityAttackRatio = 10;
 
     // Value of _all_ tiles
     public int totalFood;
@@ -79,6 +103,11 @@ public partial class City : Node2D
     Label label;
     public Sprite2D sprite;
 
+    // Units
+    public List<Unit> unitBuildQueue;
+    public Unit currentUnitBuild;
+    public int unitBuildTracker = 0;
+
     public override void _Ready()
     {
         // Make sure the city is visible above tilemaps (ZIndex: 0)
@@ -90,36 +119,55 @@ public partial class City : Node2D
         label = GetNode<Label>("CityName");
         territory = new List<Hex>();
         borderTilePool = new List<Hex>();
+        unitBuildQueue = new List<Unit>();
+        cityAttack = cityBaseAttack;
+        cityDefense = cityBaseDefense;
+    }
+
+    private void GrowCity()
+    {
+        calculateTerritoryResourceTotals();
+
+        // Grow territory
+        AddRandomNewTile();
+
+        // Improve city status just through growth
+        cityAttack = ( (cityPop / cityAttackRatio) > cityAttack ) ? (cityPop / cityAttackRatio) : cityAttack;
+        cityDefense = ( (cityPop / cityDefenseRatio) > cityDefense ) ? (cityPop / cityDefenseRatio) : cityDefense;
+    }
+
+    private void ShrinkCity()
+    {
+        calculateTerritoryResourceTotals();
+
+        // Improve city status just through growth
+        cityAttack = ( (cityPop / cityAttackRatio) < cityBaseAttack ) ? cityBaseAttack : (cityPop / cityAttackRatio);
+        cityDefense = ( (cityPop / cityDefenseRatio) < cityBaseDefense ) ? cityBaseDefense : (cityPop / cityDefenseRatio);
     }
 
     public void ProcessTurn()
     {
         storedFood += workedFood;
-        storedProduction += workedProduction;
+        // storedProduction += workedProduction;
         int requiredFood = requiredFoodForGrowth();
-        GD.Print($"{cityName} needs {requiredFood} food to grow.  We have {storedFood} available.");
+        // GD.Print($"{cityName} needs {requiredFood} food to grow.  We have {storedFood} available.");
         List<int> distances = borderTileRangePool.Keys.ToList();
         distances.Sort();
-        GD.Print($"{cityName} border pool:");
-        foreach (int dist in distances) {
-            GD.Print($" @ {dist} : " + string.Join(", ", borderTileRangePool[dist]));
-        }
+        // GD.Print($"{cityName} border pool:");
+        // foreach (int dist in distances) {
+        //     GD.Print($" @ {dist} : " + string.Join(", ", borderTileRangePool[dist]));
+        // }
 
-        if (storedFood >= requiredFood)
-        {
-            population++;
+        if (storedFood >= requiredFood) {
             storedFood -= requiredFood;
-
-            calculateTerritoryResourceTotals();
-
-            // Grow territory
-            AddRandomNewTile();
+            cityPop += 1;
         }
+        ProcessUnitBuildQueue();
     }
 
     public void AddRandomNewTile()
     {
-        if (borderTilePool.Count > 0) {
+        if ( borderTilePool.Count > 0 && ( territory.Count < (cityPop * 2 ) ) ) {
             Random r = new Random();
             List<int> borderDistance = new List<int>(borderTileRangePool.Keys);
             borderDistance.Sort();
@@ -140,12 +188,97 @@ public partial class City : Node2D
         foreach (Hex h in sortTerritory()) {
             totalFood += h.foodValue;
             totalProduction += h.productionValue;
-            if (count < population) {
+            if (count < cityPop) {
                 workedFood += h.foodValue;
                 workedProduction += h.productionValue;
             }
             count++;
         }
+    }
+
+    public void AddUnitToBuildQueue(Unit u)
+    {
+        if ( this.civ.units.Count < this.civ.maxUnits )
+            unitBuildQueue.Add(u);
+    }
+
+    public void SpawnUnit(Unit u)
+    {
+        Unit unitToSpawn = (Unit) Unit.unitSceneResources[u.GetType()].Instantiate();
+        map.AddChild(unitToSpawn);
+        unitToSpawn.SetCiv(this.civ);
+        unitToSpawn.unitCoords = this.centerCoords;
+        unitToSpawn.ZAsRelative = true;
+        unitToSpawn.ZIndex = 5;
+    }
+
+    public void ProcessUnitBuildQueue()
+    {
+        if (unitBuildQueue.Count > 0) {
+            if ( currentUnitBuild == null ) {
+                currentUnitBuild = unitBuildQueue[0];
+            }
+
+            // Add worked production to the unit build
+            unitBuildTracker += workedProduction;
+
+            if ( unitBuildTracker >= currentUnitBuild.productionRequired ) {
+                // If we are building a settler, but our city only has 1 population, don't complete the build
+                if ( currentUnitBuild.GetType() == typeof(Settler) && cityPop < 2 ) return;
+
+                // If we have more than one item in the queue, move worked production to the next item
+                if ( unitBuildQueue.Count > 1 ) {
+                    unitBuildTracker -= currentUnitBuild.productionRequired;
+                } else {
+                    // if there is nothing else in the queue, we just wasted leftover production
+                    unitBuildTracker = 0;
+                }
+
+                // If we successfully built a Settler, reduce population by 1
+                if ( currentUnitBuild.GetType() == typeof(Settler) ) cityPop--;
+
+                // Spawn the newly completed unit
+                SpawnUnit(currentUnitBuild);
+
+                // Remove the thing we just spawned.
+                unitBuildQueue.RemoveAt(0);
+                if ( unitBuildQueue.Count > 0 ) {
+                    currentUnitBuild = unitBuildQueue[0];
+                } else {
+                    currentUnitBuild = null;
+                }
+            }
+        }
+    }
+
+    public void ChangeOwnership(Civilization newOwner)
+    {
+        Civilization oldOwner = this.civ;
+
+        this.civ.cities.Remove(this);
+        newOwner.cities.Add(this);
+
+        this.civ = newOwner;
+        SetIconColor(newOwner.territoryColor);
+        map.UpdateCivTerritoryMap(oldOwner);
+        map.UpdateCivTerritoryMap(newOwner);
+    }
+
+    public void RazeCity()
+    {
+        Civilization oldOwner = this.civ;
+
+        foreach (Hex h in territory) {
+            h.ownerCity = null;
+            h.isCityCenter = false;
+        }
+
+        Dictionary<Hex,City> oldInvalidTiles = invalidTiles;
+        foreach (Hex h in oldInvalidTiles.Keys) {
+            if (h.ownerCity == this) invalidTiles.Remove(h);
+        }
+        oldOwner.cities.Remove(this);
+        map.UpdateCivTerritoryMap(oldOwner);
     }
 
     public List<Hex> sortTerritory()
@@ -296,7 +429,7 @@ public partial class City : Node2D
         //   Pop 3 -> 4 = int(10 * (4 * 0.5)) = 10 * (4 * 0.5) = int(10 *   2) = 20
         //   Pop 4 -> 5 = int(10 * (5 * 0.5)) = 10 * (5 * 0.5) = int(10 * 2.5) = 25
         //   Pop 5 -> 6 = int(10 * (6 * 0.5)) = 10 * (6 * 0.5) = int(10 *   3) = 30
-        float popGrowth = (float)(population + 1) * foodMultiplier;
+        float popGrowth = (float)(cityPop + 1) * foodMultiplier;
         return foodPerNewPop * (int)popGrowth;
     }
 
@@ -309,8 +442,8 @@ public partial class City : Node2D
         //   Pop 3 -> 4 = int(10 + ((3-1)^(4 * 0.5))) = 10 + (2^2) = int(10 + 4) = 14
         //   Pop 4 -> 5 = int(10 + ((4-1)^(5 * 0.5))) = 10 + (3^2.5) = int(10 + 15.58) = 25
         //   Pop 5 -> 6 = int(10 + ((5-1)^(6 * 0.5))) = 10 + (4^3) = int(10 + 64) = 74
-        int prevPop = population - 1;
-        float popPower = (float)(population + 1) * foodMultiplier;
+        int prevPop = cityPop - 1;
+        float popPower = (float)(cityPop + 1) * foodMultiplier;
         return foodPerNewPop + (int)MathF.Pow((float)prevPop,popPower);
     }
 
@@ -323,7 +456,7 @@ public partial class City : Node2D
         //   Pop 3 -> 4 = int(10 + (3! * 0.5)) = 10 + (6 * 0.5) = int(10 + 3) = 13
         //   Pop 4 -> 5 = int(10 + (4! * 0.5)) = 10 + (24 * 0.5) = int(10 + 12) = 22
         //   Pop 5 -> 6 = int(10 + (5! * 0.5)) = 10 + (120 * 0.5) = int(10 + 60) = 70
-        int fac = population;
+        int fac = cityPop;
         for (int i = fac - 1; i > 0; i--) {
             fac *= i;
         }

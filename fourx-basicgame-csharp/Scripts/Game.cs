@@ -9,5 +9,6 @@ public partial class Game : Node
     public override void _EnterTree()
     {
         TerrainTileUI.LoadTerrainTextures();
+        Unit.LoadResources();
     }
 }
