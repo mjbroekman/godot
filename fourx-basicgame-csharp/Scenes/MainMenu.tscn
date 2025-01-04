@@ -1,0 +1,143 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh5sgj8r17wh3"]
+
+[ext_resource type="Texture2D" uid="uid://b6l4q0o3ep8s6" path="res://Textures/menu_bg1.png" id="1_taq3a"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_np141"]
+font_size = 81
+font_color = Color(0.676903, 0.54186, 0.150528, 1)
+shadow_size = 15
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1eot6"]
+font_size = 36
+font_color = Color(0.851134, 0.491485, 0.404644, 1)
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1, 2)
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0, 0.338474, 0.783465, 1)
+polygon = PackedVector2Array(0, 0, 1920, 0, 1920, 1080, 0, 1080)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.470588)
+position = Vector2(1023, 512)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("1_taq3a")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 448.0
+offset_top = 7.0
+offset_right = 1472.0
+offset_bottom = 141.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+text = "Hex-Based Strategy Game"
+label_settings = SubResource("LabelSettings_np141")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 640.0
+offset_top = 175.0
+offset_right = 1280.0
+offset_bottom = 915.0
+size_flags_vertical = 3
+theme_override_constants/separation = 25
+
+[node name="MapSizeContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Label" type="Label" parent="VBoxContainer/MapSizeContainer"]
+layout_mode = 2
+text = "Map Width"
+label_settings = SubResource("LabelSettings_1eot6")
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/MapSizeContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(5, 15)
+layout_mode = 2
+
+[node name="WidthBox" type="SpinBox" parent="VBoxContainer/MapSizeContainer"]
+layout_mode = 2
+min_value = 50.0
+max_value = 150.0
+value = 50.0
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/MapSizeContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(21, 15)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/MapSizeContainer"]
+layout_mode = 2
+text = "Map Height"
+label_settings = SubResource("LabelSettings_1eot6")
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer/MapSizeContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(5, 15)
+layout_mode = 2
+
+[node name="HeightBox" type="SpinBox" parent="VBoxContainer/MapSizeContainer"]
+layout_mode = 2
+min_value = 30.0
+max_value = 70.0
+value = 44.0
+
+[node name="CivContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/CivContainer"]
+layout_mode = 2
+text = "AI Civilizations"
+label_settings = SubResource("LabelSettings_1eot6")
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/CivContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(25, 15)
+layout_mode = 2
+
+[node name="CivCountBox" type="SpinBox" parent="VBoxContainer/CivContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 2.0
+max_value = 8.0
+value = 3.0
+
+[node name="PlayerContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/PlayerContainer"]
+layout_mode = 2
+text = "Player Color"
+label_settings = SubResource("LabelSettings_1eot6")
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer/PlayerContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(25, 15)
+layout_mode = 2
+
+[node name="PlayerColor" type="ColorPickerButton" parent="VBoxContainer/PlayerContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Start Game"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Quit
+"
