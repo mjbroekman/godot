@@ -15,7 +15,7 @@ point_count = 4
 
 [sub_resource type="Gradient" id="Gradient_5q2oy"]
 offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.138638, 0.138637, 0.138637, 1)
+colors = PackedColorArray(0.192556, 0.192556, 0.192556, 1)
 
 [sub_resource type="Curve" id="Curve_ca4aw"]
 _data = [Vector2(0.102128, 1), 0.0, 0.0, 0, 0, Vector2(0.24539, 0), 0.0, 0.0, 0, 0, Vector2(0.750355, 0), 0.0, 0.0, 0, 0, Vector2(0.896454, 1), 0.0, 0.0, 0, 0]
@@ -71,7 +71,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100
 shadow_enabled = true
 
 [node name="Moon" type="DirectionalLight3D" parent="DayNightCycle"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
 shadow_enabled = true
 sky_mode = 1
 
