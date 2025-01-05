@@ -1,9 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://xdyujc3cvpnk"]
+[gd_scene load_steps=30 format=3 uid="uid://xdyujc3cvpnk"]
 
 [ext_resource type="ArrayMesh" uid="uid://d0p8nuctpi21c" path="res://Models/Terrain.obj" id="1_3n6bh"]
-[ext_resource type="Script" path="res://Scenes/DayNightCycle.gd" id="1_aatp0"]
+[ext_resource type="Script" path="res://Scripts/DayNightCycle.gd" id="1_aatp0"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="2_6wevf"]
+[ext_resource type="PackedScene" uid="uid://4v40cul81vha" path="res://Scenes/NeedUI.tscn" id="4_7v4gw"]
 [ext_resource type="PackedScene" uid="uid://defmdp6i5klnb" path="res://Scenes/Tree.tscn" id="4_qeebp"]
+[ext_resource type="Script" path="res://Scripts/Need.gd" id="4_tb54b"]
+[ext_resource type="Script" path="res://Scripts/PlayerNeeds.gd" id="4_xqpe5"]
 
 [sub_resource type="Gradient" id="Gradient_rkbnh"]
 offsets = PackedFloat32Array(0, 0.338392, 0.661609, 1)
@@ -54,6 +57,38 @@ data = PackedVector3Array(-24.4957, -1.3, 25, -25, -1.3, 25, -24.4957, -1.3, 24.
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_htg6q"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ukfd0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r3or4"]
+resource_local_to_scene = true
+bg_color = Color(0.0943044, 0.0943044, 0.0943043, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4be5y"]
+resource_local_to_scene = true
+bg_color = Color(0.945098, 0.129412, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ff0t"]
+resource_local_to_scene = true
+bg_color = Color(0.0943044, 0.0943044, 0.0943043, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yekk7"]
+resource_local_to_scene = true
+bg_color = Color(0.945098, 0.129412, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lnv0j"]
+resource_local_to_scene = true
+bg_color = Color(0.0943044, 0.0943044, 0.0943043, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7wla"]
+resource_local_to_scene = true
+bg_color = Color(0.945098, 0.129412, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b4qkn"]
+resource_local_to_scene = true
+bg_color = Color(0.0943044, 0.0943044, 0.0943043, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dt752"]
+resource_local_to_scene = true
+bg_color = Color(0.945098, 0.129412, 0.0705882, 1)
 
 [node name="Main" type="Node3D"]
 
@@ -107,6 +142,53 @@ current = true
 
 [node name="Head" type="Node3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="PlayerNeeds" type="Node3D" parent="Player"]
+script = ExtResource("4_xqpe5")
+
+[node name="Health" type="Node" parent="Player/PlayerNeeds"]
+script = ExtResource("4_tb54b")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Health" instance=ExtResource("4_7v4gw")]
+offset_left = 33.0
+offset_top = 766.0
+offset_right = 333.0
+offset_bottom = 811.0
+theme_override_styles/background = SubResource("StyleBoxFlat_r3or4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4be5y")
+
+[node name="Hunger" type="Node" parent="Player/PlayerNeeds"]
+script = ExtResource("4_tb54b")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Hunger" instance=ExtResource("4_7v4gw")]
+offset_left = 33.0
+offset_top = 826.0
+offset_right = 333.0
+offset_bottom = 871.0
+theme_override_styles/background = SubResource("StyleBoxFlat_6ff0t")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yekk7")
+
+[node name="Thirst" type="Node" parent="Player/PlayerNeeds"]
+script = ExtResource("4_tb54b")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Thirst" instance=ExtResource("4_7v4gw")]
+offset_left = 33.0
+offset_top = 886.0
+offset_right = 333.0
+offset_bottom = 931.0
+theme_override_styles/background = SubResource("StyleBoxFlat_lnv0j")
+theme_override_styles/fill = SubResource("StyleBoxFlat_d7wla")
+
+[node name="Sleep" type="Node" parent="Player/PlayerNeeds"]
+script = ExtResource("4_tb54b")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Sleep" instance=ExtResource("4_7v4gw")]
+offset_left = 33.0
+offset_top = 946.0
+offset_right = 333.0
+offset_bottom = 991.0
+theme_override_styles/background = SubResource("StyleBoxFlat_b4qkn")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dt752")
 
 [node name="Tree" parent="." instance=ExtResource("4_qeebp")]
 

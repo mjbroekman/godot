@@ -34,6 +34,9 @@ func _ready():
 	world = get_node("WorldEnvironment")
 
 
+func get_daytime() -> float:
+	return (time * 24)
+
 func _process(delta):
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		time += time_rate * delta
