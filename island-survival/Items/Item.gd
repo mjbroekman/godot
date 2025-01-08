@@ -7,5 +7,6 @@ extends Resource
 @export var world_item_scene : PackedScene
 
 func _on_use (player) -> bool:
+	print(type_string(typeof(self)))
 	print("Use")
 	return false

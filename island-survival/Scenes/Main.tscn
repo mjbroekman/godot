@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://b3iyi6tk4w2st"]
+[gd_scene load_steps=14 format=3 uid="uid://b3iyi6tk4w2st"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_i1qig"]
 [ext_resource type="ArrayMesh" uid="uid://dsugghaubs8as" path="res://Survival Assets/Island/Island.obj" id="2_2ecwp"]
 [ext_resource type="PackedScene" uid="uid://c8rps3i4xpup2" path="res://Survival Assets/Static Assets/Tree_Palm.tscn" id="3_gx0qr"]
 [ext_resource type="PackedScene" uid="uid://ce62ediyh8r40" path="res://Survival Assets/Static Assets/Tree_Large_Palm.tscn" id="4_gxq6g"]
 [ext_resource type="PackedScene" uid="uid://c1e6f2fu1y3bs" path="res://Survival Assets/Static Assets/Rock.tscn" id="5_p2jbx"]
+[ext_resource type="PackedScene" uid="uid://cjbdnpxek2xnb" path="res://Survival Assets/Static Assets/Pumpkin_Patch.tscn" id="6_8udll"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l4wfq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -350,3 +351,20 @@ transform = Transform3D(0.943985, 0.146094, -0.295885, 0, 0.896657, 0.442727, 0.
 
 [node name="Rock23" parent="NavigationRegion3D/Rocks" instance=ExtResource("5_p2jbx")]
 transform = Transform3D(0.943985, 0.146094, -0.295885, 0, 0.896657, 0.442727, 0.329987, -0.417928, 0.846431, -0.31958, 3.07032, 32.8825)
+
+[node name="Food" type="Node" parent="NavigationRegion3D"]
+
+[node name="PumpkinPatch" parent="NavigationRegion3D/Food" instance=ExtResource("6_8udll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.48993, 4.42922, 0)
+
+[node name="PumpkinPatch2" parent="NavigationRegion3D/Food" instance=ExtResource("6_8udll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.3444, 6.21088, 8.75614)
+
+[node name="PumpkinPatch3" parent="NavigationRegion3D/Food" instance=ExtResource("6_8udll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.87057, 2.31818, -28.286)
+
+[node name="PumpkinPatch4" parent="NavigationRegion3D/Food" instance=ExtResource("6_8udll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.942328, 8.8467, 16.8734)
+
+[node name="PumpkinPatch5" parent="NavigationRegion3D/Food" instance=ExtResource("6_8udll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.2238, 2.80158, -10.2275)
