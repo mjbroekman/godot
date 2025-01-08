@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=23 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Crafting System/Crafting.gd" id="8_t166b"]
 [ext_resource type="Script" path="res://Crafting System/CraftingRecipe.gd" id="9_7ttmd"]
 [ext_resource type="Script" path="res://Combat/FallDamage.gd" id="10_8ki2n"]
+[ext_resource type="Resource" uid="uid://rwmso7a66fft" path="res://Crafting System/Recipes/BoneSword_Recipe.tres" id="11_i2dwo"]
 [ext_resource type="Script" path="res://Combat/HealthBar.gd" id="11_ygl51"]
 [ext_resource type="Script" path="res://Combat/Health.gd" id="12_l5ts4"]
 
@@ -173,7 +174,7 @@ horizontal_alignment = 1
 [node name="Crafting" type="Node" parent="."]
 script = ExtResource("8_t166b")
 crafting_recipe_ui_scene = ExtResource("8_m8m5c")
-recipes = Array[ExtResource("9_7ttmd")]([ExtResource("8_88sw1")])
+recipes = Array[ExtResource("9_7ttmd")]([ExtResource("8_88sw1"), ExtResource("11_i2dwo")])
 
 [node name="CraftingWindow" type="Panel" parent="Crafting"]
 anchors_preset = 8

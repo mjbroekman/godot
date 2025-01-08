@@ -1,0 +1,48 @@
+[gd_scene load_steps=10 format=3 uid="uid://bmp4t7sx74t62"]
+
+[ext_resource type="Script" path="res://AI/AIController.gd" id="1_6a6b1"]
+[ext_resource type="PackedScene" uid="uid://bw2aajrmbxi0j" path="res://Survival Assets/Skeleton/Skeleton.glb" id="2_epkv5"]
+[ext_resource type="Script" path="res://Combat/Health.gd" id="3_pup2d"]
+[ext_resource type="PackedScene" uid="uid://b8ffnb54vm2cp" path="res://Items/World Items/WorldItem_Bone.tscn" id="4_48cwa"]
+[ext_resource type="Script" path="res://AI/StateMachine.gd" id="5_dsy3i"]
+[ext_resource type="Script" path="res://AI/States/WanderState.gd" id="6_1jcwf"]
+[ext_resource type="Script" path="res://AI/States/ChaseState.gd" id="7_6o3ue"]
+[ext_resource type="Script" path="res://AI/States/AttackState.gd" id="8_foukh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rtkoc"]
+height = 1.67896
+
+[node name="Skeleton" type="CharacterBody3D"]
+script = ExtResource("1_6a6b1")
+
+[node name="Skeleton" parent="." instance=ExtResource("2_epkv5")]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.861494, 0)
+shape = SubResource("CapsuleShape3D_rtkoc")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_pup2d")
+max_health = 10
+drop_on_death = ExtResource("4_48cwa")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
+script = ExtResource("5_dsy3i")
+default_state = NodePath("Wander")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("6_1jcwf")
+controller_path = NodePath("../..")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("7_6o3ue")
+controller_path = NodePath("../..")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("8_foukh")
+controller_path = NodePath("../..")
+
+[connection signal="target_reached" from="NavigationAgent3D" to="StateMachine" method="on_target_reached"]

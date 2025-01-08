@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EquipItem" load_steps=5 format=3 uid="uid://hstivuagxwq7"]
+
+[ext_resource type="Script" path="res://Items/EquipItem.gd" id="1_n0fqv"]
+[ext_resource type="PackedScene" uid="uid://m1lprv835him" path="res://Items/Equip Items/EquipItem_BoneSword.tscn" id="1_o6t4i"]
+[ext_resource type="Texture2D" uid="uid://bbe2gatc75nj3" path="res://Items/Icons/BoneSword.png" id="2_7orls"]
+[ext_resource type="PackedScene" uid="uid://blai2dxccri2e" path="res://Items/World Items/WorldItem_BoneSword.tscn" id="4_jkyen"]
+
+[resource]
+script = ExtResource("1_n0fqv")
+equip_scene = ExtResource("1_o6t4i")
+display_name = "Bone Sword"
+icon = ExtResource("2_7orls")
+max_stack_size = 1
+world_item_scene = ExtResource("4_jkyen")

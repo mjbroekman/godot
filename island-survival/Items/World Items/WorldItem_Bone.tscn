@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8ffnb54vm2cp"]
+
+[ext_resource type="Script" path="res://Items/WorldItem.gd" id="1_05t6e"]
+[ext_resource type="PackedScene" uid="uid://cn5a7kw3fid0a" path="res://Items/Models/Bone.glb" id="2_axtq2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ngdkk"]
+size = Vector3(0.288818, 0.188232, 0.592529)
+
+[node name="WorldItem_Bone" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.82199, 14.5939)
+script = ExtResource("1_05t6e")
+item_name = "Bone"
+interact_prompt = "Pickup Bone"
+
+[node name="Bone" parent="." instance=ExtResource("2_axtq2")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0289307, 0.0250282, 0.00695801)
+shape = SubResource("BoxShape3D_ngdkk")

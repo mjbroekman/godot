@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://blai2dxccri2e"]
+
+[ext_resource type="Script" path="res://Items/WorldItem.gd" id="1_08rwa"]
+[ext_resource type="Material" uid="uid://3t244ggpacj1" path="res://Combat/Models/Sword/ShortSwordMaterial.tres" id="2_n4d2y"]
+[ext_resource type="ArrayMesh" uid="uid://dpv7j4etlnn48" path="res://Combat/Models/Sword/Short Sword.obj" id="3_htjjj"]
+[ext_resource type="PackedScene" uid="uid://dlltlqscdyo7m" path="res://Survival Assets/Tools/BoneSword.glb" id="4_2qtef"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qr54k"]
+height = 0.92501
+radius = 0.0449989
+
+[node name="WorldItem_Sword" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.518531, -2.18063)
+script = ExtResource("1_08rwa")
+item_name = "Sword"
+interact_prompt = "Pickup Sword"
+
+[node name="Model" type="MeshInstance3D" parent="."]
+visible = false
+material_override = ExtResource("2_n4d2y")
+mesh = ExtResource("3_htjjj")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.343409, 0)
+shape = SubResource("CylinderShape3D_qr54k")
+
+[node name="BoneSword" parent="." instance=ExtResource("4_2qtef")]
+transform = Transform3D(0.197203, 0, 0, 0, 0.24141, 0, 0, 0, 0.15243, 0, 0, 0)
