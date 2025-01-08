@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://m1lprv835him"]
+
+[ext_resource type="PackedScene" uid="uid://dy6re5u0h3pn" path="res://Items/Equip Items/EquipItem_Sword.tscn" id="1_8rdoh"]
+[ext_resource type="PackedScene" uid="uid://dlltlqscdyo7m" path="res://Survival Assets/Tools/BoneSword.glb" id="2_isd47"]
+
+[node name="EquipObject_Sword" instance=ExtResource("1_8rdoh")]
+damage = 10
+attack_rate = 0.5
+
+[node name="ShortSword" parent="Visual" index="0"]
+visible = false
+
+[node name="BoneSword" parent="Visual" index="1" instance=ExtResource("2_isd47")]
+transform = Transform3D(0.14908, 0, 0, 0, 0.238717, 0, 0, 0, 0.243599, 0, 0, 0)

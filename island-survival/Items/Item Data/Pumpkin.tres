@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FoodItem" load_steps=4 format=3 uid="uid://5vdbdden46f0"]
+
+[ext_resource type="Texture2D" uid="uid://7obh7u6h3msx" path="res://Items/Icons/Pumpkin.png" id="1_6ulpw"]
+[ext_resource type="Script" path="res://Items/FoodItem.gd" id="1_f3lqj"]
+[ext_resource type="PackedScene" uid="uid://dyfm3dqn4kemr" path="res://Items/World Items/WorldItem_Pumpkin.tscn" id="3_4kl0a"]
+
+[resource]
+script = ExtResource("1_f3lqj")
+heal_amount = 10
+display_name = "Pumpkin"
+icon = ExtResource("1_6ulpw")
+max_stack_size = 4
+world_item_scene = ExtResource("3_4kl0a")

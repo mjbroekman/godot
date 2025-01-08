@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce62ediyh8r40"]
+
+[ext_resource type="PackedScene" uid="uid://dnki0r0w5htdy" path="res://Survival Assets/Nature/PalmTree_4.glb" id="1_h4g86"]
+[ext_resource type="Script" path="res://Combat/Health.gd" id="2_5t7o6"]
+[ext_resource type="PackedScene" uid="uid://c8myljfurwjb7" path="res://Items/World Items/WorldItem_Wood.tscn" id="3_vy211"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rpkeu"]
+height = 2.57044
+radius = 0.344513
+
+[node name="Tree_LargePalm" type="StaticBody3D"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 10.1498, 3.25411, -33.1108)
+
+[node name="Tree_LargePalmModel" parent="." instance=ExtResource("1_h4g86")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0731466, 1.44583, 0)
+shape = SubResource("CylinderShape3D_rpkeu")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_5t7o6")
+max_health = 40
+drop_on_death = ExtResource("3_vy211")

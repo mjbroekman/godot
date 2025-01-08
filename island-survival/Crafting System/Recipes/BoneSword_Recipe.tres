@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=6 format=3 uid="uid://rwmso7a66fft"]
+
+[ext_resource type="Resource" uid="uid://hstivuagxwq7" path="res://Items/Item Data/BoneSword.tres" id="1_vby6c"]
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipeRequirement.gd" id="2_0hcvg"]
+[ext_resource type="Resource" uid="uid://h67bfbo5wril" path="res://Items/Item Data/Bone.tres" id="3_v243l"]
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipe.gd" id="5_5ohi8"]
+
+[sub_resource type="Resource" id="Resource_wo8wd"]
+script = ExtResource("2_0hcvg")
+item = ExtResource("3_v243l")
+quantity = 5
+
+[resource]
+script = ExtResource("5_5ohi8")
+item = ExtResource("1_vby6c")
+requirements = Array[ExtResource("2_0hcvg")]([SubResource("Resource_wo8wd")])
