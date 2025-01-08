@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dsugghaubs8as"
+path="res://.godot/imported/Island.obj-80616e6a641b5f48d7d6561cacb687f0.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Island.obj-80616e6a641b5f48d7d6561cacb687f0.mesh"]
+
+source_file="res://Survival Assets/Island/Island.obj"
+dest_files=["res://.godot/imported/Island.obj-80616e6a641b5f48d7d6561cacb687f0.mesh", "res://.godot/imported/Island.obj-80616e6a641b5f48d7d6561cacb687f0.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

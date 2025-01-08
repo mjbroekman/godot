@@ -1,0 +1,235 @@
+[gd_scene load_steps=22 format=3 uid="uid://cf1pwgl0y0mi6"]
+
+[ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
+[ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
+[ext_resource type="Script" path="res://Inventory/Inventory.gd" id="3_ilfm3"]
+[ext_resource type="Resource" uid="uid://mid6co58sdh" path="res://Items/Item Data/Sword.tres" id="4_k5vpc"]
+[ext_resource type="Script" path="res://Items/Item.gd" id="4_ohlle"]
+[ext_resource type="PackedScene" uid="uid://n7ekj3yl42y2" path="res://Inventory/InventorySlot.tscn" id="4_w1ngo"]
+[ext_resource type="Script" path="res://Combat/EquipController.gd" id="7_2f40h"]
+[ext_resource type="Resource" uid="uid://bvu8ftjdgo1hp" path="res://Crafting System/Recipes/Sword_Recipe.tres" id="8_88sw1"]
+[ext_resource type="PackedScene" uid="uid://dovfab5hq6y6d" path="res://Crafting System/CraftingRecipeUI.tscn" id="8_m8m5c"]
+[ext_resource type="Script" path="res://Crafting System/Crafting.gd" id="8_t166b"]
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipe.gd" id="9_7ttmd"]
+[ext_resource type="Script" path="res://Combat/FallDamage.gd" id="10_8ki2n"]
+[ext_resource type="Script" path="res://Combat/HealthBar.gd" id="11_ygl51"]
+[ext_resource type="Script" path="res://Combat/Health.gd" id="12_l5ts4"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt5te"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dragq"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="LabelSettings" id="LabelSettings_cbwra"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_fsrsb"]
+font_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wh2ym"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmpkm"]
+bg_color = Color(1, 0.309804, 0.309804, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_74jq5"]
+font_size = 28
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.32549)
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+script = ExtResource("1_krxqb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_lt5te")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CapsuleMesh_dragq")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+current = true
+
+[node name="InteractionController" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -2)
+script = ExtResource("2_66uls")
+
+[node name="InteractionPrompt" type="Label" parent="Camera3D/InteractionController"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -247.0
+offset_top = -50.0
+offset_right = 247.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_cbwra")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EquipOrigin" type="Node3D" parent="Camera3D"]
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("3_ilfm3")
+starter_items = Array[ExtResource("4_ohlle")]([ExtResource("4_k5vpc")])
+
+[node name="InventoryWindow" type="Panel" parent="Inventory"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -184.0
+offset_right = 280.0
+offset_bottom = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SlotContainer" type="GridContainer" parent="Inventory/InventoryWindow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -167.0
+offset_right = 260.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="InventorySlot" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot4" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot5" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot6" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot7" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot8" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot9" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot10" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot11" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot12" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot13" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot14" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InventorySlot15" parent="Inventory/InventoryWindow/SlotContainer" instance=ExtResource("4_w1ngo")]
+layout_mode = 2
+
+[node name="InfoText" type="Label" parent="Inventory/InventoryWindow"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_fsrsb")
+horizontal_alignment = 1
+
+[node name="Crafting" type="Node" parent="."]
+script = ExtResource("8_t166b")
+crafting_recipe_ui_scene = ExtResource("8_m8m5c")
+recipes = Array[ExtResource("9_7ttmd")]([ExtResource("8_88sw1")])
+
+[node name="CraftingWindow" type="Panel" parent="Crafting"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RecipeContainer" type="VBoxContainer" parent="Crafting/CraftingWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EquipController" type="Node" parent="."]
+script = ExtResource("7_2f40h")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("12_l5ts4")
+post_death_action = 1
+
+[node name="FallDamage" type="Node" parent="."]
+script = ExtResource("10_8ki2n")
+damage_velocity_multiplier = 1.5
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = 11.0
+offset_top = 10.0
+offset_right = 311.0
+offset_bottom = 40.0
+theme_override_styles/background = SubResource("StyleBoxFlat_wh2ym")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xmpkm")
+value = 16.01
+show_percentage = false
+script = ExtResource("11_ygl51")
+
+[node name="HealthText" type="Label" parent="HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "100 / 100"
+label_settings = SubResource("LabelSettings_74jq5")
+horizontal_alignment = 1
+vertical_alignment = 1
