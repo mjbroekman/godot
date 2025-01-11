@@ -106,12 +106,12 @@ func get_noise_y (x, z) -> float:
 	var adjusted_value = elevation_curve.sample(remapped_value)
 	
 	# convert our X and Z to a range of 0.0 to 1.0
-	var x_percent = (x + (size_width / 2)) / size_width
-	var z_percent = (z + (size_depth / 2)) / size_depth
+	var x_percent = (x + (size_width / 2.0)) / float(size_width)
+	var z_percent = (z + (size_depth / 2.0)) / float(size_depth)
 	
 	# find the X and Y pixel for the coordinate on the falloff texture
-	var x_pixel = int(x_percent * falloff_image.get_width())
-	var y_pixel = int(z_percent * falloff_image.get_height())
+	var x_pixel = int(x_percent * (falloff_image.get_width() - 1) )
+	var y_pixel = int(z_percent * (falloff_image.get_height() - 1) )
 	
 	# sample the falloff texture
 	var falloff = falloff_image.get_pixel(x_pixel, y_pixel).r
@@ -124,8 +124,8 @@ func get_noise_y (x, z) -> float:
 
 # returns a random position on the terrain
 func get_random_position () -> Vector3:
-	var x = rng.randf_range(-size_width / 2, size_width / 2)
-	var z = rng.randf_range(-size_depth / 2, size_depth / 2)
+	var x = rng.randf_range(-size_width / 2.0, size_width / 2.0)
+	var z = rng.randf_range(-size_depth / 2.0, size_depth / 2.0)
 	var y = get_noise_y(x, z)
 	return Vector3(x, y, z)
 
