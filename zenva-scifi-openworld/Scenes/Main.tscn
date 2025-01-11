@@ -1,7 +1,37 @@
-[gd_scene load_steps=2 format=3 uid="uid://catgx57nk61c3"]
+[gd_scene load_steps=8 format=3 uid="uid://catgx57nk61c3"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_fiowp"]
+[ext_resource type="Script" path="res://Procedural Generation/TerrainGeneration.gd" id="2_b0r8t"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ukb3p"]
+noise_type = 3
+frequency = 0.007
+
+[sub_resource type="Curve" id="Curve_34tan"]
+_data = [Vector2(0.0837563, 0), 0.0, 0.0, 0, 0, Vector2(0.337563, 0.348596), 0.0, 0.0, 0, 0, Vector2(0.703046, 0.651836), 0.0, 0.0, 0, 0, Vector2(0.865482, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dx124"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vwwi5"]
+albedo_color = Color(0.823529, 0.419608, 0.133333, 1)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_6igyf"]
 
 [node name="Main" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_fiowp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+
+[node name="TerrainGeneration" type="Node" parent="."]
+script = ExtResource("2_b0r8t")
+noise = SubResource("FastNoiseLite_ukb3p")
+elevation_curve = SubResource("Curve_34tan")
+
+[node name="Water" type="MeshInstance3D" parent="TerrainGeneration"]
+transform = Transform3D(999, 0, 0, 0, 999, 0, 0, 0, 999, 0, 0, 0)
+mesh = SubResource("PlaneMesh_dx124")
+surface_material_override/0 = SubResource("StandardMaterial3D_vwwi5")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="TerrainGeneration"]
+navigation_mesh = SubResource("NavigationMesh_6igyf")
