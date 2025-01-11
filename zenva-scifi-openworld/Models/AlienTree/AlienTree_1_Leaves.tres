@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://n6v5y0x4o4yd"]
+
+[ext_resource type="Texture2D" uid="uid://bsu4jcgdbo1i3" path="res://Models/AlienTree/AlienTree_1_Leaves.png" id="1_vdji7"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.755
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_vdji7")
+roughness = 0.9
