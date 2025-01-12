@@ -1,7 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://catgx57nk61c3"]
+[gd_scene load_steps=15 format=3 uid="uid://catgx57nk61c3"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_fiowp"]
 [ext_resource type="Script" path="res://Procedural Generation/TerrainGeneration.gd" id="2_b0r8t"]
+[ext_resource type="Script" path="res://Procedural Generation/SpawnableObject.gd" id="3_shiko"]
+[ext_resource type="PackedScene" uid="uid://i8rvvuxtnaxi" path="res://Procedural Generation/Spawnable Objects/AlienTree0.tscn" id="4_d6g6q"]
+[ext_resource type="PackedScene" uid="uid://b0d3jgd61j7h7" path="res://Procedural Generation/Spawnable Objects/AlienTree1.tscn" id="5_ygp06"]
+[ext_resource type="PackedScene" uid="uid://crlk3u335xyr6" path="res://Procedural Generation/Spawnable Objects/Rock.tscn" id="6_yubbf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m6ubi"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -65,3 +69,17 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vwwi5")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="TerrainGeneration"]
 navigation_mesh = SubResource("NavigationMesh_6igyf")
+
+[node name="SpawnableObject_AlienTree" type="Node" parent="TerrainGeneration"]
+script = ExtResource("3_shiko")
+scenes_to_spawn = Array[PackedScene]([ExtResource("4_d6g6q"), ExtResource("5_ygp06")])
+spawn_count = 500
+min_scale = 0.75
+max_scale = 2.5
+
+[node name="SpawnableObject_Rock" type="Node" parent="TerrainGeneration"]
+script = ExtResource("3_shiko")
+scenes_to_spawn = Array[PackedScene]([ExtResource("6_yubbf")])
+spawn_count = 100
+min_scale = 0.5
+max_scale = 2.0
