@@ -1,7 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://catgx57nk61c3"]
+[gd_scene load_steps=11 format=3 uid="uid://catgx57nk61c3"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_fiowp"]
 [ext_resource type="Script" path="res://Procedural Generation/TerrainGeneration.gd" id="2_b0r8t"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m6ubi"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_ikdi4"]
+sky_material = SubResource("ProceduralSkyMaterial_m6ubi")
+
+[sub_resource type="Environment" id="Environment_welud"]
+background_mode = 2
+sky = SubResource("Sky_ikdi4")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ukb3p"]
 noise_type = 3
@@ -19,6 +32,13 @@ albedo_color = Color(0.823529, 0.419608, 0.133333, 1)
 [sub_resource type="NavigationMesh" id="NavigationMesh_6igyf"]
 
 [node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_welud")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.285357, 0.410575, 0, 0.821149, 0.570714, -0.5, 0.494252, -0.711136, 0, 0, 0)
+shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_fiowp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
