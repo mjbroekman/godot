@@ -14,7 +14,16 @@ sky_material = SubResource("ProceduralSkyMaterial_m6ubi")
 background_mode = 2
 sky = SubResource("Sky_ikdi4")
 tonemap_mode = 2
+ssao_enabled = true
+ssao_radius = 0.5
 glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.654307, 0.402616, 0.268355, 1)
+fog_sun_scatter = 1.0
+adjustment_enabled = true
+adjustment_brightness = 0.83
+adjustment_contrast = 1.04
+adjustment_saturation = 1.29
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ukb3p"]
 noise_type = 3
@@ -38,6 +47,7 @@ environment = SubResource("Environment_welud")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.285357, 0.410575, 0, 0.821149, 0.570714, -0.5, 0.494252, -0.711136, 0, 0, 0)
+light_color = Color(0.278102, 0.798404, 8.08597e-06, 1)
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_fiowp")]
