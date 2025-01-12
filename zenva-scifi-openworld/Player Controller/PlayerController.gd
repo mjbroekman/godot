@@ -18,11 +18,14 @@ var camera_look_input : Vector2
 @onready var camera : Camera3D = get_node("Camera3D")
 @onready var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_modifier
 
+var total_time_elapsed : float = 0.0
+
 func _ready():
 	# Lock the mouse
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta):
+	total_time_elapsed += delta
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta

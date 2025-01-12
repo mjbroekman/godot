@@ -9,8 +9,12 @@ extends Node
 var on_floor_last_frame : bool = true
 var y_velocity_last_frame : float
 
+var total_time_elapsed : float = 0.0
+
 func _process(delta):
-	if controller.is_on_floor() and !on_floor_last_frame and y_velocity_last_frame < min_damage_velocity:
+	total_time_elapsed += delta
+
+	if total_time_elapsed > 5.0 and controller.is_on_floor() and !on_floor_last_frame and y_velocity_last_frame < min_damage_velocity:
 		calculate_damage()
 	
 	on_floor_last_frame = controller.is_on_floor()

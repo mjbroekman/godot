@@ -1,14 +1,16 @@
-[gd_scene load_steps=19 format=3 uid="uid://cf1pwgl0y0mi6"]
+[gd_scene load_steps=21 format=3 uid="uid://cf1pwgl0y0mi6"]
 
 [ext_resource type="Script" path="res://Player Controller/PlayerController.gd" id="1_krxqb"]
 [ext_resource type="Script" path="res://Player Controller/Interaction/InteractionController.gd" id="2_66uls"]
 [ext_resource type="Script" path="res://Inventory/Inventory.gd" id="3_ilfm3"]
+[ext_resource type="Script" path="res://Items/Item.gd" id="4_k0p8e"]
 [ext_resource type="Resource" uid="uid://mid6co58sdh" path="res://Items/Item Data/Sword.tres" id="4_k5vpc"]
 [ext_resource type="PackedScene" uid="uid://n7ekj3yl42y2" path="res://Inventory/InventorySlot.tscn" id="4_w1ngo"]
 [ext_resource type="Script" path="res://Combat/EquipController.gd" id="7_2f40h"]
 [ext_resource type="Resource" uid="uid://bvu8ftjdgo1hp" path="res://Crafting System/Recipes/Sword_Recipe.tres" id="8_88sw1"]
 [ext_resource type="PackedScene" uid="uid://dovfab5hq6y6d" path="res://Crafting System/CraftingRecipeUI.tscn" id="8_m8m5c"]
 [ext_resource type="Script" path="res://Crafting System/Crafting.gd" id="8_t166b"]
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipe.gd" id="9_pd4hm"]
 [ext_resource type="Script" path="res://Combat/FallDamage.gd" id="10_8ki2n"]
 [ext_resource type="Script" path="res://Combat/HealthBar.gd" id="11_ygl51"]
 [ext_resource type="Script" path="res://Combat/Health.gd" id="12_l5ts4"]
@@ -69,7 +71,7 @@ vertical_alignment = 1
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("3_ilfm3")
-starter_items = Array[Resource("res://Items/Item.gd")]([ExtResource("4_k5vpc")])
+starter_items = Array[ExtResource("4_k0p8e")]([ExtResource("4_k5vpc")])
 
 [node name="InventoryWindow" type="Panel" parent="Inventory"]
 visible = false
@@ -163,7 +165,7 @@ horizontal_alignment = 1
 [node name="Crafting" type="Node" parent="."]
 script = ExtResource("8_t166b")
 crafting_recipe_ui_scene = ExtResource("8_m8m5c")
-recipes = Array[Resource("res://Crafting System/CraftingRecipe.gd")]([ExtResource("8_88sw1")])
+recipes = Array[ExtResource("9_pd4hm")]([ExtResource("8_88sw1")])
 
 [node name="CraftingWindow" type="Panel" parent="Crafting"]
 anchors_preset = 8
