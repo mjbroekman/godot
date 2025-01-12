@@ -30,7 +30,7 @@ noise_type = 3
 frequency = 0.007
 
 [sub_resource type="Curve" id="Curve_34tan"]
-_data = [Vector2(0.0837563, 0), 0.0, 0.0, 0, 0, Vector2(0.337563, 0.348596), 0.0, 0.0, 0, 0, Vector2(0.703046, 0.651836), 0.0, 0.0, 0, 0, Vector2(0.865482, 1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.0837563, 0), 0.0, 0.0, 0, 0, Vector2(0.47027, 0.230539), 0.467346, 0.467346, 0, 0, Vector2(0.810811, 0.754491), 0.0, 0.0, 0, 0, Vector2(0.865482, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dx124"]
