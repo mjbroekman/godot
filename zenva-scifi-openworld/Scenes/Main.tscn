@@ -43,6 +43,9 @@ point_count = 4
 albedo_color = Color(0.823529, 0.419608, 0.133333, 1)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6igyf"]
+geometry_parsed_geometry_type = 2
+geometry_source_geometry_mode = 2
+geometry_source_group_name = &"NavSource"
 
 [node name="Main" type="Node3D"]
 
