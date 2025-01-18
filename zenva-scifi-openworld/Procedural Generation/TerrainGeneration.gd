@@ -95,6 +95,16 @@ func generate ():
 	await get_tree().create_timer(0.5).timeout
 	var agent_manager = get_node("/root/Main/AgentManager")
 	agent_manager.spawn_agents()
+	
+	### Randomly place the player (above water)
+	var player_pos = get_random_position()
+
+	while player_pos.y < water_level * max_height:
+		player_pos = get_random_position()
+
+	var player = get_node("/root/Main/Player")
+	player.position = player_pos
+	
 
 # returns a Y position from the given X and Z
 # uses the noise map, elevation curve and falloff

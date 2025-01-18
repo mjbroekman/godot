@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EquipItem" load_steps=5 format=3 uid="uid://bjimo7uykdman"]
+
+[ext_resource type="PackedScene" uid="uid://dveoocu3sxjws" path="res://Items/Equip Items/EquipItem_LaserSword.tscn" id="1_dxiye"]
+[ext_resource type="Texture2D" uid="uid://d3je01au46kq5" path="res://Items/Icons/LaserSword.png" id="2_a4tra"]
+[ext_resource type="Script" path="res://Items/EquipItem.gd" id="3_ply6f"]
+[ext_resource type="PackedScene" uid="uid://dru4q1557xie" path="res://Items/World Items/WorldItem_LaserSword.tscn" id="4_7t3ao"]
+
+[resource]
+script = ExtResource("3_ply6f")
+equip_scene = ExtResource("1_dxiye")
+display_name = "Laser Sword"
+icon = ExtResource("2_a4tra")
+max_stack_size = 1
+world_item_scene = ExtResource("4_7t3ao")

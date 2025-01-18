@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://dveoocu3sxjws"]
+
+[ext_resource type="PackedScene" uid="uid://dy6re5u0h3pn" path="res://Items/Equip Items/EquipItem_Sword.tscn" id="1_8otpa"]
+[ext_resource type="ArrayMesh" uid="uid://dmrh1r4prjbwt" path="res://Combat/Models/LaserSword/LaserSword.obj" id="2_6hqve"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_65iri"]
+albedo_color = Color(0.391185, 0.391185, 0.391185, 1)
+metallic = 0.86
+metallic_specular = 0.68
+roughness = 0.75
+clearcoat_enabled = true
+clearcoat = 0.53
+clearcoat_roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x1h4x"]
+albedo_color = Color(0.501961, 0.372549, 0.231373, 1)
+metallic = 0.3
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6h6r4"]
+transparency = 1
+blend_mode = 1
+depth_draw_mode = 1
+albedo_color = Color(0.956863, 0, 0, 1)
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.1
+emission_enabled = true
+emission = Color(0.909804, 0, 0, 1)
+emission_energy_multiplier = 11.31
+clearcoat_enabled = true
+clearcoat_roughness = 1.0
+
+[node name="EquipObject_LaserSword" instance=ExtResource("1_8otpa")]
+damage = 10
+attack_rate = 0.4
+
+[node name="ShortSword" parent="Visual" index="0"]
+visible = false
+
+[node name="LaserSword" type="MeshInstance3D" parent="Visual" index="1"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("2_6hqve")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_65iri")
+surface_material_override/1 = SubResource("StandardMaterial3D_x1h4x")
+surface_material_override/2 = SubResource("StandardMaterial3D_6h6r4")
+surface_material_override/3 = SubResource("StandardMaterial3D_65iri")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://catgx57nk61c3"]
+[gd_scene load_steps=20 format=3 uid="uid://catgx57nk61c3"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_fiowp"]
 [ext_resource type="Script" path="res://Procedural Generation/TerrainGeneration.gd" id="2_b0r8t"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://i8rvvuxtnaxi" path="res://Procedural Generation/Spawnable Objects/AlienTree0.tscn" id="4_d6g6q"]
 [ext_resource type="PackedScene" uid="uid://b0d3jgd61j7h7" path="res://Procedural Generation/Spawnable Objects/AlienTree1.tscn" id="5_ygp06"]
 [ext_resource type="PackedScene" uid="uid://crlk3u335xyr6" path="res://Procedural Generation/Spawnable Objects/Rock.tscn" id="6_yubbf"]
+[ext_resource type="PackedScene" uid="uid://crnpei27no8w6" path="res://Procedural Generation/Spawnable Objects/Rock_Iron.tscn" id="7_12jq0"]
 [ext_resource type="Script" path="res://Procedural Generation/AgentManager.gd" id="7_u5o5y"]
 [ext_resource type="Script" path="res://Procedural Generation/SpawnableAgent.gd" id="8_hlycl"]
+[ext_resource type="PackedScene" uid="uid://dnyg5cpwgha5w" path="res://Procedural Generation/Spawnable Objects/Rock_EnergyCrystal.tscn" id="8_pu8vq"]
 [ext_resource type="PackedScene" uid="uid://c63j7yofdbrlo" path="res://AI/Alien/Alien.tscn" id="9_11aj6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m6ubi"]
@@ -24,6 +26,9 @@ tonemap_mode = 2
 ssao_enabled = true
 ssao_radius = 0.5
 glow_enabled = true
+glow_strength = 0.76
+glow_bloom = 0.1
+glow_blend_mode = 0
 fog_enabled = true
 fog_light_color = Color(0.654307, 0.402616, 0.268355, 1)
 fog_sun_scatter = 1.0
@@ -61,7 +66,7 @@ light_color = Color(0.278102, 0.798404, 8.08597e-06, 1)
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_fiowp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62073, 42.3766, 2.117)
 
 [node name="TerrainGeneration" type="Node" parent="."]
 script = ExtResource("2_b0r8t")
@@ -89,6 +94,13 @@ scenes_to_spawn = Array[PackedScene]([ExtResource("6_yubbf")])
 spawn_count = 100
 min_scale = 0.5
 max_scale = 2.0
+
+[node name="SpawnableObject_Resources" type="Node" parent="TerrainGeneration"]
+script = ExtResource("3_shiko")
+scenes_to_spawn = Array[PackedScene]([ExtResource("7_12jq0"), ExtResource("8_pu8vq")])
+spawn_count = 100
+min_scale = 0.5
+max_scale = 1.5
 
 [node name="AgentManager" type="Node3D" parent="."]
 script = ExtResource("7_u5o5y")

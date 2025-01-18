@@ -10,6 +10,8 @@ height = 14.0
 radius = 1.04416
 
 [node name="AlienTree_0" type="StaticBody3D"]
+script = ExtResource("3_61vgh")
+drop_on_death = ExtResource("4_asro4")
 
 [node name="AlienTree0" type="MeshInstance3D" parent="."]
 material_override = ExtResource("1_06fod")
@@ -22,5 +24,4 @@ shape = SubResource("CylinderShape3D_a4tns")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("3_61vgh")
-max = 20
 drop_on_death = ExtResource("4_asro4")
