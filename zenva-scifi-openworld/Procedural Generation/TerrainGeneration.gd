@@ -91,6 +91,10 @@ func generate ():
 	# ---------------
 	# Spawn AI here
 	# ---------------
+	### Wait half a second to allow the nav mesh to finish baking
+	await get_tree().create_timer(0.5).timeout
+	var agent_manager = get_node("/root/Main/AgentManager")
+	agent_manager.spawn_agents()
 
 # returns a Y position from the given X and Z
 # uses the noise map, elevation curve and falloff

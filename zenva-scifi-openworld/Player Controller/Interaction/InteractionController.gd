@@ -3,6 +3,8 @@ extends RayCast3D
 @onready var interact_prompt_label : Label = get_node("InteractionPrompt")
 
 func _process(delta):
+	var _time_in_type = delta
+
 	var object = get_collider()
 	interact_prompt_label.text = ""
 	

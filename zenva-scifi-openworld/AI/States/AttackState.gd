@@ -10,6 +10,8 @@ func enter ():
 	controller.look_at_player = true
 
 func update (delta):
+	var _time_in_state = delta
+
 	if can_attack():
 		attack()
 	

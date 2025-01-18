@@ -21,6 +21,8 @@ func _ready ():
 		add_item(item)
 
 func _process (delta):
+	var _time_in_type = delta
+
 	if Input.is_action_just_pressed("inventory"):
 		toggle_window(!window.visible)
 

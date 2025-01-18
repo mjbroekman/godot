@@ -22,13 +22,15 @@ func exit ():
 
 # Called every frame while in the state.
 func update (delta):
+	var _time_in_state = delta
+
 	# State transitions.
 	if controller.player_distance < chase_range:
 		state_machine.set_state("Chase")
 
 # Called every physics update while in the state.
 func physics_update (delta):
-	pass
+	var _time_in_type = delta
 
 func navigation_complete ():
 	await get_tree().create_timer(randf_range(min_wait_time, max_wait_time)).timeout

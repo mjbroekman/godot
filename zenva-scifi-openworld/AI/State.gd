@@ -22,11 +22,11 @@ func exit ():
 
 # Called every frame while in the state.
 func update (delta):
-	pass
+	var _time_in_type = delta
 
 # Called every physics update while in the state.
 func physics_update (delta):
-	pass
+	var _time_in_type = delta
 
 # Called when the controller has completed a navigation path.
 func navigation_complete ():

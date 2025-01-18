@@ -30,6 +30,8 @@ func craft (recipe : CraftingRecipe):
 	open()
 
 func _process(delta):
+	var _time_in_type = delta
+
 	if Input.is_action_just_pressed("crafting"):
 		if window.visible:
 			close()

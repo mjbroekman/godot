@@ -22,6 +22,8 @@ func exit ():
 
 # Called every frame while in thwe state.
 func update (delta):
+	var _time_in_state = delta
+
 	# State transitions.
 	if controller.position.distance_to(controller.player.position) > safe_distance:
 		state_machine.set_state("Wander")

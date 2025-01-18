@@ -17,10 +17,14 @@ var target_y_rot : float
 var player_distance : float
 
 func _process(delta):
+	var _time_in_type = delta
+
 	if player:
 		player_distance = position.distance_to(player.position)
 
 func _physics_process(delta):
+	var _time_in_type = delta
+
 	# Stop the ai if player is far away.
 	if player_distance > 30:
 		return

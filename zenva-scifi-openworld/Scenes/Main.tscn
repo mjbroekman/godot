@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://catgx57nk61c3"]
+[gd_scene load_steps=18 format=3 uid="uid://catgx57nk61c3"]
 
 [ext_resource type="PackedScene" uid="uid://cf1pwgl0y0mi6" path="res://Player Controller/Player.tscn" id="1_fiowp"]
 [ext_resource type="Script" path="res://Procedural Generation/TerrainGeneration.gd" id="2_b0r8t"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://i8rvvuxtnaxi" path="res://Procedural Generation/Spawnable Objects/AlienTree0.tscn" id="4_d6g6q"]
 [ext_resource type="PackedScene" uid="uid://b0d3jgd61j7h7" path="res://Procedural Generation/Spawnable Objects/AlienTree1.tscn" id="5_ygp06"]
 [ext_resource type="PackedScene" uid="uid://crlk3u335xyr6" path="res://Procedural Generation/Spawnable Objects/Rock.tscn" id="6_yubbf"]
+[ext_resource type="Script" path="res://Procedural Generation/AgentManager.gd" id="7_u5o5y"]
+[ext_resource type="Script" path="res://Procedural Generation/SpawnableAgent.gd" id="8_hlycl"]
+[ext_resource type="PackedScene" uid="uid://c63j7yofdbrlo" path="res://AI/Alien/Alien.tscn" id="9_11aj6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m6ubi"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -86,3 +89,16 @@ scenes_to_spawn = Array[PackedScene]([ExtResource("6_yubbf")])
 spawn_count = 100
 min_scale = 0.5
 max_scale = 2.0
+
+[node name="AgentManager" type="Node3D" parent="."]
+script = ExtResource("7_u5o5y")
+
+[node name="SpawnableAgent_Alien" type="Node" parent="AgentManager"]
+script = ExtResource("8_hlycl")
+agent_scene = ExtResource("9_11aj6")
+
+[node name="Timer" type="Timer" parent="AgentManager"]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="AgentManager/Timer" to="AgentManager" method="_on_timer_timeout"]

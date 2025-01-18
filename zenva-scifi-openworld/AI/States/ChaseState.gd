@@ -16,6 +16,7 @@ func exit ():
 
 # Called every frame while in the state.
 func update (delta):
+	var _time_in_state = delta
 	# Update the path to the player every 0.1 seconds.
 	if Time.get_unix_time_from_system() - last_path_update_time > path_update_rate:
 		controller.move_to_position(controller.player.position, false)
