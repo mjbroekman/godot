@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://ci38ox80kyyaw"]
+
+[ext_resource type="Script" path="res://Combat/Health.gd" id="1_2f82b"]
+[ext_resource type="PackedScene" uid="uid://cjatvlhyikfdp" path="res://Items/World Items/WorldItem_Crystal.tscn" id="2_tbt3s"]
+[ext_resource type="ArrayMesh" uid="uid://8qxlrlk05b71" path="res://Items/Models/EnergyCrystal.obj" id="3_sq6uh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajcmb"]
+transparency = 1
+albedo_color = Color(0.792157, 0.027451, 0, 1)
+metallic = 0.3
+metallic_specular = 0.76
+roughness = 0.41
+emission_enabled = true
+emission = Color(0.4, 0, 0, 1)
+emission_energy_multiplier = 0.68
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jk5be"]
+points = PackedVector3Array(-0.142201, 0.0465259, -0.10851, 0.0200516, 0.226786, 0.161011, 0.0795563, -0.181526, 0.0225801, -0.102848, 0.294294, -0.20624, -0.0983863, -0.192056, 0.0909824, -0.16504, 0.249904, -0.117402, -0.00449362, -0.15742, -0.0764476, 0.153702, 0.312928, -0.1028, 0.0779088, -0.1351, 0.112538, 0.00366826, 0.294294, 0.131173, -0.0299052, 0.230862, 0.156775, 0.152113, 0.104045, -0.0441453, -0.0711269, 0.04632, -0.160745, -0.0536114, -0.207235, -0.0439187, -0.0129357, -0.0866811, 0.146732, 0.0671147, 0.0783571, -0.114477, -0.119959, -0.110185, 0.0547178, 0.134954, 0.0709997, 0.0215562, -0.149356, 0.233111, -0.189637, 0.0518957, -0.162386, -0.043415, 0.13067, 0.325579, -0.0872607, -0.111715, -0.151452, -0.00298122, 0.147533, 0.299974, -0.0364574, 0.0892174, -0.159273, 0.0915922, 0.0202963, -0.145138, 0.138663, -0.154496, 0.0546, -0.102684, -0.117307, 0.296574, -0.201155, 0.00366826, -0.192461, 0.0911569, 0.140532, 0.0626199, -0.0515267, -0.0561814, -0.218983, -0.0195436, -0.0296186, 0.0296719, 0.155306, -0.102848, 0.267649, -0.20624)
+
+[node name="EnergyCrystal" type="StaticBody3D"]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+script = ExtResource("1_2f82b")
+max_health = 15
+drop_on_death = ExtResource("2_tbt3s")
+
+[node name="EnergyCrystal" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_sq6uh")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ajcmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_jk5be")

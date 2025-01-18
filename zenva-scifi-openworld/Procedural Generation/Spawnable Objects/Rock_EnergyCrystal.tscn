@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://dnyg5cpwgha5w"]
+
+[ext_resource type="ArrayMesh" uid="uid://bf16wd1udiyr7" path="res://Models/MineralRock/MineralRock.obj" id="1_5pen7"]
+[ext_resource type="Material" uid="uid://56gy3i80rp6u" path="res://Models/MineralRock/MineralRockBase.tres" id="2_tuq0i"]
+[ext_resource type="Script" path="res://Combat/Health.gd" id="3_xc56q"]
+[ext_resource type="PackedScene" uid="uid://cjatvlhyikfdp" path="res://Items/World Items/WorldItem_Crystal.tscn" id="4_6yt8m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c5epi"]
+albedo_color = Color(0.803483, 0.0376326, 1.92523e-07, 0.984314)
+albedo_texture_msdf = true
+metallic = 0.7
+roughness = 0.03
+emission_enabled = true
+emission = Color(0.687725, 0.0508976, 0.0125778, 1)
+emission_energy_multiplier = 9.31
+emission_on_uv2 = true
+clearcoat_enabled = true
+clearcoat = 0.61
+clearcoat_roughness = 1.0
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 0.81
+subsurf_scatter_skin_mode = true
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e547i"]
+points = PackedVector3Array(-0.956657, -0.473924, -0.218193, 1.27288, 0.39625, 0.393813, 1.22769, 0.527899, 0.481089, 0.26049, 1.00181, -1.08243, -0.386542, 1.12841, 0.68825, 0.828882, -0.43211, -1.22179, 0.0440821, -0.521439, 1.17897, -0.709638, 0.884226, -0.931664, -1.19194, 0.626009, 0.181849, 0.43407, 1.08931, 1.08224, -0.0443394, -0.264335, -1.36656, 0.878308, -0.657662, -0.835203, -0.433621, 1.39544, -0.391718, 0.88011, 0.854739, -0.710657, -0.82349, 0.00580428, 0.866775, 0.826734, -0.516599, 0.607477, 0.13166, 0.0442985, 1.40853, 0.686994, 1.20956, 0.0843715, 1.18573, -0.437932, -0.879309, 0.131315, -0.695242, -0.830199, -0.494474, 0.768929, 0.995469, 0.174499, -0.689952, 0.650568, 1.26753, 0.789539, 0.348274, -0.990881, -0.380205, -0.431895, 0.867438, 0.395979, 0.995608, 0.2171, 1.25977, -0.86474, 0.0445558, 1.42223, 0.127077, 1.17546, -0.212571, 0.390453, 0.131295, 0.0908652, -1.39755, 1.04278, 0.00574796, -1.0428, -0.650727, -0.298777, 0.954822, -0.606015, -0.644207, -0.0873071)
+
+[node name="Rock_EnergyCrystal" type="StaticBody3D"]
+
+[node name="MineralRock" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_5pen7")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_tuq0i")
+surface_material_override/1 = SubResource("StandardMaterial3D_c5epi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_e547i")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_xc56q")
+max_health = 15
+drop_on_death = ExtResource("4_6yt8m")

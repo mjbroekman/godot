@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://c63j7yofdbrlo"]
+
+[ext_resource type="Script" path="res://AI/AIController.gd" id="1_qnq21"]
+[ext_resource type="PackedScene" uid="uid://c2tcjs26j25ww" path="res://AI/Alien/alien-bug.glb" id="2_6lo46"]
+[ext_resource type="Script" path="res://AI/StateMachine.gd" id="3_oafx6"]
+[ext_resource type="Script" path="res://AI/States/WanderState.gd" id="4_w868r"]
+[ext_resource type="Script" path="res://AI/States/FleeState.gd" id="5_a42l0"]
+[ext_resource type="Script" path="res://AI/States/AttackState.gd" id="6_ijuco"]
+[ext_resource type="Script" path="res://AI/States/ChaseState.gd" id="7_csfv8"]
+[ext_resource type="Script" path="res://Combat/Health.gd" id="8_8xprp"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mxae2"]
+height = 0.58421
+radius = 0.383605
+
+[node name="Alien" type="CharacterBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_qnq21")
+
+[node name="alien-bug" parent="." instance=ExtResource("2_6lo46")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28273, 0)
+shape = SubResource("CylinderShape3D_mxae2")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
+script = ExtResource("3_oafx6")
+default_state = NodePath("Wander")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("4_w868r")
+controller_path = NodePath("../..")
+
+[node name="Flee" type="Node" parent="StateMachine"]
+script = ExtResource("5_a42l0")
+controller_path = NodePath("../..")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("6_ijuco")
+controller_path = NodePath("../..")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("7_csfv8")
+controller_path = NodePath("../..")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("8_8xprp")
+max_health = 15
+
+[connection signal="target_reached" from="NavigationAgent3D" to="StateMachine" method="on_target_reached"]

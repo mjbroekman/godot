@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8myljfurwjb7"]
+
+[ext_resource type="Script" path="res://Items/WorldItem.gd" id="1_b0knn"]
+[ext_resource type="ArrayMesh" uid="uid://c2r7rahr0a8em" path="res://Items/Models/Wood.obj" id="2_3swyf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tojtf"]
+albedo_color = Color(0.580392, 0.435294, 0.243137, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7fjgx"]
+albedo_color = Color(0.831373, 0.607843, 0.423529, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0gc7i"]
+points = PackedVector3Array(0.00997853, 0.163972, 0.0519129, 0.00117156, -0.154759, 0.11425, 0.00984111, -0.152879, 0.112892, -0.0974791, -0.129764, -0.279447, 0.124612, -0.0126653, -0.274418, -0.151932, 0.0770732, -0.289603, -0.133555, -0.0579815, 0.286688, 0.147245, -0.0314907, 0.290526, -0.0769859, 0.117617, 0.267605, 0.0554665, 0.131214, -0.289713, 0.133772, 0.0668045, 0.272962, 0.0545378, -0.128366, -0.276558, 0.0807273, -0.136513, 0.281866, -0.166821, -0.0215555, -0.275066, -0.077041, -0.133836, 0.276512, 0.124041, 0.101488, -0.0800437, -0.0980938, 0.131522, -0.290417, -0.138636, 0.0223751, 0.269575, 0.132928, -0.0653751, -0.0800986, 0.0380799, 0.123965, 0.291916, 0.0721135, 0.155664, -0.0808214, 0.151282, 0.0137347, 0.0165949, -0.151618, -0.0760356, -0.279957, 0.120585, 0.014064, -0.294156, -0.0165365, 0.164867, -0.160944, -0.00767545, -0.145871, -0.276032, -0.016527, -0.154842, 0.282929, 0.0801531, 0.119135, 0.280029, -0.119799, 0.0739426, 0.266336, -0.0941213, 0.134614, -0.147988, 0.133387, -0.0832221, 0.281052, -0.16335, 0.0140625, -0.294107)
+
+[node name="WorldItem_Wood" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.783629, 1.35472, -3.98431)
+script = ExtResource("1_b0knn")
+item_name = "Wood"
+interact_prompt = "Pickup Wood"
+
+[node name="Wood" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_3swyf")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_tojtf")
+surface_material_override/1 = SubResource("StandardMaterial3D_7fjgx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_0gc7i")

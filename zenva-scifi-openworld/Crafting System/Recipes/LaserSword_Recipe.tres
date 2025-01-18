@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=10 format=3 uid="uid://b2nrdpqipf0ii"]
+
+[ext_resource type="Resource" uid="uid://bjimo7uykdman" path="res://Items/Item Data/LaserSword.tres" id="1_rspqf"]
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipeRequirement.gd" id="2_wvqr4"]
+[ext_resource type="Resource" uid="uid://dlr5q3wxhswfe" path="res://Items/Item Data/Iron.tres" id="3_cye1u"]
+[ext_resource type="Resource" uid="uid://b0yyyss31h2nv" path="res://Items/Item Data/Wood.tres" id="4_665sd"]
+[ext_resource type="Resource" uid="uid://coxhiu5q7mipp" path="res://Items/Item Data/EnergyCrystal.tres" id="4_vqnqt"]
+[ext_resource type="Script" path="res://Crafting System/CraftingRecipe.gd" id="5_hof24"]
+
+[sub_resource type="Resource" id="Resource_wo8wd"]
+script = ExtResource("2_wvqr4")
+item = ExtResource("3_cye1u")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_rtmkm"]
+script = ExtResource("2_wvqr4")
+item = ExtResource("4_vqnqt")
+quantity = 5
+
+[sub_resource type="Resource" id="Resource_3mujv"]
+script = ExtResource("2_wvqr4")
+item = ExtResource("4_665sd")
+quantity = 1
+
+[resource]
+script = ExtResource("5_hof24")
+item = ExtResource("1_rspqf")
+requirements = Array[ExtResource("2_wvqr4")]([SubResource("Resource_wo8wd"), SubResource("Resource_rtmkm"), SubResource("Resource_3mujv")])

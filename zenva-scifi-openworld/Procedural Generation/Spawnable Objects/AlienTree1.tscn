@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0d3jgd61j7h7"]
+
+[ext_resource type="ArrayMesh" uid="uid://cfjjcwinla28y" path="res://Models/AlienTree/AlienTree_1.obj" id="1_h7pbc"]
+[ext_resource type="Material" uid="uid://bluk8ry0rhjl7" path="res://Models/AlienTree/AlienTree_0.tres" id="2_ymbyw"]
+[ext_resource type="Material" uid="uid://n6v5y0x4o4yd" path="res://Models/AlienTree/AlienTree_1_Leaves.tres" id="3_ofkmq"]
+[ext_resource type="Script" path="res://Combat/Health.gd" id="4_bi8m3"]
+[ext_resource type="PackedScene" uid="uid://c8myljfurwjb7" path="res://Items/World Items/WorldItem_Wood.tscn" id="5_k161p"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j3i7m"]
+height = 6.0
+radius = 0.776932
+
+[node name="AlienTree_1" type="StaticBody3D"]
+script = ExtResource("4_bi8m3")
+drop_on_death = ExtResource("5_k161p")
+
+[node name="AlienTree1" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_h7pbc")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_ymbyw")
+surface_material_override/1 = ExtResource("3_ofkmq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.40506, 0)
+shape = SubResource("CylinderShape3D_j3i7m")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("4_bi8m3")
+drop_on_death = ExtResource("5_k161p")
