@@ -41,6 +41,7 @@ These are _my_ implementations of various coursework
       * Implemented 'bonus' resources
   * micro-survival-game - Zenva's micro survival game course
   * zenva-scifi-openworld - Zenva's open world sci-fi survival game course
+  * adv-2d-platformer - Zenva's Advanced 2D Platformer game course
 * My Creations
   * orbit-cam - A simple orbit-camera implementation and demo
   * galaxy - The start of something more...
