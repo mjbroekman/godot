@@ -11,14 +11,34 @@ config_version=5
 [application]
 
 config/name="Advanced 2D Platformer"
+run/main_scene="res://Levels/Level1.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=576
+window/size/viewport_height=324
+window/size/window_width_override=1152
+window/size/window_height_override=648
+window/stretch/mode="viewport"
 
 [dotnet]
 
 project/assembly_name="Advanced 2D Platformer"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/Audio/": "purple",
+"res://Assets/Backgrounds/": "green",
+"res://Assets/Characters/": "yellow",
+"res://Assets/Tilemaps/": "pink",
+"res://Assets/Tiles/": "teal"
+}
+
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
