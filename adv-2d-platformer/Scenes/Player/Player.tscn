@@ -1,8 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmlolrx5kn048"]
+[gd_scene load_steps=11 format=3 uid="uid://cmlolrx5kn048"]
 
 [ext_resource type="Texture2D" uid="uid://d3les0mlqncrc" path="res://Assets/Characters/tile_0000.png" id="1_uwef5"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_w1rk1"]
 [ext_resource type="Texture2D" uid="uid://ttg35d2pmifj" path="res://Assets/Characters/tile_0001.png" id="2_x04kb"]
+[ext_resource type="Script" path="res://Scripts/Player/States/IdleState.gd" id="4_52jof"]
+[ext_resource type="Script" path="res://Scripts/Player/States/DashState.gd" id="5_bx3ed"]
+[ext_resource type="Script" path="res://Scripts/Player/States/FallState.gd" id="6_d21cf"]
+[ext_resource type="Script" path="res://Scripts/Player/States/JumpState.gd" id="7_iahyq"]
+[ext_resource type="Script" path="res://Scripts/Player/States/MoveState.gd" id="8_ev3nn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uilyw"]
 radius = 8.0
@@ -39,3 +44,20 @@ shape = SubResource("CapsuleShape2D_uilyw")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_idf46")
 animation = &"Idle"
+
+[node name="StateMachine" type="Node" parent="."]
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("4_52jof")
+
+[node name="DashState" type="Node" parent="StateMachine"]
+script = ExtResource("5_bx3ed")
+
+[node name="FallState" type="Node" parent="StateMachine"]
+script = ExtResource("6_d21cf")
+
+[node name="JumpState" type="Node" parent="StateMachine"]
+script = ExtResource("7_iahyq")
+
+[node name="MoveState" type="Node" parent="StateMachine"]
+script = ExtResource("8_ev3nn")
