@@ -7,20 +7,43 @@
 [ext_resource type="Script" path="res://Scripts/Player/States/DashState.gd" id="5_bx3ed"]
 [ext_resource type="Script" path="res://Scripts/Player/States/FallState.gd" id="6_d21cf"]
 [ext_resource type="Script" path="res://Scripts/Player/States/JumpState.gd" id="7_iahyq"]
-[ext_resource type="Script" path="res://Scripts/Player/States/MoveState.gd" id="8_ev3nn"]
+[ext_resource type="Script" path="res://Scripts/Player/States/WalkState.gd" id="8_ev3nn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uilyw"]
 radius = 8.0
 height = 24.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_idf46"]
+resource_local_to_scene = true
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_x04kb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_uwef5")
+}],
+"loop": true,
+"name": &"Dash",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_uwef5")
 }],
 "loop": true,
 "name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_x04kb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_uwef5")
+}],
+"loop": false,
+"name": &"Jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -43,7 +66,7 @@ shape = SubResource("CapsuleShape2D_uilyw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_idf46")
-animation = &"Idle"
+animation = &"Jump"
 
 [node name="StateMachine" type="Node" parent="."]
 
@@ -59,5 +82,5 @@ script = ExtResource("6_d21cf")
 [node name="JumpState" type="Node" parent="StateMachine"]
 script = ExtResource("7_iahyq")
 
-[node name="MoveState" type="Node" parent="StateMachine"]
+[node name="WalkState" type="Node" parent="StateMachine"]
 script = ExtResource("8_ev3nn")
