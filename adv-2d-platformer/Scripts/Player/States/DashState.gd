@@ -1,11 +1,17 @@
 extends Node
 class_name DashState
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+@onready var player: Node = get_parent().get_parent()
 
+func reset_state() -> void:
+	exit_state()
+	start_state()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func start_state() -> void:
+	print("Starting to Dash")
+	player.anim.play("Dash",2.0)
+	player.jump_count = 0
+	player.can_dash = false
+
+func exit_state() -> void:
+	player.anim.stop()

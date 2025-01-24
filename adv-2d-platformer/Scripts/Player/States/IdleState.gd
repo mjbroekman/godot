@@ -1,12 +1,16 @@
 extends Node
 class_name IdleState
 
+@onready var player: Node = get_parent().get_parent()
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func reset_state() -> void:
+	exit_state()
+	start_state()
 
+func start_state() -> void:
+	player.anim.play("Idle",1.0)
+	player.jump_count = 0
+	player.can_dash = true
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func exit_state() -> void:
+	player.anim.stop()

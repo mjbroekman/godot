@@ -1,11 +1,14 @@
 extends Node
 class_name FallState
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+@onready var player: Node = get_parent().get_parent()
 
+func reset_state() -> void:
+	exit_state()
+	start_state()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func start_state() -> void:
+	player.anim.play("Jump",1.0)
+
+func exit_state() -> void:
+	player.anim.stop()
