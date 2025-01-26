@@ -26,24 +26,21 @@ var move_dir : float = 0
 @export var current_state : String = ""
 var is_jumping : bool = false
 @export var can_dash : bool = true
-@export var can_jump_dash : bool = false
+@export var can_jump_dash : bool = true
 @export var max_jumps : int = 3
 @export var jump_count : int = 0
-@export var has_double_jump : bool = false
+@export var has_double_jump : bool = true
 @export var can_double_jump : bool = false
 
 func _ready() -> void:
 	change_state("Idle")
 
 func _physics_process(delta):
-	# Account for gravity.
 	if not is_on_floor():
-		# Alternate gravity calculation
 		var target_velocity : float = min( (velocity.y + acceleration * delta), (max_speed * delta) )
 		velocity.y = lerp(velocity.y, target_velocity, 0.6)
-		# Original gravity calculation
 		#velocity += get_gravity() * delta
-	
+
 	move_player(delta)
 
 
@@ -65,21 +62,17 @@ func move_player(delta):
 		var target_velocity : float = max( (velocity.x - acceleration * delta), (-max_speed * delta) )
 #		velocity.x = move_dir * max_speed * delta
 		velocity.x = lerp(velocity.x, target_velocity, weight)
-	else:
+	elif is_on_floor():
 		change_state("Idle")
-
 
 	move_and_slide()
 
 
 func change_state(new_state_name: String) -> void:
 	current_state = new_state_name
-	print("Changing state to " + new_state_name)
 	var state_to_start = null
 	for state in get_node("StateMachine").get_children():
-		print("Checking state " + state.name)
 		if new_state_name in state.name:
-			print("Found " + new_state_name + " state")
 			state_to_start = state
 		else:
 			state.exit_state()

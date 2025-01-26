@@ -48,14 +48,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_uwef5")
+"texture": ExtResource("2_x04kb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_x04kb")
+"texture": ExtResource("1_uwef5")
 }],
 "loop": true,
 "name": &"Walk",
-"speed": 5.0
+"speed": 7.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
@@ -66,7 +66,7 @@ shape = SubResource("CapsuleShape2D_uilyw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_idf46")
-animation = &"Jump"
+animation = &"Walk"
 
 [node name="StateMachine" type="Node" parent="."]
 
