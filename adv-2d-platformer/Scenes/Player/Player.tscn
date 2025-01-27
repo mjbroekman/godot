@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cmlolrx5kn048"]
+[gd_scene load_steps=13 format=3 uid="uid://cmlolrx5kn048"]
 
 [ext_resource type="Texture2D" uid="uid://d3les0mlqncrc" path="res://Assets/Characters/tile_0000.png" id="1_uwef5"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_w1rk1"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://Scripts/Player/States/FallState.gd" id="6_d21cf"]
 [ext_resource type="Script" path="res://Scripts/Player/States/JumpState.gd" id="7_iahyq"]
 [ext_resource type="Script" path="res://Scripts/Player/States/WalkState.gd" id="8_ev3nn"]
+[ext_resource type="AudioStream" uid="uid://br15e76pd0lhp" path="res://Assets/Audio/jump.ogg" id="9_rmja8"]
+[ext_resource type="AudioStream" uid="uid://5ajs6cxifh7g" path="res://Assets/Audio/audiomass-output.mp3" id="10_7a8rk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uilyw"]
 radius = 8.0
@@ -84,3 +86,9 @@ script = ExtResource("7_iahyq")
 
 [node name="WalkState" type="Node" parent="StateMachine"]
 script = ExtResource("8_ev3nn")
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_rmja8")
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_7a8rk")

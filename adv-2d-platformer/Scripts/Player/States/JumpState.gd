@@ -31,6 +31,9 @@ func start_state() -> void:
 	player.jump_count += 1
 	if player.can_jump_dash:
 		player.can_dash = true
+	
+	player.get_node("Jump").play()
+
 
 func exit_state() -> void:
 	player.jump_count = 0
