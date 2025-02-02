@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://0to8fpypdi2o"]
+[gd_scene load_steps=10 format=4 uid="uid://0to8fpypdi2o"]
 
 [ext_resource type="Texture2D" uid="uid://dtlkxxjgx7kgk" path="res://Assets/Tilemaps/tilemap_packed.png" id="1_br8f6"]
 [ext_resource type="PackedScene" uid="uid://cmlolrx5kn048" path="res://Scenes/Player/Player.tscn" id="2_mjrel"]
 [ext_resource type="Texture2D" uid="uid://brduuwtutrg5n" path="res://Assets/Tilemaps/tilemap-backgrounds.png" id="3_w63vh"]
 [ext_resource type="PackedScene" uid="uid://doic3uabqhxo" path="res://Scenes/Objects/Coin.tscn" id="4_k158y"]
+[ext_resource type="PackedScene" uid="uid://uuefuoo8mrye" path="res://Scenes/Monsters/AlienPlatform.tscn" id="5_dh5n2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cls01"]
 texture = ExtResource("1_br8f6")
@@ -462,3 +463,12 @@ position = Vector2(496, 240)
 
 [node name="Coin10" parent="Coins" instance=ExtResource("4_k158y")]
 position = Vector2(472, 72)
+
+[node name="Alien" parent="." instance=ExtResource("5_dh5n2")]
+position = Vector2(512, 168)
+
+[node name="Alien2" parent="." instance=ExtResource("5_dh5n2")]
+position = Vector2(315, 150)
+
+[node name="Alien3" parent="." instance=ExtResource("5_dh5n2")]
+position = Vector2(366, 204)
