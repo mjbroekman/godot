@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://0to8fpypdi2o"]
+[gd_scene load_steps=11 format=4 uid="uid://0to8fpypdi2o"]
 
 [ext_resource type="Texture2D" uid="uid://dtlkxxjgx7kgk" path="res://Assets/Tilemaps/tilemap_packed.png" id="1_br8f6"]
 [ext_resource type="PackedScene" uid="uid://cmlolrx5kn048" path="res://Scenes/Player/Player.tscn" id="2_mjrel"]
 [ext_resource type="Texture2D" uid="uid://brduuwtutrg5n" path="res://Assets/Tilemaps/tilemap-backgrounds.png" id="3_w63vh"]
 [ext_resource type="PackedScene" uid="uid://doic3uabqhxo" path="res://Scenes/Objects/Coin.tscn" id="4_k158y"]
 [ext_resource type="PackedScene" uid="uid://uuefuoo8mrye" path="res://Scenes/Monsters/AlienPlatform.tscn" id="5_dh5n2"]
+[ext_resource type="PackedScene" uid="uid://b8yu7c66jgymi" path="res://Scenes/Monsters/BatFlying.tscn" id="5_k8qdw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cls01"]
 texture = ExtResource("1_br8f6")
@@ -464,11 +465,27 @@ position = Vector2(496, 240)
 [node name="Coin10" parent="Coins" instance=ExtResource("4_k158y")]
 position = Vector2(472, 72)
 
-[node name="Alien" parent="." instance=ExtResource("5_dh5n2")]
-position = Vector2(512, 168)
+[node name="PlatformEnemy" type="Node" parent="."]
 
-[node name="Alien2" parent="." instance=ExtResource("5_dh5n2")]
-position = Vector2(315, 150)
+[node name="Alien" parent="PlatformEnemy" instance=ExtResource("5_dh5n2")]
+position = Vector2(490, 168)
 
-[node name="Alien3" parent="." instance=ExtResource("5_dh5n2")]
-position = Vector2(366, 204)
+[node name="Alien2" parent="PlatformEnemy" instance=ExtResource("5_dh5n2")]
+position = Vector2(351, 204)
+
+[node name="Alien3" parent="PlatformEnemy" instance=ExtResource("5_dh5n2")]
+position = Vector2(119, 295)
+
+[node name="FlyingEnemy" type="Node" parent="."]
+
+[node name="FlyingMob" parent="FlyingEnemy" instance=ExtResource("5_k8qdw")]
+position = Vector2(39, 117)
+
+[node name="FlyingMob2" parent="FlyingEnemy" instance=ExtResource("5_k8qdw")]
+position = Vector2(181, 206)
+
+[node name="FlyingMob3" parent="FlyingEnemy" instance=ExtResource("5_k8qdw")]
+position = Vector2(429, 279)
+
+[node name="FlyingMob4" parent="FlyingEnemy" instance=ExtResource("5_k8qdw")]
+position = Vector2(326, 137)
