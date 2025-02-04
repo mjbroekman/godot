@@ -11,10 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://br15e76pd0lhp" path="res://Assets/Audio/jump.ogg" id="9_rmja8"]
 [ext_resource type="AudioStream" uid="uid://5ajs6cxifh7g" path="res://Assets/Audio/audiomass-output.mp3" id="10_7a8rk"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uilyw"]
-radius = 8.0
-height = 24.0
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_idf46"]
 resource_local_to_scene = true
 animations = [{
@@ -60,15 +56,20 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uilyw"]
+radius = 8.0
+height = 20.0
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_w1rk1")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_uilyw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_idf46")
 animation = &"Walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_uilyw")
 
 [node name="StateMachine" type="Node" parent="."]
 
