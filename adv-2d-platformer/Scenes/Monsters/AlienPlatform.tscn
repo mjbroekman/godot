@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://uuefuoo8mrye"]
+[gd_scene load_steps=9 format=3 uid="uid://uuefuoo8mrye"]
 
 [ext_resource type="Script" path="res://Scripts/Monsters/AlienPlatform.gd" id="1_fq4br"]
 [ext_resource type="Texture2D" uid="uid://c7500kg53xpqk" path="res://Assets/Characters/tile_0009.png" id="2_4uvm8"]
 [ext_resource type="Texture2D" uid="uid://caw8t0fy53it8" path="res://Assets/Characters/tile_0010.png" id="3_dm7fn"]
+[ext_resource type="AudioStream" uid="uid://brgdfh2lxqiio" path="res://Assets/Audio/kill-enemy.ogg" id="4_1h8uy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p0tv3"]
 animations = [{
@@ -19,8 +20,14 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ycyqk"]
-radius = 8.0
-height = 22.0
+radius = 7.0
+height = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycuiq"]
+size = Vector2(12, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pw3yt"]
+size = Vector2(24, 11)
 
 [node name="Alien" type="CharacterBody2D"]
 script = ExtResource("1_fq4br")
@@ -31,8 +38,8 @@ animation = &"Run"
 autoplay = "Run"
 frame_progress = 0.0228427
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+[node name="BodyCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_ycyqk")
 
 [node name="CliffCheck" type="RayCast2D" parent="."]
@@ -42,4 +49,21 @@ target_position = Vector2(0, 16)
 [node name="WallCheck" type="RayCast2D" parent="."]
 target_position = Vector2(-12, 0)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="DeathAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_1h8uy")
+
+[node name="HeadDamage" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeadDamage"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_ycuiq")
+
+[node name="PlayerDamage" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDamage"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_pw3yt")
+
+[connection signal="finished" from="DeathAudio" to="." method="_on_death_audio_finished"]
+[connection signal="body_entered" from="HeadDamage" to="." method="_on_head_damage_body_entered"]
+[connection signal="body_entered" from="PlayerDamage" to="." method="_on_player_damage_body_entered"]
