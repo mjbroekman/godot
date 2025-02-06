@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://ow1u042tspd4"]
+
+[ext_resource type="Script" path="res://Scripts/Player/GUI.gd" id="1_hqroc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nen4j"]
+font_size = 24
+font_color = Color(1, 0.835294, 0.290196, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 3)
+
+[node name="GUI" type="CanvasLayer"]
+script = ExtResource("1_hqroc")
+
+[node name="Header" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HeartContainer" type="HBoxContainer" parent="Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gold" type="Label" parent="Header"]
+layout_mode = 2
+text = "Gold: 0"
+label_settings = SubResource("LabelSettings_nen4j")
+horizontal_alignment = 2

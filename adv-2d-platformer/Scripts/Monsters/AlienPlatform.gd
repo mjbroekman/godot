@@ -6,6 +6,7 @@ const SPEED = 30.0
 var change_dir : bool = false
 @onready var ray_cliff : RayCast2D = get_node("GroundCheck")
 @onready var ray_wall : RayCast2D = get_node("WallCheck")
+@onready var ray_ceil : RayCast2D = get_node("CeilingCheck")
 var move_dir : int = -1
 var am_dead : bool = false
 
@@ -20,7 +21,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	if ( ! ray_cliff.is_colliding() ) || ray_wall.is_colliding():
+	if ( ! ray_cliff.is_colliding() ) || ray_wall.is_colliding() || ray_ceil.is_colliding():
 		print("Switch direction!")
 		change_dir = !change_dir
 		if change_dir:
@@ -30,6 +31,7 @@ func _physics_process(delta):
 
 	ray_cliff.position.x = abs(ray_cliff.position.x) * move_dir
 	ray_wall.target_position.x = abs(ray_wall.target_position.x) * move_dir
+	ray_ceil.target_position.x = abs(ray_ceil.target_position.x) * move_dir
 
 	print("Cliff RayCast2D X position = " + str(ray_cliff.position.x))
 	print("Wall RayCast2D X target = " + str(ray_wall.target_position.x))
@@ -51,20 +53,18 @@ func _on_player_damage_body_entered(body):
 		if "Dash" in body.current_state:
 			death()
 		else:
-			Game.health -= 1
+			if Game.health > 0:
+				Game.health -= 1
+
 			if body.get_node("Hit") != null:
 				body.get_node("Hit").play()
 
 func death():
 	am_dead = true
-	if get_node("BodyCollider") != null:
-		get_node("BodyCollider").queue_free()
-	if get_node("PlayerDamage") != null:
-		get_node("PlayerDamage").queue_free()
-	if get_node("GroundCheck") != null:
-		get_node("GroundCheck").queue_free()
-	if get_node("WallCheck") != null:
-		get_node("WallCheck").queue_free()
+	for n in get_children():
+		if n is RayCast2D || n is CollisionShape2D:
+			n.queue_free()
+
 	if get_node("DeathAudio") != null:
 		get_node("DeathAudio").play()
 

@@ -46,7 +46,12 @@ shape = SubResource("CapsuleShape2D_ycyqk")
 position = Vector2(-9, 0)
 target_position = Vector2(0, 16)
 
+[node name="CeilingCheck" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(-12, 0)
+
 [node name="WallCheck" type="RayCast2D" parent="."]
+position = Vector2(0, 6)
 target_position = Vector2(-12, 0)
 
 [node name="DeathAudio" type="AudioStreamPlayer2D" parent="."]

@@ -9,7 +9,7 @@ var change_dir : bool = false
 var move_dir : int = -1
 var am_dead : bool = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if am_dead:
 		var new_scale = 1.0 - get_node("DeathAudio").get_playback_position()
 		self.scale.x = new_scale
@@ -18,7 +18,6 @@ func _physics_process(delta):
 
 #	if ( ! ray_ground.is_colliding() ) || ray_wall.is_colliding():
 	if ( ray_ground.is_colliding() ):
-		print("Switch direction!")
 		change_dir = !change_dir
 		if change_dir:
 			move_dir = 1
@@ -27,11 +26,6 @@ func _physics_process(delta):
 
 	ray_ground.target_position.y = abs(ray_ground.target_position.y) * move_dir
 	ray_wall.target_position.x = abs(ray_wall.target_position.x) * move_dir
-
-	print("Ground RayCast2D Y target = " + str(ray_ground.target_position.y))
-	print("Wall RayCast2D X target = " + str(ray_wall.target_position.x))
-	print("Change direction? " + str(change_dir))
-	print("Move direction? " + str(move_dir))
 
 	velocity.y = SPEED * move_dir
 	velocity.x = 0.0
@@ -49,7 +43,9 @@ func _on_player_damage_body_entered(body):
 		if "Dash" in body.current_state:
 			death()
 		else:
-			Game.health -= 1
+			if Game.health > 0:
+				Game.health -= 1
+
 			if body.get_node("Hit") != null:
 				body.get_node("Hit").play()
 

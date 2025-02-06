@@ -34,7 +34,7 @@ height = 8.0
 size = Vector2(12, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pw3yt"]
-size = Vector2(13, 6)
+size = Vector2(14, 6)
 
 [node name="FlyingMob" type="CharacterBody2D"]
 script = ExtResource("1_lmru2")
@@ -67,7 +67,7 @@ shape = SubResource("RectangleShape2D_ycuiq")
 [node name="PlayerDamage" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDamage"]
-position = Vector2(-0.5, 2)
+position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_pw3yt")
 
 [connection signal="finished" from="DeathAudio" to="." method="_on_death_audio_finished"]
