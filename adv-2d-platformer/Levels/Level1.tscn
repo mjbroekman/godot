@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://0to8fpypdi2o"]
+[gd_scene load_steps=13 format=4 uid="uid://0to8fpypdi2o"]
 
 [ext_resource type="Texture2D" uid="uid://dtlkxxjgx7kgk" path="res://Assets/Tilemaps/tilemap_packed.png" id="1_br8f6"]
 [ext_resource type="PackedScene" uid="uid://cmlolrx5kn048" path="res://Scenes/Player/Player.tscn" id="2_mjrel"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://uuefuoo8mrye" path="res://Scenes/Monsters/AlienPlatform.tscn" id="5_dh5n2"]
 [ext_resource type="PackedScene" uid="uid://b8yu7c66jgymi" path="res://Scenes/Monsters/BatFlying.tscn" id="5_k8qdw"]
 [ext_resource type="PackedScene" uid="uid://ow1u042tspd4" path="res://Scenes/Player/GUI.tscn" id="7_1wodk"]
+[ext_resource type="PackedScene" uid="uid://c07x763co4pl0" path="res://Scenes/GameOver.tscn" id="8_nwagn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cls01"]
 texture = ExtResource("1_br8f6")
@@ -415,7 +416,7 @@ texture_region_size = Vector2i(24, 24)
 tile_size = Vector2i(24, 24)
 sources/0 = SubResource("TileSetAtlasSource_3jajy")
 
-[node name="Game" type="Node2D"]
+[node name="Level1" type="Node2D"]
 
 [node name="GameTileMapLayer" type="TileMapLayer" parent="."]
 use_parent_material = true
@@ -492,3 +493,5 @@ position = Vector2(429, 279)
 position = Vector2(326, 137)
 
 [node name="GUI" parent="." instance=ExtResource("7_1wodk")]
+
+[node name="GameOver" parent="." instance=ExtResource("8_nwagn")]
