@@ -385,7 +385,7 @@ terrain_set_0/terrain_0/name = "Dirt"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/2 = SubResource("TileSetAtlasSource_cls01")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3jajy"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i41ww"]
 resource_name = "Background"
 texture = ExtResource("3_w63vh")
 separation = Vector2i(1, 1)
@@ -417,7 +417,7 @@ texture_region_size = Vector2i(24, 24)
 
 [sub_resource type="TileSet" id="TileSet_pt31b"]
 tile_size = Vector2i(24, 24)
-sources/0 = SubResource("TileSetAtlasSource_3jajy")
+sources/0 = SubResource("TileSetAtlasSource_i41ww")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kv8b2"]
 size = Vector2(22, 488)
