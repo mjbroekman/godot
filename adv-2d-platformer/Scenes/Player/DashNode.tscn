@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://ba3xu87va60m2"]
+
+[ext_resource type="Texture2D" uid="uid://ttg35d2pmifj" path="res://Assets/Characters/tile_0001.png" id="1_wsha3"]
+[ext_resource type="Texture2D" uid="uid://d3les0mlqncrc" path="res://Assets/Characters/tile_0000.png" id="2_b4uh4"]
+[ext_resource type="Script" path="res://Scripts/Player/DashNode.gd" id="3_cx7py"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rw4rv"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wsha3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_b4uh4")
+}],
+"loop": true,
+"name": &"Dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_b4uh4")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wsha3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_b4uh4")
+}],
+"loop": false,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_b4uh4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wsha3")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
+}]
+
+[node name="DashNode" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_rw4rv")
+animation = &"Jump"
+script = ExtResource("3_cx7py")

@@ -1,0 +1,95 @@
+[gd_scene load_steps=13 format=3 uid="uid://cmlolrx5kn048"]
+
+[ext_resource type="Texture2D" uid="uid://d3les0mlqncrc" path="res://Assets/Characters/tile_0000.png" id="1_uwef5"]
+[ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_w1rk1"]
+[ext_resource type="Texture2D" uid="uid://ttg35d2pmifj" path="res://Assets/Characters/tile_0001.png" id="2_x04kb"]
+[ext_resource type="Script" path="res://Scripts/Player/States/IdleState.gd" id="4_52jof"]
+[ext_resource type="Script" path="res://Scripts/Player/States/DashState.gd" id="5_bx3ed"]
+[ext_resource type="Script" path="res://Scripts/Player/States/FallState.gd" id="6_d21cf"]
+[ext_resource type="Script" path="res://Scripts/Player/States/JumpState.gd" id="7_iahyq"]
+[ext_resource type="Script" path="res://Scripts/Player/States/WalkState.gd" id="8_ev3nn"]
+[ext_resource type="AudioStream" uid="uid://br15e76pd0lhp" path="res://Assets/Audio/jump.ogg" id="9_rmja8"]
+[ext_resource type="AudioStream" uid="uid://5ajs6cxifh7g" path="res://Assets/Audio/audiomass-output.mp3" id="10_7a8rk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_idf46"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_x04kb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_uwef5")
+}],
+"loop": true,
+"name": &"Dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uwef5")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_x04kb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_uwef5")
+}],
+"loop": false,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_x04kb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_uwef5")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 7.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uilyw"]
+radius = 8.0
+height = 20.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_w1rk1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_idf46")
+animation = &"Walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_uilyw")
+
+[node name="StateMachine" type="Node" parent="."]
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("4_52jof")
+
+[node name="DashState" type="Node" parent="StateMachine"]
+script = ExtResource("5_bx3ed")
+
+[node name="FallState" type="Node" parent="StateMachine"]
+script = ExtResource("6_d21cf")
+
+[node name="JumpState" type="Node" parent="StateMachine"]
+script = ExtResource("7_iahyq")
+
+[node name="WalkState" type="Node" parent="StateMachine"]
+script = ExtResource("8_ev3nn")
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_rmja8")
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_7a8rk")

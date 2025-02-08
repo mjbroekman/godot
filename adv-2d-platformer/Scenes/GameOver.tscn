@@ -1,0 +1,78 @@
+[gd_scene load_steps=6 format=3 uid="uid://c07x763co4pl0"]
+
+[ext_resource type="Script" path="res://Scripts/GameOver.gd" id="1_lxkfv"]
+[ext_resource type="AudioStream" uid="uid://cyshavislg44r" path="res://Assets/Audio/game over.mp3" id="2_1brc3"]
+
+[sub_resource type="SystemFont" id="SystemFont_bvqev"]
+font_italic = true
+font_weight = 550
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_be8w1"]
+font = SubResource("SystemFont_bvqev")
+font_size = 40
+font_color = Color(0.819608, 0, 0, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lgwf1"]
+font_size = 20
+font_color = Color(1, 0.662745, 0.0980392, 1)
+outline_size = 2
+outline_color = Color(1, 0.396078, 0, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 3)
+
+[node name="GameOver" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_lxkfv")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Panel"]
+stream = ExtResource("2_1brc3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -33.5
+offset_right = 150.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Game Over!"
+label_settings = SubResource("LabelSettings_be8w1")
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Collected Gold: 0"
+label_settings = SubResource("LabelSettings_lgwf1")
+horizontal_alignment = 1
+
+[node name="Retry" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.803922, 0.823529, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "Retry ?"
+
+[connection signal="pressed" from="Panel/VBoxContainer/Retry" to="." method="_on_retry_pressed"]

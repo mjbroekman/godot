@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4mdl5otif32o"]
+
+[ext_resource type="Texture2D" uid="uid://brqb6k1rhy233" path="res://Assets/Tiles/tile_0044.png" id="1_yd0r5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_je50u"]
+
+[node name="Heart" type="Panel"]
+custom_minimum_size = Vector2(18, 18)
+offset_right = 18.0
+offset_bottom = 18.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_je50u")
+
+[node name="HeartIcon" type="Sprite2D" parent="."]
+position = Vector2(9, 9)
+texture = ExtResource("1_yd0r5")
