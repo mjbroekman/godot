@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://dfqihm55m4224"]
+[gd_scene load_steps=6 format=4 uid="uid://dfqihm55m4224"]
 
-[ext_resource type="Texture2D" uid="uid://t2nbfd673rw6" path="res://Assets/Images/Background.png" id="1_vl1il"]
+[ext_resource type="PackedScene" uid="uid://bewk52f0j4j7n" path="res://Scenes/Screens/Background.tscn" id="1_3mj3u"]
 [ext_resource type="Texture2D" uid="uid://c8spgd1r65fjw" path="res://Assets/Images/Tiles.png" id="2_kmvkb"]
+[ext_resource type="PackedScene" uid="uid://drvad3hrkg36u" path="res://Scenes/Player.tscn" id="3_3pmig"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5ybut"]
 resource_name = "Platforms"
@@ -9,22 +10,27 @@ texture = ExtResource("2_kmvkb")
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(14, 14)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
 1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
 0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(7, -7, -5.8125, -7, -7, -5.8125, -7, -3.1875, -2.6875, 4.25, 2.125, 7, 7, 7)
 1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 5.875, -7, 7, -5.8125, 7, -3.3125, 2.875, 3.9375, -1.9375, 7, -7, 7)
 0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
 1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
 
 [sub_resource type="TileSet" id="TileSet_ue1pm"]
 tile_size = Vector2i(14, 14)
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_5ybut")
 
 [node name="Levels" type="Node2D"]
 
-[node name="Background" type="Sprite2D" parent="."]
-position = Vector2(595, 335)
-scale = Vector2(4.1, 4.25)
-texture = ExtResource("1_vl1il")
+[node name="Background" parent="." instance=ExtResource("1_3mj3u")]
+position = Vector2(596, 334)
 
 [node name="Level0" type="TileMapLayer" parent="."]
 texture_filter = 1
@@ -50,5 +56,7 @@ tile_set = SubResource("TileSet_ue1pm")
 visible = false
 texture_filter = 1
 scale = Vector2(3, 3)
-tile_map_data = PackedByteArray("AAAZAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAATAAgAAAAAAAAAAAAQAAsAAAAAAAAAAAAPAAwAAAAAAAAAAAAKAAYAAAAAAAAAAAAHAAcAAAAAAAAAAAAGAAwAAAAAAAAAAAAIAA4AAAAAAAAAAAABAA4AAAAAAAAAAAACAAcAAAAAAAAAAAADAAYAAAAAAAAAAAANAAsAAAAAAAAAAAAWAAQAAAAAAAAAAAAYAAgAAAAAAAAAAAAVAAwAAAAAAAAAAAASAAsAAAAAAAAAAAADAAwAAAAAAAAAAAAFAAkAAAAAAAAAAAALAAwAAAAAAAAAAAAOAAQAAAAAAAIAAAAOAAkAAAAAAAIAADAOAAUAAAABAAIAAAAOAAYAAAABAAIAAAAOAAcAAAABAAIAAAAOAAgAAAABAAIAAAA=")
+tile_map_data = PackedByteArray("AAAZAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAATAAgAAAAAAAAAAAAQAAsAAAAAAAAAAAAPAAwAAAAAAAAAAAAKAAYAAAAAAAAAAAAHAAcAAAAAAAAAAAAGAAwAAAAAAAAAAAAIAA4AAAAAAAAAAAABAA4AAAAAAAAAAAACAAcAAAAAAAAAAAADAAYAAAAAAAAAAAANAAsAAAAAAAAAAAAWAAQAAAAAAAAAAAAYAAgAAAAAAAAAAAAVAAwAAAAAAAAAAAASAAsAAAAAAAAAAAADAAwAAAAAAAAAAAAFAAkAAAAAAAAAAAALAAwAAAAAAAAAAAAOAAQAAAAAAAIAAAAOAAUAAAABAAIAAAAOAAYAAAABAAIAAAAOAAcAAAABAAIAAAAOAAgAAAAAAAIAADA=")
 tile_set = SubResource("TileSet_ue1pm")
+
+[node name="Player" parent="." instance=ExtResource("3_3pmig")]
