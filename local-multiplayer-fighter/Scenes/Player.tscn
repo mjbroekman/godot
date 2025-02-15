@@ -8,7 +8,6 @@ radius = 4.5
 height = 14.0
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(164, 433)
 scale = Vector2(4, 4)
 script = ExtResource("1_xwetc")
 
