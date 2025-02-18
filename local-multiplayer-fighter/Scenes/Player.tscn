@@ -1,7 +1,60 @@
-[gd_scene load_steps=4 format=3 uid="uid://drvad3hrkg36u"]
+[gd_scene load_steps=10 format=3 uid="uid://drvad3hrkg36u"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_xwetc"]
 [ext_resource type="Texture2D" uid="uid://c76cbf8npiv4b" path="res://Assets/Images/Player.png" id="2_e6vpw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lypa2"]
+atlas = ExtResource("2_e6vpw")
+region = Rect2(0, 0, 9, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ca0lp"]
+atlas = ExtResource("2_e6vpw")
+region = Rect2(10, 0, 9, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6ro6"]
+atlas = ExtResource("2_e6vpw")
+region = Rect2(0, 0, 9, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohsv7"]
+atlas = ExtResource("2_e6vpw")
+region = Rect2(10, 0, 9, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcfkl"]
+atlas = ExtResource("2_e6vpw")
+region = Rect2(20, 0, 9, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_31jsi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lypa2")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ca0lp")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6ro6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohsv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcfkl")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 10.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i0gc2"]
 radius = 4.5
@@ -11,12 +64,12 @@ height = 14.0
 scale = Vector2(4, 4)
 script = ExtResource("1_xwetc")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_e6vpw")
-hframes = 5
-region_enabled = true
-region_rect = Rect2(0, 0, 43, 14)
+sprite_frames = SubResource("SpriteFrames_31jsi")
+animation = &"Jump"
+autoplay = "Idle"
+frame_progress = 0.0158095
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_i0gc2")
