@@ -15,12 +15,16 @@ func _ready():
 	if name == "Player":
 		print("Defaulting to controls for player 1")
 		player = "Player1"
-	
+
+	if name == "Player2":
+		get_node("PlayerSprite").flip_h = true
+
 	if name == "":
 		print("Error... Player node name not discoverable. Exiting...")
 		get_tree().quit()
 
 	controls = Global.keybindings[player]
+	reset_player()
 
 
 func _physics_process(delta):
@@ -49,3 +53,12 @@ func _physics_process(delta):
 		get_node("PlayerSprite").play("Idle")
 
 	move_and_slide()
+	
+	if position.y > 1000:
+		reset_player()
+
+func reset_player():
+	if player == "Player1":
+		position = get_parent().get_node("SpawnPoints/LeftSpawn").position
+	if player == "Player2":
+		position = get_parent().get_node("SpawnPoints/RightSpawn").position

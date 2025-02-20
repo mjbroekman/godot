@@ -60,7 +60,15 @@ enabled = false
 tile_set = SubResource("TileSet_ue1pm")
 
 [node name="Player1" parent="." instance=ExtResource("3_3pmig")]
-position = Vector2(186, 426)
+position = Vector2(404, 97)
 
 [node name="Player2" parent="." instance=ExtResource("3_3pmig")]
-position = Vector2(936, 431)
+position = Vector2(730, 93)
+
+[node name="SpawnPoints" type="Node" parent="."]
+
+[node name="LeftSpawn" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(149, 416)
+
+[node name="RightSpawn" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(970, 416)
