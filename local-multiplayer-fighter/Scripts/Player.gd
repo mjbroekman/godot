@@ -34,7 +34,7 @@ func _physics_process(delta):
 		get_node("PlayerSprite").play("Jump")
 
 	# Handle jump.
-	if Input.is_action_just_pressed(controls["jump"]) and is_on_floor():
+	if is_on_floor() and ( Input.is_action_just_pressed(controls["jump"]) ):
 		velocity.y -= jump_force
 
 	# Get the input direction and handle the movement/deceleration.
@@ -53,9 +53,13 @@ func _physics_process(delta):
 		get_node("PlayerSprite").play("Idle")
 
 	move_and_slide()
-	
+
 	if position.y > 1000:
 		reset_player()
+	if position.x < 0:
+		position.x = 0
+	if position.x > get_viewport_rect().size.x:
+		position.x = get_viewport_rect().size.x
 
 func reset_player():
 	if player == "Player1":

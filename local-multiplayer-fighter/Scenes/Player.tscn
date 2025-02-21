@@ -60,7 +60,7 @@ animations = [{
 radius = 4.5
 height = 14.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 scale = Vector2(4, 4)
 script = ExtResource("1_xwetc")
 
