@@ -73,3 +73,9 @@ frame_progress = 0.0158095
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_i0gc2")
+
+[node name="AttackRateTimer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[connection signal="timeout" from="AttackRateTimer" to="." method="_on_attack_rate_timer_timeout"]

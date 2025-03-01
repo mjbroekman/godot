@@ -3,9 +3,13 @@ extends CharacterBody2D
 @export var move_speed : float = 600.0
 @export var jump_force : float = 1000.0
 @export var gravity : float = 2800.0
+@export var fireball : PackedScene = preload("res://Scenes/Projectile.tscn")
+
 var char_dir : float = 0.0
 var player : String = ""
 var controls : Dictionary
+var can_shoot : bool = true
+
 
 func _ready():
 	if Global.keybindings.has(name):
@@ -32,6 +36,9 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		get_node("PlayerSprite").play("Jump")
+
+	if Input.is_action_just_pressed(controls["fire"]):
+		shoot_projectile()
 
 	# Handle jump.
 	if is_on_floor() and ( Input.is_action_just_pressed(controls["jump"]) ):
@@ -61,8 +68,28 @@ func _physics_process(delta):
 	if position.x > get_viewport_rect().size.x:
 		position.x = get_viewport_rect().size.x
 
+
 func reset_player():
 	if player == "Player1":
 		position = get_parent().get_node("SpawnPoints/LeftSpawn").position
 	if player == "Player2":
 		position = get_parent().get_node("SpawnPoints/RightSpawn").position
+
+
+func shoot_projectile():
+	if can_shoot:
+		var fireball_inst : Area2D = fireball.instantiate()
+		fireball_inst.position = self.position
+
+		if get_node("PlayerSprite").flip_h:
+			fireball_inst.proj_dir = -1
+		else:
+			fireball_inst.proj_dir = 1
+
+		get_parent().add_child(fireball_inst)
+
+	can_shoot = false
+
+
+func _on_attack_rate_timer_timeout():
+	can_shoot = true
