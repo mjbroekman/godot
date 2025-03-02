@@ -4,9 +4,13 @@ extends CharacterBody2D
 @export var jump_force : float = 1000.0
 @export var gravity : float = 2800.0
 @export var fireball : PackedScene = preload("res://Scenes/Projectile.tscn")
+@export var ui_ctrl : Control
+@export var player_health_ui : ProgressBar
+@export var player_score_ui : Label
 
 var char_dir : float = 0.0
 var player : String = ""
+var max_health : float = 3.0
 var controls : Dictionary
 var can_shoot : bool = true
 
@@ -27,8 +31,20 @@ func _ready():
 		print("Error... Player node name not discoverable. Exiting...")
 		get_tree().quit()
 
+	player_health_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ProgressBar")
+	player_score_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ScoreLabel")
+
 	controls = Global.keybindings[player]
+
 	reset_player()
+
+
+func decrease_health():
+	if player_health_ui.value <= 0:
+		pass # Game Over
+	
+	player_health_ui.value -= 1
+
 
 
 func _physics_process(delta):
