@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bewk52f0j4j7n" path="res://Scenes/Screens/Background.tscn" id="1_rdypq"]
 
-[node name="MainMenu" type="Node2D"]
+[node name="MainMenu" type="Node"]
 
 [node name="Background" parent="." instance=ExtResource("1_rdypq")]
 position = Vector2(566, 321)
