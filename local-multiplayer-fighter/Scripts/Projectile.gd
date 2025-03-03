@@ -3,6 +3,7 @@ extends Area2D
 @export var speed : float = 750.0
 @export var duration : float = 1.0
 var proj_dir : int
+var player : String
 
 func _ready():
 	if proj_dir == 0:
@@ -22,3 +23,12 @@ func _process(delta):
 
 	if position.x > get_viewport_rect().size.x:
 		queue_free()
+
+
+func _on_body_entered(body):
+	if body.is_in_group("Player"):
+		if player != body.player:
+			body.decrease_health()
+			queue_free()
+	elif body.is_in_group("TileMap"):
+		queue_free() 

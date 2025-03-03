@@ -14,7 +14,6 @@ var max_health : float = 3.0
 var controls : Dictionary
 var can_shoot : bool = true
 
-
 func _ready():
 	if Global.keybindings.has(name):
 		print("Using keybindings for " + name)
@@ -34,17 +33,18 @@ func _ready():
 	player_health_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ProgressBar")
 	player_score_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ScoreLabel")
 
+	player_health_ui.value = max_health
+
 	controls = Global.keybindings[player]
 
 	reset_player()
 
 
 func decrease_health():
-	if player_health_ui.value <= 0:
-		pass # Game Over
-	
 	player_health_ui.value -= 1
 
+	if player_health_ui.value <= 0:
+		pass # Game Over
 
 
 func _physics_process(delta):
@@ -86,6 +86,7 @@ func _physics_process(delta):
 
 
 func reset_player():
+	
 	if player == "Player1":
 		position = get_parent().get_node("SpawnPoints/LeftSpawn").position
 	if player == "Player2":
@@ -95,6 +96,7 @@ func reset_player():
 func shoot_projectile():
 	if can_shoot:
 		var fireball_inst : Area2D = fireball.instantiate()
+		fireball_inst.player = player
 		fireball_inst.position = self.position
 
 		if get_node("PlayerSprite").flip_h:

@@ -30,6 +30,7 @@ project/assembly_name="Local Multiplayer Fighter"
 [global_group]
 
 Player=""
+TileMap=""
 
 [input]
 
