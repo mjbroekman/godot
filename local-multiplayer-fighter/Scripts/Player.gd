@@ -10,6 +10,8 @@ extends CharacterBody2D
 
 var char_dir : float = 0.0
 var player : String = ""
+var opponent : String = ""
+var opp_cb2d : CharacterBody2D
 var max_health : float = 3.0
 var controls : Dictionary
 var can_shoot : bool = true
@@ -19,21 +21,22 @@ func _ready():
 		print("Using keybindings for " + name)
 		player = name
 	
-	if name == "Player":
-		print("Defaulting to controls for player 1")
+	if name == "Player" or name == "Player1":
 		player = "Player1"
+		opponent = "Player2"
 
 	if name == "Player2":
 		get_node("PlayerSprite").flip_h = true
+		opponent = "Player1"
 
 	if name == "":
 		print("Error... Player node name not discoverable. Exiting...")
 		get_tree().quit()
 
+	opp_cb2d = get_parent().get_node(opponent)
+
 	player_health_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ProgressBar")
 	player_score_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ScoreLabel")
-
-	player_health_ui.value = max_health
 
 	controls = Global.keybindings[player]
 
@@ -44,7 +47,13 @@ func decrease_health():
 	player_health_ui.value -= 1
 
 	if player_health_ui.value <= 0:
-		pass # Game Over
+		opp_cb2d.increase_score()
+		reset_player()
+		opp_cb2d.reset_player()
+
+
+func increase_score():
+	player_score_ui.text = str(int(player_score_ui.text) + 1)
 
 
 func _physics_process(delta):
@@ -86,7 +95,8 @@ func _physics_process(delta):
 
 
 func reset_player():
-	
+	player_health_ui.value = max_health
+
 	if player == "Player1":
 		position = get_parent().get_node("SpawnPoints/LeftSpawn").position
 	if player == "Player2":
