@@ -47,9 +47,13 @@ func decrease_health():
 	player_health_ui.value -= 1
 
 	if player_health_ui.value <= 0:
-		opp_cb2d.increase_score()
-		reset_player()
-		opp_cb2d.reset_player()
+		death()
+
+
+func death():
+	opp_cb2d.increase_score()
+	reset_player()
+	opp_cb2d.reset_player()
 
 
 func increase_score():
