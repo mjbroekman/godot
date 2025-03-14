@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://Scripts/Global.gd"
+MultiplayerInput="*res://addons/multiplayer_input/multiplayer_input.gd"
 
 [display]
 
@@ -26,6 +27,10 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="Local Multiplayer Fighter"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/multiplayer_input/plugin.cfg")
 
 [global_group]
 
