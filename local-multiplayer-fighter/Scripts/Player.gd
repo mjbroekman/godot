@@ -7,6 +7,7 @@ extends CharacterBody2D
 @export var ui_ctrl : Control
 @export var player_health_ui : ProgressBar
 @export var player_score_ui : Label
+@export var death_bloom : PackedScene = preload("res://Scenes/DeathBlossom.tscn")
 
 var char_dir : float = 0.0
 var player : String = ""
@@ -51,7 +52,21 @@ func decrease_health():
 
 
 func death():
+	self.visible = false
+	var death_blossom : CPUParticles2D = death_bloom.instantiate()
+	get_parent().add_child(death_blossom)
+
+	death_blossom.position = self.position
+
+	if death_blossom.position.y > get_viewport_rect().size.y:
+		death_blossom.position.y = get_viewport_rect().size.y
+
+	death_blossom.emitting = true
+
 	opp_cb2d.increase_score()
+
+	await get_tree().create_timer(0.5).timeout
+
 	reset_player()
 	opp_cb2d.reset_player()
 
@@ -100,6 +115,7 @@ func _physics_process(delta):
 
 func reset_player():
 	player_health_ui.value = max_health
+	self.visible = true
 
 	if player == "Player1":
 		position = get_parent().get_node("SpawnPoints/LeftSpawn").position
