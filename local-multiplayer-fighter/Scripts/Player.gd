@@ -16,8 +16,11 @@ var opp_cb2d : CharacterBody2D
 var max_health : float = 3.0
 var controls : Dictionary
 var can_shoot : bool = true
+var device : int = -1
 
 func _ready():
+	var devices : Array[int] = Input.get_connected_joypads()
+
 	if Global.keybindings.has(name):
 		print("Using keybindings for " + name)
 		player = name
@@ -25,10 +28,18 @@ func _ready():
 	if name == "Player" or name == "Player1":
 		player = "Player1"
 		opponent = "Player2"
+		if devices.size() > 0:
+			device = 0
+		else:
+			device = -1
 
 	if name == "Player2":
 		get_node("PlayerSprite").flip_h = true
 		opponent = "Player1"
+		if devices.size() > 1:
+			device = 1
+		else:
+			device = -1
 
 	if name == "":
 		print("Error... Player node name not discoverable. Exiting...")
@@ -81,15 +92,21 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 		get_node("PlayerSprite").play("Jump")
 
-	if Input.is_action_just_pressed(controls["fire"]):
+	if ( Input.is_action_just_pressed(controls["fire"]) or MultiplayerInput.is_action_just_pressed(device,"shoot_ctlr") ):
 		shoot_projectile()
 
 	# Handle jump.
-	if is_on_floor() and ( Input.is_action_just_pressed(controls["jump"]) ):
+	if is_on_floor() and ( Input.is_action_just_pressed(controls["jump"]) or MultiplayerInput.is_action_just_pressed(device,"jump_ctlr") ):
 		velocity.y -= jump_force
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
+	char_dir = 0
+	if Input.get_axis(controls["left"], controls["right"]) != 0:
+		char_dir = Input.get_axis(controls["left"], controls["right"])
+	elif MultiplayerInput.get_axis(device, "move_left_ctlr", "move_right_ctlr"):
+		char_dir = MultiplayerInput.get_axis(device, "move_left_ctlr", "move_right_ctlr")
+
 	char_dir = Input.get_axis(controls["left"], controls["right"])
 	if char_dir > 0:
 		get_node("PlayerSprite").flip_h = false
