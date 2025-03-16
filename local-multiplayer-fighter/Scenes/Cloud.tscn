@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq1l1b6ihbocx"]
+
+[ext_resource type="Texture2D" uid="uid://bcwkg6w5ec6yf" path="res://Assets/Images/Cloud.png" id="1_nb8xg"]
+[ext_resource type="Script" path="res://Scripts/Cloud.gd" id="2_qgli5"]
+
+[node name="Cloud" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.47451)
+texture_filter = 1
+texture = ExtResource("1_nb8xg")
+script = ExtResource("2_qgli5")

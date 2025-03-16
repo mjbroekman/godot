@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=4 uid="uid://bqppvlvf1focg"]
+[gd_scene load_steps=10 format=4 uid="uid://bqppvlvf1focg"]
 
+[ext_resource type="Script" path="res://Scripts/Game.gd" id="1_2jicw"]
 [ext_resource type="PackedScene" uid="uid://bewk52f0j4j7n" path="res://Scenes/Screens/Background.tscn" id="1_j7rac"]
 [ext_resource type="PackedScene" uid="uid://g0d0y7hu08h2" path="res://Scenes/Screens/UI.tscn" id="1_xkav1"]
 [ext_resource type="Texture2D" uid="uid://c8spgd1r65fjw" path="res://Assets/Images/Tiles.png" id="2_whbk1"]
@@ -34,6 +35,7 @@ custom_solver_bias = 1.0
 size = Vector2(1265, 67)
 
 [node name="Level1" type="Node"]
+script = ExtResource("1_2jicw")
 
 [node name="UI" parent="." instance=ExtResource("1_xkav1")]
 
@@ -67,5 +69,7 @@ script = ExtResource("4_a2ddj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldCollider"]
 position = Vector2(596, 20)
 shape = SubResource("RectangleShape2D_cdmte")
+
+[node name="Clouds" type="Node" parent="."]
 
 [connection signal="body_entered" from="WorldCollider" to="WorldCollider" method="_on_body_entered"]
