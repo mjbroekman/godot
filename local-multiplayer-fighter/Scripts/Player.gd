@@ -22,7 +22,6 @@ func _ready():
 	var devices : Array[int] = Input.get_connected_joypads()
 
 	if Global.keybindings.has(name):
-		print("Using keybindings for " + name)
 		player = name
 	
 	if name == "Player" or name == "Player1":

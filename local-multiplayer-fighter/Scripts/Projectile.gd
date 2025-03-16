@@ -28,6 +28,7 @@ func _process(delta):
 func _on_body_entered(body):
 	if body.is_in_group("Player"):
 		if player != body.player:
+			get_parent().get_node("UI/Camera2D/AnimationPlayer").play("Shake")
 			body.decrease_health()
 			queue_free()
 	elif body.is_in_group("TileMap"):
