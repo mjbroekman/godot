@@ -1,12 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://duam4c03i46cu"]
+[gd_scene load_steps=2 format=3 uid="uid://duam4c03i46cu"]
 
 [sub_resource type="Curve" id="Curve_g3rhu"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.00912678), 0.0, 0.0, 0, 0]
 point_count = 2
-
-[sub_resource type="Gradient" id="Gradient_8w7c2"]
-offsets = PackedFloat32Array(0, 0.546667, 1)
-colors = PackedColorArray(0, 0, 1, 1, 0.72549, 0.101961, 0.0941176, 1, 0.964706, 0.14902, 0.0627451, 1)
 
 [node name="DeathBlossom" type="CPUParticles2D"]
 emitting = false
@@ -31,4 +27,3 @@ scale_amount_min = 10.0
 scale_amount_max = 10.0
 scale_amount_curve = SubResource("Curve_g3rhu")
 color = Color(1, 0.0901961, 0.137255, 1)
-color_ramp = SubResource("Gradient_8w7c2")

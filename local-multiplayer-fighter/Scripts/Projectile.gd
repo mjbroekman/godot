@@ -24,6 +24,13 @@ func _process(delta):
 	if position.x > get_viewport_rect().size.x:
 		queue_free()
 
+func set_color(new_color):
+	var sprite = get_node("Sprite2D")
+	sprite.modulate -= Color.WHITE
+	sprite.modulate += new_color
+	print(sprite)
+	print(new_color)
+	print(sprite.modulate)
 
 func _on_body_entered(body):
 	if body.is_in_group("Player"):

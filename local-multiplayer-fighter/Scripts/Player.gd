@@ -17,9 +17,14 @@ var max_health : float = 3.0
 var controls : Dictionary
 var can_shoot : bool = true
 var device : int = -1
+var proj_color : Color = Color.BLUE
+var death_color : Color = Color.GREEN
+var player_color : Color = Color.RED
+var player_sprite : AnimatedSprite2D
 
 func _ready():
 	var devices : Array[int] = Input.get_connected_joypads()
+	player_sprite = get_node("PlayerSprite")
 
 	if Global.keybindings.has(name):
 		player = name
@@ -27,6 +32,11 @@ func _ready():
 	if name == "Player" or name == "Player1":
 		player = "Player1"
 		opponent = "Player2"
+		if Global.player1_colors.size() > 0:
+			player_color = Global.player1_colors[0]
+			proj_color = Global.player1_colors[1]
+			death_color = Global.player1_colors[2]
+
 		if devices.size() > 0:
 			device = 0
 		else:
@@ -35,6 +45,11 @@ func _ready():
 	if name == "Player2":
 		get_node("PlayerSprite").flip_h = true
 		opponent = "Player1"
+		if Global.player2_colors.size() > 0:
+			player_color = Global.player2_colors[0]
+			proj_color = Global.player2_colors[1]
+			death_color = Global.player2_colors[2]
+
 		if devices.size() > 1:
 			device = 1
 		else:
@@ -45,7 +60,7 @@ func _ready():
 		get_tree().quit()
 
 	opp_cb2d = get_parent().get_node(opponent)
-
+	player_sprite.modulate = player_color
 	player_health_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ProgressBar")
 	player_score_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ScoreLabel")
 
@@ -67,6 +82,7 @@ func death():
 	get_parent().add_child(death_blossom)
 
 	death_blossom.position = self.position
+	death_blossom.color = death_color
 
 	if death_blossom.position.y > get_viewport_rect().size.y:
 		death_blossom.position.y = get_viewport_rect().size.y
@@ -144,6 +160,7 @@ func shoot_projectile():
 		var fireball_inst : Area2D = fireball.instantiate()
 		fireball_inst.player = player
 		fireball_inst.position = self.position
+		fireball_inst.set_color(proj_color)
 
 		if get_node("PlayerSprite").flip_h:
 			fireball_inst.proj_dir = -1
