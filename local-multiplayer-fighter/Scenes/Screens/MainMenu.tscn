@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dw34isfs0k8dj"]
+[gd_scene load_steps=7 format=3 uid="uid://dw34isfs0k8dj"]
 
+[ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_6oe7c"]
 [ext_resource type="PackedScene" uid="uid://bewk52f0j4j7n" path="res://Scenes/Screens/Background.tscn" id="1_rdypq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_iph7g"]
@@ -41,12 +42,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_6oe7c")
 
 [node name="Background" parent="." instance=ExtResource("1_rdypq")]
 position = Vector2(566, 321)
 
 [node name="GameMode" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +95,15 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Single Match"
 
+[node name="HSeparator" type="HSeparator" parent="GameMode/MainButtonContainer"]
+layout_mode = 2
+
+[node name="QuitButton" type="Button" parent="GameMode/MainButtonContainer"]
+layout_mode = 2
+text = "Quit"
+
 [node name="PlayerConfig" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -138,17 +147,17 @@ text = "Player 1"
 label_settings = SubResource("LabelSettings_pu2ah")
 horizontal_alignment = 1
 
-[node name="Color1Rect" type="ColorRect" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
+[node name="Color1Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(1, 1, 0.0627451, 1)
 
-[node name="Color2Rect" type="ColorRect" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
+[node name="Color2Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(1, 0.156863, 0.113725, 1)
 
-[node name="Color3Rect" type="ColorRect" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
+[node name="Color3Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(0.0666667, 0.952941, 0.145098, 1)
@@ -164,22 +173,42 @@ text = "Player 2"
 label_settings = SubResource("LabelSettings_pil5e")
 horizontal_alignment = 1
 
-[node name="Color1Rect" type="ColorRect" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
+[node name="Color1Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-color = Color(1, 1, 0.0784314, 1)
+color = Color(1, 0.32549, 1, 1)
 
-[node name="Color2Rect" type="ColorRect" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
+[node name="Color2Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-color = Color(0.960784, 0.0823529, 0.0470588, 1)
+color = Color(0, 0.0823529, 1, 1)
 
-[node name="Color3Rect" type="ColorRect" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
+[node name="Color3Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-color = Color(0.0470588, 1, 0.0823529, 1)
+color = Color(0.317647, 0.294118, 0.0823529, 1)
 
 [node name="PlayButton" type="Button" parent="PlayerConfig/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Fight!"
+
+[node name="BackButton" type="Button" parent="PlayerConfig"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 8.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "<= Back"
+
+[connection signal="pressed" from="GameMode/MainButtonContainer/ChampionshipButton" to="." method="_on_championship_button_pressed"]
+[connection signal="pressed" from="GameMode/MainButtonContainer/ChampionshipButton" to="." method="_on_initial_button_pressed"]
+[connection signal="pressed" from="GameMode/MainButtonContainer/SinglematchButton" to="." method="_on_singlematch_button_pressed"]
+[connection signal="pressed" from="GameMode/MainButtonContainer/SinglematchButton" to="." method="_on_initial_button_pressed"]
+[connection signal="pressed" from="GameMode/MainButtonContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="PlayerConfig/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="PlayerConfig/BackButton" to="." method="_on_back_button_pressed"]

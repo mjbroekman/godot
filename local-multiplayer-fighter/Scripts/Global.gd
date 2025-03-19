@@ -1,6 +1,9 @@
 extends Node
 
-@export var game_mode : String = ""
+enum game_modes { SingleMatch, Championship }
+@export var game_mode : game_modes
+@export var player1_colors : Array[Color]
+@export var player2_colors : Array[Color]
 
 var keybindings : Dictionary = {
 	"Player1" : {
