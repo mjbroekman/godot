@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dw34isfs0k8dj"]
+[gd_scene load_steps=8 format=3 uid="uid://dw34isfs0k8dj"]
 
 [ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_6oe7c"]
 [ext_resource type="PackedScene" uid="uid://bewk52f0j4j7n" path="res://Scenes/Screens/Background.tscn" id="1_rdypq"]
@@ -27,6 +27,13 @@ shadow_size = 3
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(2, 2)
 
+[sub_resource type="LabelSettings" id="LabelSettings_46sd7"]
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0.94902, 0)
+shadow_offset = Vector2(3, 3)
+
 [sub_resource type="LabelSettings" id="LabelSettings_pil5e"]
 font_size = 24
 outline_size = 2
@@ -48,6 +55,7 @@ script = ExtResource("1_6oe7c")
 position = Vector2(566, 321)
 
 [node name="GameMode" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -103,7 +111,6 @@ layout_mode = 2
 text = "Quit"
 
 [node name="PlayerConfig" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,15 +154,33 @@ text = "Player 1"
 label_settings = SubResource("LabelSettings_pu2ah")
 horizontal_alignment = 1
 
+[node name="Label2" type="Label" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
+layout_mode = 2
+text = "Player Color"
+label_settings = SubResource("LabelSettings_46sd7")
+horizontal_alignment = 1
+
 [node name="Color1Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(1, 1, 0.0627451, 1)
 
+[node name="Label3" type="Label" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
+layout_mode = 2
+text = "Projectile Color"
+label_settings = SubResource("LabelSettings_46sd7")
+horizontal_alignment = 1
+
 [node name="Color2Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(1, 0.156863, 0.113725, 1)
+
+[node name="Label4" type="Label" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
+layout_mode = 2
+text = "Death Color"
+label_settings = SubResource("LabelSettings_46sd7")
+horizontal_alignment = 1
 
 [node name="Color3Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player1Config"]
 custom_minimum_size = Vector2(0, 50)
@@ -173,15 +198,33 @@ text = "Player 2"
 label_settings = SubResource("LabelSettings_pil5e")
 horizontal_alignment = 1
 
+[node name="Label3" type="Label" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
+layout_mode = 2
+text = "Player Color"
+label_settings = SubResource("LabelSettings_46sd7")
+horizontal_alignment = 1
+
 [node name="Color1Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(1, 0.32549, 1, 1)
 
+[node name="Label4" type="Label" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
+layout_mode = 2
+text = "Projectile Color"
+label_settings = SubResource("LabelSettings_46sd7")
+horizontal_alignment = 1
+
 [node name="Color2Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(0, 0.0823529, 1, 1)
+
+[node name="Label5" type="Label" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
+layout_mode = 2
+text = "Death Color"
+label_settings = SubResource("LabelSettings_46sd7")
+horizontal_alignment = 1
 
 [node name="Color3Rect" type="ColorPickerButton" parent="PlayerConfig/VBoxContainer/HBoxContainer/Player2Config"]
 custom_minimum_size = Vector2(0, 50)
@@ -205,10 +248,10 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "<= Back"
 
-[connection signal="pressed" from="GameMode/MainButtonContainer/ChampionshipButton" to="." method="_on_championship_button_pressed"]
 [connection signal="pressed" from="GameMode/MainButtonContainer/ChampionshipButton" to="." method="_on_initial_button_pressed"]
-[connection signal="pressed" from="GameMode/MainButtonContainer/SinglematchButton" to="." method="_on_singlematch_button_pressed"]
+[connection signal="pressed" from="GameMode/MainButtonContainer/ChampionshipButton" to="." method="_on_championship_button_pressed"]
 [connection signal="pressed" from="GameMode/MainButtonContainer/SinglematchButton" to="." method="_on_initial_button_pressed"]
+[connection signal="pressed" from="GameMode/MainButtonContainer/SinglematchButton" to="." method="_on_singlematch_button_pressed"]
 [connection signal="pressed" from="GameMode/MainButtonContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="PlayerConfig/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="PlayerConfig/BackButton" to="." method="_on_back_button_pressed"]
