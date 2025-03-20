@@ -36,6 +36,7 @@ enabled=PackedStringArray("res://addons/multiplayer_input/plugin.cfg")
 
 Player=""
 TileMap=""
+Projectile=""
 
 [input]
 
