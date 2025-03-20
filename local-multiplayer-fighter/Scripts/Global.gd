@@ -4,6 +4,7 @@ enum game_modes { SingleMatch, Championship }
 @export var game_mode : game_modes
 @export var player1_colors : Array[Color]
 @export var player2_colors : Array[Color]
+@export var championship : int = 3
 
 var keybindings : Dictionary = {
 	"Player1" : {

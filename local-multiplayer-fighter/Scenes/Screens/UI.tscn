@@ -1,4 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://g0d0y7hu08h2"]
+[gd_scene load_steps=12 format=3 uid="uid://g0d0y7hu08h2"]
+
+[ext_resource type="Script" path="res://Scripts/UI.gd" id="1_wrgv4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7jyxu"]
 font_size = 20
@@ -60,6 +62,9 @@ _data = {
 "Shake": SubResource("Animation_hnabu")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_q5lb7"]
+font_size = 55
+
 [node name="UI" type="Control"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 3
@@ -70,8 +75,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_wrgv4")
 
 [node name="UIBanner" type="HBoxContainer" parent="."]
+z_index = 1
 custom_minimum_size = Vector2(250, 75)
 layout_mode = 1
 anchors_preset = 5
@@ -139,3 +146,52 @@ libraries = {
 "": SubResource("AnimationLibrary_co8a2")
 }
 speed_scale = 5.0
+
+[node name="GameFinished" type="ColorRect" parent="."]
+z_index = 9
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.619608)
+
+[node name="Container" type="VBoxContainer" parent="GameFinished"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="WinnerLabel" type="Label" parent="GameFinished/Container"]
+layout_mode = 2
+text = "Player X WINS!"
+label_settings = SubResource("LabelSettings_q5lb7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="GameFinished/Container"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Play Again?"
+
+[node name="HomeButton" type="Button" parent="GameFinished/Container"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Return to Menu"
+
+[node name="QuitButton" type="Button" parent="GameFinished/Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit"
+
+[connection signal="pressed" from="GameFinished/Container/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="GameFinished/Container/HomeButton" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="GameFinished/Container/QuitButton" to="." method="_on_quit_button_pressed"]

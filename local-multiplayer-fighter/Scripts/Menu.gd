@@ -29,11 +29,11 @@ func _on_play_button_pressed():
 
 	for node in player1_config.get_children():
 		if node is ColorPickerButton:
-			Global.player1_colors.append(node.color)
+			Global.player1_colors.append(node.color + Color(0,0,0,1))
 
 	for node in player2_config.get_children():
 		if node is ColorPickerButton:
-			Global.player2_colors.append(node.color)
+			Global.player2_colors.append(node.color + Color(0,0,0,1))
 
 	for p1_color in Global.player1_colors:
 		print(p1_color)
