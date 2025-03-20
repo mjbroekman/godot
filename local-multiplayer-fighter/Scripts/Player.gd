@@ -21,10 +21,13 @@ var proj_color : Color = Color.BLUE
 var death_color : Color = Color.GREEN
 var player_color : Color = Color.RED
 var player_sprite : AnimatedSprite2D
+var is_dead : bool = false
+var ui : Control
 
 func _ready():
 	var devices : Array[int] = Input.get_connected_joypads()
 	player_sprite = get_node("PlayerSprite")
+	ui = get_parent().get_node("UI")
 
 	if Global.keybindings.has(name):
 		player = name
@@ -61,7 +64,12 @@ func _ready():
 
 	opp_cb2d = get_parent().get_node(opponent)
 	player_sprite.modulate = player_color
+
 	player_health_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ProgressBar")
+	var player_health_stylebox = player_health_ui.get_theme_stylebox("fill").duplicate()
+	player_health_stylebox.bg_color = player_color
+	player_health_ui.add_theme_stylebox_override("fill", player_health_stylebox)
+
 	player_score_ui = get_parent().get_node("UI/UIBanner/"+ player + "UI/ScoreLabel")
 
 	controls = Global.keybindings[player]
@@ -70,35 +78,55 @@ func _ready():
 
 
 func decrease_health():
-	player_health_ui.value -= 1
+	if not is_dead:
+		player_health_ui.value -= 1
 
-	if player_health_ui.value <= 0:
-		death()
+		if player_health_ui.value <= 0:
+			death()
 
 
 func death():
+	self.is_dead = true
+
+	# Hide the player
 	self.visible = false
+
+	# Trigger the gibbity bits
 	var death_blossom : CPUParticles2D = death_bloom.instantiate()
 	get_parent().add_child(death_blossom)
-
 	death_blossom.position = self.position
 	death_blossom.color = death_color
 
+	# If we died from falling, put the gibs at the bottom of the screen
 	if death_blossom.position.y > get_viewport_rect().size.y:
 		death_blossom.position.y = get_viewport_rect().size.y
 
+	# Start the gibbity bits
 	death_blossom.emitting = true
 
-	opp_cb2d.increase_score()
-
+	# Wait for the gibbity bits to die down
 	await get_tree().create_timer(0.5).timeout
 
+	# Clear the field of projectiles
+	for pnode in get_tree().get_nodes_in_group("Projectile"):
+		pnode.queue_free()
+
+	# Increase the score of the player that shot us
+	opp_cb2d.increase_score()
+
+	# Reset everyone for the next round
 	reset_player()
 	opp_cb2d.reset_player()
 
 
 func increase_score():
 	player_score_ui.text = str(int(player_score_ui.text) + 1)
+	if Global.game_mode == Global.game_modes.SingleMatch:
+		ui.game_finished(player)
+	
+	if Global.game_mode == Global.game_modes.Championship:
+		if int(player_score_ui.text) > (Global.championship / 2):
+			ui.game_finished(player)
 
 
 func _physics_process(delta):
@@ -148,6 +176,7 @@ func _physics_process(delta):
 func reset_player():
 	player_health_ui.value = max_health
 	self.visible = true
+	self.is_dead = false
 
 	if player == "Player1":
 		position = get_parent().get_node("SpawnPoints/LeftSpawn").position
@@ -156,14 +185,16 @@ func reset_player():
 
 
 func shoot_projectile():
-	if can_shoot:
+	if can_shoot and not opp_cb2d.is_dead:
 		var fireball_inst : Area2D = fireball.instantiate()
 		fireball_inst.player = player
 		fireball_inst.position = self.position
 		fireball_inst.set_color(proj_color)
+		fireball_inst.get_node("Particles").color = proj_color
 
 		if get_node("PlayerSprite").flip_h:
 			fireball_inst.proj_dir = -1
+			fireball_inst.get_node("Particles").gravity *= -1
 		else:
 			fireball_inst.proj_dir = 1
 
