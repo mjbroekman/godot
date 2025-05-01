@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://by2hql3dkkxfs"]
+
+[ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_hs5kf"]
+[ext_resource type="Texture2D" uid="uid://vmyb1yp8spvp" path="res://Assets/Images/Fireball2.png" id="2_c0du5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w7tip"]
+radius = 3.0
+
+[node name="Projectile" type="Area2D" groups=["Projectile"]]
+position = Vector2(43, 25)
+scale = Vector2(3, 3)
+script = ExtResource("1_hs5kf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_w7tip")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_c0du5")
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+amount = 16
+lifetime = 0.1
+emission_shape = 2
+emission_sphere_radius = 3.0
+gravity = Vector2(-980, 0)
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

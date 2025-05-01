@@ -1,0 +1,197 @@
+[gd_scene load_steps=12 format=3 uid="uid://g0d0y7hu08h2"]
+
+[ext_resource type="Script" path="res://Scripts/UI.gd" id="1_wrgv4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7jyxu"]
+font_size = 20
+outline_size = 1
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toral"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ivbm"]
+bg_color = Color(0.529412, 0.0745098, 0.0745098, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_02550"]
+font_size = 20
+outline_size = 1
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vq4c"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbk36"]
+bg_color = Color(0.0745098, 0.0745098, 0.529412, 1)
+
+[sub_resource type="Animation" id="Animation_ms7x7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_hnabu"]
+resource_name = "Shake"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(5, 5), Vector2(0, 5), Vector2(0, 0), Vector2(-5, -5), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_co8a2"]
+_data = {
+"RESET": SubResource("Animation_ms7x7"),
+"Shake": SubResource("Animation_hnabu")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_q5lb7"]
+font_size = 55
+
+[node name="UI" type="Control"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_wrgv4")
+
+[node name="UIBanner" type="HBoxContainer" parent="."]
+z_index = 1
+custom_minimum_size = Vector2(250, 75)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -189.5
+offset_right = 189.5
+offset_bottom = 75.0
+grow_horizontal = 2
+theme_override_constants/separation = 30
+
+[node name="Player1UI" type="VBoxContainer" parent="UIBanner"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="ScoreLabel" type="Label" parent="UIBanner/Player1UI"]
+z_index = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0"
+label_settings = SubResource("LabelSettings_7jyxu")
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="UIBanner/Player1UI"]
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_toral")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4ivbm")
+max_value = 3.0
+step = 1.0
+value = 3.0
+
+[node name="Player2UI" type="VBoxContainer" parent="UIBanner"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="ScoreLabel" type="Label" parent="UIBanner/Player2UI"]
+z_index = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0"
+label_settings = SubResource("LabelSettings_02550")
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="UIBanner/Player2UI"]
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+theme_override_styles/background = SubResource("StyleBoxFlat_1vq4c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kbk36")
+max_value = 3.0
+step = 1.0
+value = 3.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(5, 5)
+anchor_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
+libraries = {
+"": SubResource("AnimationLibrary_co8a2")
+}
+speed_scale = 5.0
+
+[node name="GameFinished" type="ColorRect" parent="."]
+z_index = 9
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.619608)
+
+[node name="Container" type="VBoxContainer" parent="GameFinished"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="WinnerLabel" type="Label" parent="GameFinished/Container"]
+layout_mode = 2
+text = "Player X WINS!"
+label_settings = SubResource("LabelSettings_q5lb7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="GameFinished/Container"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Play Again?"
+
+[node name="HomeButton" type="Button" parent="GameFinished/Container"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Return to Menu"
+
+[node name="QuitButton" type="Button" parent="GameFinished/Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit"
+
+[connection signal="pressed" from="GameFinished/Container/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="GameFinished/Container/HomeButton" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="GameFinished/Container/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=4 uid="uid://bqppvlvf1focg"]
+
+[ext_resource type="Script" path="res://Scripts/Game.gd" id="1_2jicw"]
+[ext_resource type="PackedScene" uid="uid://bewk52f0j4j7n" path="res://Scenes/Screens/Background.tscn" id="1_j7rac"]
+[ext_resource type="PackedScene" uid="uid://g0d0y7hu08h2" path="res://Scenes/Screens/UI.tscn" id="1_xkav1"]
+[ext_resource type="Texture2D" uid="uid://c8spgd1r65fjw" path="res://Assets/Images/Tiles.png" id="2_whbk1"]
+[ext_resource type="PackedScene" uid="uid://drvad3hrkg36u" path="res://Scenes/Player.tscn" id="3_qddyq"]
+[ext_resource type="Script" path="res://Scripts/WorldCollider.gd" id="4_a2ddj"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5ybut"]
+resource_name = "Platforms"
+texture = ExtResource("2_whbk1")
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(14, 14)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(7, -7, -5.8125, -7, -7, -5.8125, -7, -3.1875, -2.6875, 4.25, 2.125, 7, 7, 7)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 5.875, -7, 7, -5.8125, 7, -3.3125, 2.875, 3.9375, -1.9375, 7, -7, 7)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
+
+[sub_resource type="TileSet" id="TileSet_ue1pm"]
+tile_size = Vector2i(14, 14)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_5ybut")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cdmte"]
+custom_solver_bias = 1.0
+size = Vector2(1265, 67)
+
+[node name="Level1" type="Node"]
+script = ExtResource("1_2jicw")
+
+[node name="UI" parent="." instance=ExtResource("1_xkav1")]
+
+[node name="Background" parent="." instance=ExtResource("1_j7rac")]
+position = Vector2(596, 334)
+
+[node name="Level" type="TileMapLayer" parent="." groups=["TileMap"]]
+texture_filter = 1
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAACAAsAAAAAAAAAAAADAAsAAAAAAAAAAAAEAAsAAAAAAAAAAAAFAAsAAAABAAEAAAAWAAsAAAAAAAEAAAAXAAsAAAAAAAAAAAAYAAsAAAAAAAAAAAAZAAsAAAAAAAAAAAANAAkAAAABAAAAAAAOAAkAAAABAAAAAAAPAAkAAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAASAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAANAAUAAAAAAAIAAAAOAAUAAAAAAAIAAAAOAAYAAAABAAIAAAAOAAcAAAABAAIAAAAOAAgAAAABAAIAAAANAAYAAAABAAIAAAANAAcAAAABAAIAAAANAAgAAAABAAIAAAATAAkAAAABAAEAAAAaAAsAAAABAAEAAAAIAAkAAAAAAAEAAAABAAsAAAAAAAEAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAAKAA0AAAAAAAEAAAARAA0AAAABAAEAAAA=")
+tile_set = SubResource("TileSet_ue1pm")
+
+[node name="Player1" parent="." instance=ExtResource("3_qddyq")]
+position = Vector2(404, 97)
+
+[node name="Player2" parent="." instance=ExtResource("3_qddyq")]
+position = Vector2(730, 93)
+
+[node name="SpawnPoints" type="Node" parent="."]
+
+[node name="LeftSpawn" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(88, 439)
+
+[node name="RightSpawn" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(1103, 433)
+
+[node name="WorldCollider" type="Area2D" parent="."]
+position = Vector2(0, 719)
+script = ExtResource("4_a2ddj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldCollider"]
+position = Vector2(596, 20)
+shape = SubResource("RectangleShape2D_cdmte")
+
+[node name="Clouds" type="Node" parent="."]
+
+[connection signal="body_entered" from="WorldCollider" to="WorldCollider" method="_on_body_entered"]
